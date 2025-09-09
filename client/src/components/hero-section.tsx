@@ -27,7 +27,7 @@ export default function HeroSection() {
     {
       id: "aswan",
       title: "Aswan Nile Escape", 
-      subtitle: "Stay where ancient wonders meet refined indulgence.",
+      subtitle: "Stay where ancient wonders meet refined Nubian indulgence.",
       images: [
         sunsetFeluccaImage, // Custom sunset felucca on the Nile
         restaurantImage, // 1902 Restaurant - luxury dining
