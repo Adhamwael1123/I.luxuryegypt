@@ -34,7 +34,7 @@ export default function DestinationBanner() {
     <section 
       ref={sectionRef}
       id="destinations" 
-      className="relative py-40 min-h-screen overflow-hidden"
+      className="relative py-48 min-h-[120vh] overflow-hidden"
       data-testid="destination-banner"
     >
       {/* Video Background with Parallax */}
