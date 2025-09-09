@@ -27,8 +27,8 @@ export default function DestinationBanner() {
     }
   }, [videoLoaded]);
 
-  // Calculate parallax offset - make it more dramatic
-  const parallaxOffset = scrollY * 0.6;
+  // Calculate parallax offset - subtle and smooth
+  const parallaxOffset = scrollY * 0.2;
 
   return (
     <section 
@@ -46,80 +46,55 @@ export default function DestinationBanner() {
           top: "-15%",
         }}
       >
-        {/* Debug: Test both video and fallback */}
-        <div className="relative w-full h-full">
-          {/* Fallback image always visible for now */}
+        {/* Video Background - Fixed z-index and visibility */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{
+            zIndex: 1,
+            filter: 'brightness(0.8)',
+          }}
+          onLoadedData={() => {
+            setVideoLoaded(true);
+            console.log('✅ Video loaded and should be visible');
+          }}
+          onPlay={() => {
+            console.log('✅ Video is playing');
+          }}
+          onError={(e) => {
+            console.error('❌ Video error:', e);
+            setVideoError(true);
+          }}
+        >
+          <source src={floatTherapyVideo} type="video/mp4" />
+        </video>
+        
+        {/* Fallback image only if video fails */}
+        {videoError && (
           <div 
             className="absolute inset-0 w-full h-full bg-cover bg-center"
             style={{
               backgroundImage: "url('https://images.unsplash.com/photo-1539650116574-75c0c6d73c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')",
-              filter: 'brightness(0.7)',
+              filter: 'brightness(0.8)',
               zIndex: 1,
             }}
           />
-          
-          {/* Video test - make it visible with border for debugging */}
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="absolute inset-0 w-full h-full object-cover border-4 border-red-500"
-            style={{
-              zIndex: 2,
-              filter: 'brightness(0.7)',
-            }}
-            onLoadedData={() => {
-              setVideoLoaded(true);
-              console.log('✅ Video DATA loaded, should be visible now');
-              console.log('Video element:', videoRef.current);
-              console.log('Video src:', floatTherapyVideo);
-            }}
-            onPlay={() => {
-              console.log('✅ Video PLAYING - should see movement');
-            }}
-            onCanPlay={() => {
-              console.log('✅ Video CAN PLAY');
-            }}
-            onError={(e) => {
-              console.error('❌ Video ERROR:', e);
-              console.error('Video source path:', floatTherapyVideo);
-              setVideoError(true);
-            }}
-          >
-            <source src={floatTherapyVideo} type="video/mp4" />
-          </video>
-          
-          {/* Debug info overlay */}
-          <div className="absolute top-4 left-4 z-10 text-white text-sm bg-black/50 p-2 rounded">
-            Video: {videoLoaded ? '✅ Loaded' : '⏳ Loading'}<br/>
-            Error: {videoError ? '❌ Failed' : '✅ OK'}<br/>
-            Path: {floatTherapyVideo ? '✅ Found' : '❌ Missing'}
-          </div>
-        </div>
+        )}
       </div>
       
       {/* Overlay */}
-      <div className="absolute inset-0 bg-primary/50 z-10"></div>
+      <div className="absolute inset-0 bg-primary/40 z-10"></div>
       
-      {/* BRIGHT TEST OVERLAY - Should be very obvious */}
-      <div className="absolute inset-0 bg-red-500/30 z-50 flex items-center justify-center">
-        <div className="bg-yellow-400 text-black p-8 rounded-lg font-bold text-2xl">
-          🎬 VIDEO SECTION TEST<br/>
-          Scroll: {scrollY}px<br/>
-          Parallax: {parallaxOffset.toFixed(1)}px<br/>
-          Video: {videoLoaded ? '✅ Loaded' : '⏳ Loading'}<br/>
-          Error: {videoError ? '❌ Failed' : '✅ OK'}
-        </div>
-      </div>
-
-      {/* Content with slight parallax */}
+      {/* Content with subtle parallax */}
       <div 
         className="relative max-w-4xl mx-auto text-center px-4 animate-fade-in z-20"
         style={{
-          transform: `translate3d(0, ${scrollY * 0.2}px, 0)`,
+          transform: `translate3d(0, ${scrollY * 0.05}px, 0)`,
         }}
       >
         <h2 className="text-5xl md:text-6xl font-serif font-bold text-white mb-6 drop-shadow-lg">
