@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import sunsetFeluccaImage from "@assets/sunset-felucca_1757456567256.jpg";
+import restaurantImage from "@assets/1902-restaurant_1757457083786.jpg";
+import poolImage from "@assets/pool-and-rivet_1757457083793.jpg";
+import suiteImage from "@assets/suite-nile_1757457083796.jpg";
 
 export default function HeroSection() {
   const [cairoImageIndex, setCairoImageIndex] = useState(0);
@@ -24,8 +27,10 @@ export default function HeroSection() {
       images: [
         "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Nile river view
         "https://images.unsplash.com/photo-1486895952287-dc652cb8ad8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Luxor temple
-        "https://images.unsplash.com/photo-1548435470-8eab73e0b830?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Valley of Kings
         sunsetFeluccaImage, // Custom sunset felucca on the Nile
+        restaurantImage, // 1902 Restaurant - luxury dining
+        poolImage, // Pool and Nile view - luxury resort
+        suiteImage, // Nile Suite - luxury accommodation
       ],
     },
   ];
