@@ -104,6 +104,17 @@ export default function DestinationBanner() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-primary/50 z-10"></div>
       
+      {/* BRIGHT TEST OVERLAY - Should be very obvious */}
+      <div className="absolute inset-0 bg-red-500/30 z-50 flex items-center justify-center">
+        <div className="bg-yellow-400 text-black p-8 rounded-lg font-bold text-2xl">
+          🎬 VIDEO SECTION TEST<br/>
+          Scroll: {scrollY}px<br/>
+          Parallax: {parallaxOffset.toFixed(1)}px<br/>
+          Video: {videoLoaded ? '✅ Loaded' : '⏳ Loading'}<br/>
+          Error: {videoError ? '❌ Failed' : '✅ OK'}
+        </div>
+      </div>
+
       {/* Content with slight parallax */}
       <div 
         className="relative max-w-4xl mx-auto text-center px-4 animate-fade-in z-20"
@@ -117,11 +128,6 @@ export default function DestinationBanner() {
         <p className="text-xl md:text-2xl text-white font-light drop-shadow-md">
           Stunning landscapes, legendary monuments, world-class hospitality.
         </p>
-        
-        {/* Debug info - Remove when working */}
-        <div className="mt-4 text-sm text-white/70">
-          Parallax Debug: {parallaxOffset.toFixed(1)}px | Scroll: {scrollY}px
-        </div>
       </div>
     </section>
   );
