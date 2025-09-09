@@ -3,6 +3,10 @@ import sunsetFeluccaImage from "@assets/sunset-felucca_1757456567256.jpg";
 import restaurantImage from "@assets/1902-restaurant_1757457083786.jpg";
 import poolImage from "@assets/pool-and-rivet_1757457083793.jpg";
 import suiteImage from "@assets/suite-nile_1757457083796.jpg";
+import elegantHallImage from "@assets/elegant-hall_1757459228629.jpeg";
+import khanKhaliliRestaurantImage from "@assets/khan-khalili-restaurant_1757459228636.jpeg";
+import pyramidFromLobbyImage from "@assets/pyramid-from-lobby_1757459228637.jpeg";
+import pyramidFromMenaHouseImage from "@assets/the-pyramid-from-mena-house_1757459228638.jpeg";
 
 export default function HeroSection() {
   const [cairoImageIndex, setCairoImageIndex] = useState(0);
@@ -14,10 +18,10 @@ export default function HeroSection() {
       title: "Cairo Pyramids Retreat",
       subtitle: "Discover timeless elegance near the Great Pyramids of Giza.",
       images: [
-        "https://images.unsplash.com/photo-1592650484472-2d0c8b12ee78?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Pyramids main view
-        "https://images.unsplash.com/photo-1575306847553-a6d4c1a72b87?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Pyramids sunset
-        "https://images.unsplash.com/photo-1543795107-ed8999b58879?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Pyramids different angle
-        "https://images.unsplash.com/photo-1539976357509-b52aa3fa9d1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Cairo cityscape
+        elegantHallImage, // Elegant luxury hall
+        khanKhaliliRestaurantImage, // Khan Khalili restaurant dining
+        pyramidFromLobbyImage, // Pyramid view from luxury lobby
+        pyramidFromMenaHouseImage, // The pyramid from Mena House
       ],
     },
     {
