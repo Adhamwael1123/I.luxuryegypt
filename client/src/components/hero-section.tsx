@@ -25,7 +25,6 @@ export default function HeroSection() {
       title: "Aswan Nile Escape", 
       subtitle: "Stay where ancient wonders meet refined indulgence.",
       images: [
-        "https://images.unsplash.com/photo-1486895952287-dc652cb8ad8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Ancient temple
         sunsetFeluccaImage, // Custom sunset felucca on the Nile
         restaurantImage, // 1902 Restaurant - luxury dining
         poolImage, // Pool and Nile view - luxury resort
