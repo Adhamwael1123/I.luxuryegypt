@@ -27,8 +27,8 @@ export default function DestinationBanner() {
     }
   }, [videoLoaded]);
 
-  // Calculate parallax offset - make it more noticeable
-  const parallaxOffset = scrollY * 0.3;
+  // Calculate parallax offset - make it more dramatic
+  const parallaxOffset = scrollY * 0.6;
 
   return (
     <section 
@@ -46,16 +46,7 @@ export default function DestinationBanner() {
           top: "-15%",
         }}
       >
-        {/* Temporary: Use background image to test parallax first */}
-        <div 
-          className="w-full h-full bg-cover bg-center"
-          style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1539650116574-75c0c6d73c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')",
-            filter: 'brightness(0.8)',
-          }}
-        />
-        
-        {/* Debug: Video element (hidden for now) */}
+        {/* Video Background - Now Visible! */}
         <video
           ref={videoRef}
           autoPlay
@@ -63,7 +54,10 @@ export default function DestinationBanner() {
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover opacity-0"
+          className="w-full h-full object-cover"
+          style={{
+            filter: 'brightness(0.7)',
+          }}
           onLoadedData={() => {
             setVideoLoaded(true);
             console.log('✅ Video loaded and ready');
@@ -76,11 +70,7 @@ export default function DestinationBanner() {
             if (videoRef.current) {
               videoRef.current.play()
                 .then(() => {
-                  console.log('✅ Video autoplay successful');
-                  // Switch to video when it's working
-                  if (videoRef.current) {
-                    videoRef.current.className = "w-full h-full object-cover";
-                  }
+                  console.log('✅ Video autoplay successful - NOW VISIBLE!');
                 })
                 .catch(err => {
                   console.error('❌ Video autoplay failed:', err);
@@ -103,7 +93,7 @@ export default function DestinationBanner() {
       <div 
         className="relative max-w-4xl mx-auto text-center px-4 animate-fade-in z-20"
         style={{
-          transform: `translate3d(0, ${scrollY * 0.1}px, 0)`,
+          transform: `translate3d(0, ${scrollY * 0.2}px, 0)`,
         }}
       >
         <h2 className="text-5xl md:text-6xl font-serif font-bold text-white mb-6 drop-shadow-lg">
