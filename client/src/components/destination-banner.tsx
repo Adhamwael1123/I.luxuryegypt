@@ -46,44 +46,59 @@ export default function DestinationBanner() {
           top: "-15%",
         }}
       >
-        {/* Video Background - Now Visible! */}
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="w-full h-full object-cover"
-          style={{
-            filter: 'brightness(0.7)',
-          }}
-          onLoadedData={() => {
-            setVideoLoaded(true);
-            console.log('✅ Video loaded and ready');
-          }}
-          onPlay={() => {
-            console.log('✅ Video started playing');
-          }}
-          onCanPlay={() => {
-            console.log('✅ Video can play - attempting autoplay');
-            if (videoRef.current) {
-              videoRef.current.play()
-                .then(() => {
-                  console.log('✅ Video autoplay successful - NOW VISIBLE!');
-                })
-                .catch(err => {
-                  console.error('❌ Video autoplay failed:', err);
-                });
-            }
-          }}
-          onError={(e) => {
-            console.error('❌ Video failed to load:', e);
-            setVideoError(true);
-          }}
-        >
-          <source src={floatTherapyVideo} type="video/mp4" />
-        </video>
+        {/* Debug: Test both video and fallback */}
+        <div className="relative w-full h-full">
+          {/* Fallback image always visible for now */}
+          <div 
+            className="absolute inset-0 w-full h-full bg-cover bg-center"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1539650116574-75c0c6d73c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')",
+              filter: 'brightness(0.7)',
+              zIndex: 1,
+            }}
+          />
+          
+          {/* Video test - make it visible with border for debugging */}
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="absolute inset-0 w-full h-full object-cover border-4 border-red-500"
+            style={{
+              zIndex: 2,
+              filter: 'brightness(0.7)',
+            }}
+            onLoadedData={() => {
+              setVideoLoaded(true);
+              console.log('✅ Video DATA loaded, should be visible now');
+              console.log('Video element:', videoRef.current);
+              console.log('Video src:', floatTherapyVideo);
+            }}
+            onPlay={() => {
+              console.log('✅ Video PLAYING - should see movement');
+            }}
+            onCanPlay={() => {
+              console.log('✅ Video CAN PLAY');
+            }}
+            onError={(e) => {
+              console.error('❌ Video ERROR:', e);
+              console.error('Video source path:', floatTherapyVideo);
+              setVideoError(true);
+            }}
+          >
+            <source src={floatTherapyVideo} type="video/mp4" />
+          </video>
+          
+          {/* Debug info overlay */}
+          <div className="absolute top-4 left-4 z-10 text-white text-sm bg-black/50 p-2 rounded">
+            Video: {videoLoaded ? '✅ Loaded' : '⏳ Loading'}<br/>
+            Error: {videoError ? '❌ Failed' : '✅ OK'}<br/>
+            Path: {floatTherapyVideo ? '✅ Found' : '❌ Missing'}
+          </div>
+        </div>
       </div>
       
       {/* Overlay */}
