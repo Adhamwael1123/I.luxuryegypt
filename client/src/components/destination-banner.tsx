@@ -42,8 +42,8 @@ export default function DestinationBanner() {
         className="absolute inset-0"
         style={{
           transform: `translate3d(0, ${parallaxOffset}px, 0)`,
-          height: "130%",
-          top: "-15%",
+          height: "140%",
+          top: "-20%",
         }}
       >
         {/* Video Background - Fixed z-index and visibility */}
@@ -58,6 +58,7 @@ export default function DestinationBanner() {
           style={{
             zIndex: 1,
             filter: 'brightness(0.8)',
+            transform: 'scale(1.05)', // Slight scale to ensure full coverage
           }}
           onLoadedData={() => {
             setVideoLoaded(true);
