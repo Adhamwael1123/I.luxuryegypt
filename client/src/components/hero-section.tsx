@@ -6,7 +6,7 @@ import suiteImage from "@assets/suite-nile_1757457083796.jpg";
 
 export default function HeroSection() {
   const [cairoImageIndex, setCairoImageIndex] = useState(0);
-  const [luxorImageIndex, setLuxorImageIndex] = useState(0);
+  const [aswanImageIndex, setAswanImageIndex] = useState(0);
 
   const destinations = [
     {
@@ -21,12 +21,11 @@ export default function HeroSection() {
       ],
     },
     {
-      id: "luxor",
-      title: "Luxor Nile Escape", 
+      id: "aswan",
+      title: "Aswan Nile Escape", 
       subtitle: "Stay where ancient wonders meet refined indulgence.",
       images: [
-        "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Nile river view
-        "https://images.unsplash.com/photo-1486895952287-dc652cb8ad8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Luxor temple
+        "https://images.unsplash.com/photo-1486895952287-dc652cb8ad8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90", // Ancient temple
         sunsetFeluccaImage, // Custom sunset felucca on the Nile
         restaurantImage, // 1902 Restaurant - luxury dining
         poolImage, // Pool and Nile view - luxury resort
@@ -45,11 +44,11 @@ export default function HeroSection() {
   }, []);
 
   useEffect(() => {
-    const luxorTimer = setInterval(() => {
-      setLuxorImageIndex((prev) => (prev + 1) % destinations[1].images.length);
+    const aswanTimer = setInterval(() => {
+      setAswanImageIndex((prev) => (prev + 1) % destinations[1].images.length);
     }, 4500); // Slightly different timing for visual interest
 
-    return () => clearInterval(luxorTimer);
+    return () => clearInterval(aswanTimer);
   }, []);
 
   return (
@@ -100,20 +99,20 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Luxor Section */}
+        {/* Aswan Section */}
         <div className="relative w-1/2 h-full overflow-hidden">
           {destinations[1].images.map((image, index) => (
             <div
-              key={`luxor-${index}`}
+              key={`aswan-${index}`}
               className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === luxorImageIndex ? "opacity-100" : "opacity-0"
+                index === aswanImageIndex ? "opacity-100" : "opacity-0"
               }`}
               style={{
                 backgroundImage: `url(${image})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
-              data-testid={`hero-luxor-image-${index}`}
+              data-testid={`hero-aswan-image-${index}`}
             />
           ))}
           <div className="absolute inset-0 bg-primary/40"></div>
@@ -128,18 +127,18 @@ export default function HeroSection() {
             </div>
           </div>
           
-          {/* Luxor image indicators */}
+          {/* Aswan image indicators */}
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
             {destinations[1].images.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setLuxorImageIndex(index)}
+                onClick={() => setAswanImageIndex(index)}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === luxorImageIndex 
+                  index === aswanImageIndex 
                     ? "bg-accent" 
                     : "bg-white/50 hover:bg-white/70"
                 }`}
-                data-testid={`hero-luxor-indicator-${index}`}
+                data-testid={`hero-aswan-indicator-${index}`}
               />
             ))}
           </div>
