@@ -34,7 +34,7 @@ export default function DestinationBanner() {
     <section 
       ref={sectionRef}
       id="destinations" 
-      className="relative min-h-[120vh] overflow-hidden"
+      className="relative min-h-[120vh] overflow-hidden bg-slate-600"
       data-testid="destination-banner"
     >
       {/* Video Background with Parallax */}
@@ -42,8 +42,8 @@ export default function DestinationBanner() {
         className="absolute inset-0"
         style={{
           transform: `translate3d(0, ${parallaxOffset}px, 0)`,
-          height: "120%",
-          top: "-10%",
+          height: "150%",
+          top: "-25%",
         }}
       >
         {/* Video Background - Fixed z-index and visibility */}
@@ -58,7 +58,8 @@ export default function DestinationBanner() {
           style={{
             zIndex: 1,
             filter: 'brightness(0.8)',
-            transform: 'scale(1.05)', // Slight scale to ensure full coverage
+            transform: 'scale(1.15)', // Increased scale for complete coverage
+            objectPosition: 'center center',
           }}
           onLoadedData={() => {
             setVideoLoaded(true);
