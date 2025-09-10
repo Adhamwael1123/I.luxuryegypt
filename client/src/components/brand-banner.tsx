@@ -6,7 +6,7 @@ export default function BrandBanner() {
           <div className="h-px bg-accent-foreground/30 flex-1 max-w-24"></div>
           <div>
             <h2 className="text-2xl md:text-3xl font-serif font-bold text-accent-foreground mb-2">
-              ILuxuryEgypt
+              I.LUXURYEGYPT
             </h2>
             <p className="text-sm md:text-base text-accent-foreground/80 font-light tracking-wide">
               Where Pharaohs' Legacy Meets Modern Luxury

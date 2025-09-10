@@ -42,7 +42,7 @@ export default function Navigation() {
             <h1 className="text-2xl font-serif font-bold text-primary hover-elevate cursor-pointer" 
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 data-testid="logo-home">
-              ILuxuryEgypt
+              I.LUXURYEGYPT
             </h1>
           </div>
           
