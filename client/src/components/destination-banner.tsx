@@ -27,8 +27,8 @@ export default function DestinationBanner() {
     }
   }, [videoLoaded]);
 
-  // Calculate parallax offset - subtle and smooth
-  const parallaxOffset = scrollY * 0.2;
+  // Calculate parallax offset - more subtle for smoother experience
+  const parallaxOffset = scrollY * 0.15;
 
   return (
     <section 
@@ -90,13 +90,13 @@ export default function DestinationBanner() {
       </div>
       
       {/* Overlay */}
-      <div className="absolute inset-0 bg-primary/40 z-10"></div>
+      <div className="absolute inset-0 bg-primary/30 z-10"></div>
       
       {/* Content with subtle parallax */}
       <div 
         className="relative max-w-4xl mx-auto text-center px-4 py-48 animate-fade-in z-20 flex flex-col justify-center min-h-[120vh]"
         style={{
-          transform: `translate3d(0, ${scrollY * 0.05}px, 0)`,
+          transform: `translate3d(0, ${scrollY * 0.03}px, 0)`,
         }}
       >
         <h2 className="text-5xl md:text-6xl font-serif font-bold text-white mb-6 drop-shadow-lg">
