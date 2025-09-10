@@ -63,13 +63,9 @@ export default function DestinationBanner() {
           }}
           onLoadedData={() => {
             setVideoLoaded(true);
-            console.log('✅ Video loaded and should be visible');
-          }}
-          onPlay={() => {
-            console.log('✅ Video is playing');
           }}
           onError={(e) => {
-            console.error('❌ Video error:', e);
+            console.error('Video loading error:', e);
             setVideoError(true);
           }}
         >
