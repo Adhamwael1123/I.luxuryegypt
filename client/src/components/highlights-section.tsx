@@ -57,19 +57,31 @@ export default function HighlightsSection() {
             return (
               <Card 
                 key={highlight.title}
-                className="hover-elevate luxury-transition shadow-lg hover:shadow-xl"
+                className="group hover-elevate luxury-transition shadow-lg hover:shadow-2xl hover:scale-105 hover:-translate-y-2 cursor-pointer border-0 bg-card hover:bg-card/90 overflow-hidden"
+                style={{
+                  animationDelay: `${index * 100}ms`
+                }}
                 data-testid={`highlight-card-${index}`}
               >
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-accent rounded-full flex items-center justify-center">
-                    <IconComponent className="h-8 w-8 text-accent-foreground" />
+                <CardContent className="p-8 text-center relative">
+                  {/* Animated background glow on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 mx-auto mb-6 bg-accent rounded-full flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 group-hover:bg-primary group-hover:shadow-lg">
+                      <IconComponent className="h-8 w-8 text-accent-foreground group-hover:text-primary-foreground group-hover:scale-110 transition-all duration-300" />
+                    </div>
+                    <h3 className="text-xl font-serif font-semibold text-primary mb-4 group-hover:text-accent transition-colors duration-300 transform group-hover:translate-y-1">
+                      {highlight.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-all duration-300 transform group-hover:translate-y-1">
+                      {highlight.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-serif font-semibold text-primary mb-4">
-                    {highlight.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {highlight.description}
-                  </p>
+                  
+                  {/* Decorative corner elements that appear on hover */}
+                  <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-accent opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 -translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0"></div>
+                  <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-accent opacity-0 group-hover:opacity-100 transition-all duration-500 transform -translate-x-2 translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0"></div>
                 </CardContent>
               </Card>
             );
