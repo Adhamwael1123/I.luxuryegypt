@@ -1,21 +1,24 @@
 import { Card, CardContent } from "@/components/ui/card";
+import luxorImage from "@assets/luxor_1757531163688.jpg";
+import redSeaImage from "@assets/red-sea_1757531163688.jpg";
+import siwaImage from "@assets/siwa_1757531163689.jpg";
 
 export default function DestinationBlocks() {
   const destinations = [
     {
       title: "Luxor Sanctuary",
       description: "Walk among temples and tombs in unmatched luxury.",
-      imageUrl: "https://images.unsplash.com/photo-1542336936-b3b2db5fe2b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      imageUrl: luxorImage,
     },
     {
       title: "Red Sea Bliss",
       description: "Indulge in turquoise waters, white sands, and world-class resorts.",
-      imageUrl: "https://images.unsplash.com/photo-1591608971362-f08b2a75731a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      imageUrl: redSeaImage,
     },
     {
       title: "Siwa Oasis Hideaway", 
       description: "Retreat into Egypt's mystical desert haven.",
-      imageUrl: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
+      imageUrl: siwaImage,
     },
   ];
 
