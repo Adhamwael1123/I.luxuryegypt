@@ -2,7 +2,6 @@ import Navigation from "../components/navigation";
 import HeroSection from "../components/hero-section";
 import BrandBanner from "../components/brand-banner";
 import GuestExperienceIntro from "../components/guest-experience-intro";
-import AboutSection from "../components/about-section";
 import HighlightsSection from "../components/highlights-section";
 import DestinationBanner from "../components/destination-banner";
 import TestimonialSection from "../components/testimonial-section";
@@ -26,8 +25,6 @@ export default function Home() {
             </h2>
           </div>
         </section>
-        
-        <AboutSection />
         <HighlightsSection />
         <DestinationBanner />
         <TestimonialSection />
