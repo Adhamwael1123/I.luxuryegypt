@@ -1,6 +1,6 @@
 # Overview
 
-ILuxuryEgypt is a luxury travel website for bespoke Egyptian travel experiences. This is a full-stack React application that showcases premium travel services and allows potential customers to submit travel inquiries through a contact form. The application features an elegant design with custom Egyptian-inspired branding and handles luxury travel booking inquiries.
+I.LuxuryEgypt is a luxury travel website for bespoke Egyptian travel experiences. This is a full-stack React application that showcases premium travel services and allows potential customers to submit travel inquiries through a contact form. The application features an elegant design with custom Egyptian-inspired branding and handles luxury travel booking inquiries.
 
 # User Preferences
 

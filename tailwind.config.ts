@@ -81,7 +81,7 @@ export default {
           busy: "rgb(239 68 68)",
           offline: "rgb(156 163 175)",
         },
-        // ILuxuryEgypt brand colors for direct usage
+        // I.LuxuryEgypt brand colors for direct usage
         'pharaoh-gold': '#C8A76C',
         'nile-blue': '#1F2B44',
         'desert-sand': '#E5D5C3',

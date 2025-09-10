@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="bg-primary text-primary-foreground py-16" data-testid="footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-serif font-bold mb-4">ILuxuryEgypt</h2>
+          <h2 className="text-3xl font-serif font-bold mb-4">I.LuxuryEgypt</h2>
           <p className="text-xl italic">Redefining bespoke travel in the land of the Pharaohs.</p>
         </div>
         
@@ -20,11 +20,11 @@ export default function Footer() {
               <div className="flex items-center justify-center md:justify-start">
                 <Mail className="h-5 w-5 mr-2 text-accent" />
                 <a 
-                  href="mailto:concierge@iluxuryegypt.com" 
+                  href="mailto:concierge@i.luxuryegypt.com" 
                   className="hover:text-accent transition-colors"
                   data-testid="link-email"
                 >
-                  concierge@iluxuryegypt.com
+                  concierge@i.luxuryegypt.com
                 </a>
               </div>
               <div className="flex items-center justify-center md:justify-start">
@@ -88,7 +88,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center">
-          <p>&copy; 2024 ILuxuryEgypt. All rights reserved.</p>
+          <p>&copy; 2024 I.LuxuryEgypt. All rights reserved.</p>
         </div>
       </div>
     </footer>

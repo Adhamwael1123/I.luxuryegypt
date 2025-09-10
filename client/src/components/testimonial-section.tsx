@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 export default function TestimonialSection() {
   const testimonials = [
     {
-      quote: "From the moment we arrived, every detail exceeded our expectations. ILuxuryEgypt created not just a trip, but a lifetime memory filled with wonder.",
+      quote: "From the moment we arrived, every detail exceeded our expectations. I.LuxuryEgypt created not just a trip, but a lifetime memory filled with wonder.",
       author: "Sarah & Michael",
       location: "UK",
       rating: 5

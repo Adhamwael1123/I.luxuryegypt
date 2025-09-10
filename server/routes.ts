@@ -5,7 +5,7 @@ import { insertInquirySchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // API Routes for ILuxuryEgypt inquiry form
+  // API Routes for I.LuxuryEgypt inquiry form
   
   // Submit inquiry form
   app.post("/api/inquiries", async (req, res) => {

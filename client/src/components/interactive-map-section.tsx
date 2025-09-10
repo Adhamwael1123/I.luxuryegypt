@@ -45,7 +45,7 @@ export default function InteractiveMapSection() {
             Discover Egypt's Iconic Destinations
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-4">
-            Explore Egypt's most iconic destinations, seamlessly connected through ILuxuryEgypt.
+            Explore Egypt's most iconic destinations, seamlessly connected through I.LuxuryEgypt.
           </p>
         </div>
 
