@@ -7,6 +7,7 @@ import DestinationBlocks from "../components/destination-blocks";
 import DestinationBanner from "../components/destination-banner";
 import TestimonialSection from "../components/testimonial-section";
 import InquiryForm from "../components/inquiry-form";
+import InteractiveMapSection from "../components/interactive-map-section";
 import Footer from "../components/footer";
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
         <DestinationBanner />
         <TestimonialSection />
         <InquiryForm />
+        <InteractiveMapSection />
       </main>
       <Footer />
     </div>
