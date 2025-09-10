@@ -1,5 +1,6 @@
 import Navigation from "../components/navigation";
 import HeroSection from "../components/hero-section";
+import BrandBanner from "../components/brand-banner";
 import AboutSection from "../components/about-section";
 import HighlightsSection from "../components/highlights-section";
 import DestinationBanner from "../components/destination-banner";
@@ -13,6 +14,7 @@ export default function Home() {
       <Navigation />
       <main>
         <HeroSection />
+        <BrandBanner />
         
         {/* Central Banner */}
         <section className="py-24 bg-primary">
