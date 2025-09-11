@@ -16,7 +16,7 @@ export default function SiwaVideoSection() {
   }, [videoLoaded]);
 
   return (
-    <section className="relative w-full h-[400px] overflow-hidden" data-testid="siwa-video-section">
+    <section className="relative w-full h-[500px] overflow-hidden" data-testid="siwa-video-section">
       <video
         ref={videoRef}
         autoPlay
