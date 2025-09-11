@@ -81,7 +81,7 @@ export default function DestinationBanner() {
       
       {/* Content with subtle parallax */}
       <div 
-        className="relative max-w-4xl mx-auto text-center px-4 py-48 animate-fade-in z-20 flex flex-col justify-center min-h-[120vh]"
+        className="relative max-w-4xl mx-auto text-center px-4 pt-24 pb-48 animate-fade-in z-20 flex flex-col justify-center min-h-[120vh]"
         style={{
           transform: `translate3d(0, ${scrollY * 0.03}px, 0)`,
         }}
