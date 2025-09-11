@@ -3,6 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Video section background - using CSS class to bypass CSP restrictions */
+.destination-banner {
+  background-image: url('https://images.unsplash.com/photo-1539650116574-75c0c6d73c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
 /* LIGHT MODE */
 :root {
   --button-outline: rgba(0,0,0, .10);

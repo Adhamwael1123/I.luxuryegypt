@@ -19,13 +19,15 @@ export default function DestinationBanner() {
 
   useEffect(() => {
     // Force play video after component mounts
-    if (videoRef.current && videoLoaded) {
+    if (videoRef.current) {
+      console.log('Video element found, attempting to play...');
       videoRef.current.play().catch(err => {
         console.error('Video autoplay failed:', err);
         setVideoError(true);
       });
     }
   }, [videoLoaded]);
+
 
   // Calculate parallax offset - more subtle for smoother experience
   const parallaxOffset = scrollY * 0.15;
@@ -34,7 +36,7 @@ export default function DestinationBanner() {
     <section 
       ref={sectionRef}
       id="destinations" 
-      className="relative min-h-[120vh] overflow-hidden bg-slate-600"
+      className="relative min-h-[120vh] overflow-hidden destination-banner"
       data-testid="destination-banner"
     >
       {/* Video Background with Parallax */}
@@ -42,8 +44,8 @@ export default function DestinationBanner() {
         className="absolute inset-0"
         style={{
           transform: `translate3d(0, ${parallaxOffset}px, 0)`,
-          height: "150%",
-          top: "-25%",
+          height: "120%",
+          top: "-10%",
         }}
       >
         {/* Video Background - Fixed z-index and visibility */}
@@ -57,8 +59,7 @@ export default function DestinationBanner() {
           className="absolute inset-0 w-full h-full object-cover"
           style={{
             zIndex: 1,
-            filter: 'brightness(0.8)',
-            transform: 'scale(1.15)', // Increased scale for complete coverage
+            transform: 'scale(1.05)', // Optimized scale for better coverage
             objectPosition: 'center center',
           }}
           onLoadedData={() => {
@@ -72,21 +73,11 @@ export default function DestinationBanner() {
           <source src={floatTherapyVideo} type="video/mp4" />
         </video>
         
-        {/* Fallback image only if video fails */}
-        {videoError && (
-          <div 
-            className="absolute inset-0 w-full h-full bg-cover bg-center"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1539650116574-75c0c6d73c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')",
-              filter: 'brightness(0.8)',
-              zIndex: 1,
-            }}
-          />
-        )}
+        {/* Background is now applied to section element directly */}
       </div>
       
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-primary/30 z-10"></div>
+      {/* Light overlay for text readability only */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20 z-10"></div>
       
       {/* Content with subtle parallax */}
       <div 
