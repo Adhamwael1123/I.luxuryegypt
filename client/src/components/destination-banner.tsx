@@ -36,7 +36,7 @@ export default function DestinationBanner() {
     <section 
       ref={sectionRef}
       id="destinations" 
-      className="relative min-h-[120vh] overflow-hidden destination-banner"
+      className="relative min-h-[120vh] overflow-hidden destination-banner mt-5"
       data-testid="destination-banner"
     >
       {/* Video Background with Parallax */}
