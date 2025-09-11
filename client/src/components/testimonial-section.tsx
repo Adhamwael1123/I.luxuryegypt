@@ -63,28 +63,30 @@ export default function TestimonialSection() {
           </p>
         </div>
 
-        <div className="relative">
-          {/* Navigation Buttons */}
-          <button
-            onClick={handlePrev}
-            disabled={isAnimating}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-accent text-accent-foreground rounded-full flex items-center justify-center shadow-lg hover-elevate transition-all duration-300 disabled:opacity-50"
-            data-testid="testimonial-prev"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
+        <div className="relative w-full">
+          {/* Flex Overlay for Navigation Buttons */}
+          <div className="absolute inset-0 flex items-center justify-between pointer-events-none px-4 md:px-8 lg:px-16 z-10">
+            <button
+              onClick={handlePrev}
+              disabled={isAnimating}
+              className="pointer-events-auto w-12 h-12 bg-accent text-accent-foreground rounded-full flex items-center justify-center shadow-lg hover-elevate transition-all duration-300 disabled:opacity-50 hidden lg:flex"
+              data-testid="testimonial-prev"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
 
-          <button
-            onClick={handleNext}
-            disabled={isAnimating}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-accent text-accent-foreground rounded-full flex items-center justify-center shadow-lg hover-elevate transition-all duration-300 disabled:opacity-50"
-            data-testid="testimonial-next"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+            <button
+              onClick={handleNext}
+              disabled={isAnimating}
+              className="pointer-events-auto w-12 h-12 bg-accent text-accent-foreground rounded-full flex items-center justify-center shadow-lg hover-elevate transition-all duration-300 disabled:opacity-50 hidden lg:flex"
+              data-testid="testimonial-next"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
 
           {/* Testimonial Content */}
-          <div className="mx-16">
+          <div className="px-4 md:px-16">
             <div 
               className={`text-center transition-all duration-300 ${
                 isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
