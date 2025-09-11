@@ -1,5 +1,6 @@
 import Navigation from "../components/navigation";
 import HeroSection from "../components/hero-section";
+import SiwaVideoSection from "../components/siwa-video-section";
 import BrandBanner from "../components/brand-banner";
 import GuestExperienceIntro from "../components/guest-experience-intro";
 import HighlightsSection from "../components/highlights-section";
@@ -15,6 +16,7 @@ export default function Home() {
       <Navigation />
       <main>
         <HeroSection />
+        <SiwaVideoSection />
         <BrandBanner />
         <GuestExperienceIntro />
         
