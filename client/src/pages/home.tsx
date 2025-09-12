@@ -7,6 +7,7 @@ import GuestExperienceIntro from "../components/guest-experience-intro";
 import WhyUseSection from "../components/why-use-section";
 import HighlightsSection from "../components/highlights-section";
 import DestinationBlocks from "../components/destination-blocks";
+import InteractiveMapSection from "../components/interactive-map-section";
 import TestimonialSection from "../components/testimonial-section";
 import InquiryForm from "../components/inquiry-form";
 import CallToActionSection from "../components/call-to-action-section";
@@ -35,6 +36,7 @@ export default function Home() {
         <WhyUseSection />
         <HighlightsSection />
         <DestinationBlocks />
+        <InteractiveMapSection />
         <TestimonialSection />
         <InquiryForm />
         <CallToActionSection />
