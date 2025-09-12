@@ -1,36 +1,57 @@
-import { MapPin, Compass } from "lucide-react";
+import { MapPin, Compass, Navigation } from "lucide-react";
+import { useState } from "react";
 
 export default function InteractiveMapSection() {
+  const [selectedDestination, setSelectedDestination] = useState<string | null>(null);
+
   const destinations = [
     { 
+      name: "Alexandria", 
+      position: "north",
+      coordinates: { lat: 31.2001, lng: 29.9187 },
+      description: "Mediterranean pearl with ancient heritage",
+      color: "from-blue-500 to-cyan-500",
+      attractions: ["Bibliotheca Alexandrina", "Citadel of Qaitbay", "Montaza Palace"]
+    },
+    { 
       name: "Cairo", 
-      x: "45%", 
-      y: "35%",
-      description: "Ancient wonders meet modern luxury"
-    },
-    { 
-      name: "Luxor", 
-      x: "60%", 
-      y: "55%",
-      description: "Valley of the Kings and Queens"
-    },
-    { 
-      name: "Aswan", 
-      x: "65%", 
-      y: "75%",
-      description: "Gateway to Nubian heritage"
-    },
-    { 
-      name: "Red Sea", 
-      x: "85%", 
-      y: "50%",
-      description: "Pristine coral reefs and luxury resorts"
+      position: "central-north",
+      coordinates: { lat: 30.0444, lng: 31.2357 },
+      description: "Ancient wonders meet modern luxury",
+      color: "from-amber-500 to-yellow-500",
+      attractions: ["Great Pyramids of Giza", "Egyptian Museum", "Islamic Cairo"]
     },
     { 
       name: "Siwa", 
-      x: "25%", 
-      y: "25%",
-      description: "Desert oasis sanctuary"
+      position: "western",
+      coordinates: { lat: 29.2030, lng: 25.5197 },
+      description: "Desert oasis sanctuary",
+      color: "from-green-500 to-emerald-500",
+      attractions: ["Siwa Salt Lakes", "Temple of the Oracle", "Shali Fortress"]
+    },
+    { 
+      name: "Luxor", 
+      position: "central-south",
+      coordinates: { lat: 25.6872, lng: 32.6396 },
+      description: "Valley of the Kings and Queens",
+      color: "from-purple-500 to-violet-500",
+      attractions: ["Valley of the Kings", "Karnak Temple", "Luxor Temple"]
+    },
+    { 
+      name: "Red Sea", 
+      position: "eastern",
+      coordinates: { lat: 27.2579, lng: 33.8116 },
+      description: "Pristine coral reefs and luxury resorts",
+      color: "from-red-500 to-rose-500",
+      attractions: ["Hurghada Resorts", "Marsa Alam", "Ras Mohammed National Park"]
+    },
+    { 
+      name: "Aswan", 
+      position: "south",
+      coordinates: { lat: 24.0889, lng: 32.8998 },
+      description: "Gateway to Nubian heritage",
+      color: "from-orange-500 to-red-500",
+      attractions: ["Philae Temple", "High Dam", "Nubian Villages"]
     }
   ];
 
@@ -42,103 +63,127 @@ export default function InteractiveMapSection() {
             <Compass className="h-12 w-12 text-accent" />
           </div>
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-8 animate-fade-in">
-            Discover Egypt's Iconic Destinations
+            Journey Across Egypt's Iconic Destinations
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-4">
-            Explore Egypt's most iconic destinations, seamlessly connected through I.LuxuryEgypt.
+            Discover Egypt's treasures from the Mediterranean coast to the Nubian heartland, 
+            each destination offering unique luxury experiences.
           </p>
         </div>
 
-        <div className="relative max-w-4xl mx-auto">
-          {/* Egypt Map Background */}
-          <div className="relative bg-gradient-to-br from-accent/5 to-primary/10 rounded-3xl p-8 overflow-hidden">
-            {/* Decorative map outline */}
-            <svg
-              viewBox="0 0 400 300"
-              className="w-full h-96 opacity-20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              {/* Simplified Egypt outline */}
-              <path
-                d="M50 50 L350 50 L350 80 L320 120 L340 160 L320 200 L300 250 L80 250 L60 200 L50 150 Z"
-                className="text-accent fill-accent/10"
-              />
-              {/* Nile River */}
-              <path
-                d="M180 50 Q190 100 200 150 Q210 200 220 250"
-                className="text-primary stroke-2"
-              />
-            </svg>
-
-            {/* Destination Markers */}
+        {/* Side-to-Side Interactive Map */}
+        <div className="relative">
+          {/* Geographic Flow Line */}
+          <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-accent/30 via-primary/50 to-accent/30 transform -translate-y-1/2 rounded-full"></div>
+          
+          {/* Destinations Grid - Side to Side Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 relative">
             {destinations.map((destination, index) => (
               <div
                 key={destination.name}
-                className="absolute group cursor-pointer transform -translate-x-1/2 -translate-y-1/2"
-                style={{ 
-                  left: destination.x, 
-                  top: destination.y,
-                  animationDelay: `${index * 200}ms`
-                }}
-                data-testid={`map-marker-${destination.name.toLowerCase().replace(' ', '-')}`}
+                className={`relative group cursor-pointer transform transition-all duration-500 hover:scale-105 ${
+                  index % 2 === 0 ? 'lg:translate-y-8' : ''
+                }`}
+                style={{ animationDelay: `${index * 150}ms` }}
+                onClick={() => setSelectedDestination(
+                  selectedDestination === destination.name ? null : destination.name
+                )}
+                data-testid={`destination-${destination.name.toLowerCase().replace(' ', '-')}`}
               >
-                {/* Pulsing background effect */}
-                <div className="absolute inset-0 w-6 h-6 bg-accent rounded-full opacity-30 animate-ping"></div>
-                
-                {/* Main marker */}
-                <div className="relative w-6 h-6 bg-accent rounded-full border-4 border-background shadow-lg group-hover:scale-125 group-hover:bg-primary transition-all duration-300 flex items-center justify-center">
-                  <MapPin className="h-3 w-3 text-accent-foreground group-hover:text-primary-foreground" />
-                </div>
+                {/* Destination Card */}
+                <div className={`
+                  bg-gradient-to-br ${destination.color} p-1 rounded-2xl shadow-lg 
+                  group-hover:shadow-2xl transition-all duration-300
+                  ${selectedDestination === destination.name ? 'ring-4 ring-primary/50 scale-105' : ''}
+                `}>
+                  <div className="bg-card/95 backdrop-blur-sm rounded-xl p-6 h-full">
+                    {/* Position Indicator */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center space-x-2">
+                        <MapPin className="h-5 w-5 text-accent" />
+                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                          {destination.position.replace('-', ' ')}
+                        </span>
+                      </div>
+                      <Navigation className="h-4 w-4 text-primary opacity-60" />
+                    </div>
 
-                {/* Tooltip */}
-                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-10">
-                  <div className="bg-card border border-accent/20 rounded-lg px-4 py-3 shadow-xl min-w-max">
-                    <h3 className="font-serif font-bold text-primary mb-1 text-center">
+                    {/* Destination Name */}
+                    <h3 className="text-xl font-serif font-bold text-primary mb-2 group-hover:text-accent transition-colors">
                       {destination.name}
                     </h3>
-                    <p className="text-sm text-muted-foreground text-center whitespace-nowrap">
+
+                    {/* Description */}
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                       {destination.description}
                     </p>
-                    {/* Tooltip arrow */}
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-card"></div>
+
+                    {/* Coordinates Display (Prepared for Google Maps) */}
+                    <div className="text-xs text-muted-foreground/70 mb-3 font-mono">
+                      {destination.coordinates.lat.toFixed(4)}°N, {destination.coordinates.lng.toFixed(4)}°E
+                    </div>
+
+                    {/* Attractions Preview */}
+                    <div className={`
+                      transition-all duration-300 overflow-hidden
+                      ${selectedDestination === destination.name ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'}
+                    `}>
+                      <div className="border-t border-border/30 pt-3">
+                        <h4 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wide">
+                          Key Attractions
+                        </h4>
+                        <ul className="text-xs text-muted-foreground space-y-1">
+                          {destination.attractions.map((attraction, i) => (
+                            <li key={i} className="flex items-center space-x-1">
+                              <div className="w-1 h-1 bg-accent rounded-full"></div>
+                              <span>{attraction}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* Interaction Hint */}
+                    <div className="mt-4 pt-3 border-t border-border/20">
+                      <div className="flex items-center justify-center space-x-1 text-xs text-muted-foreground/60">
+                        <span>Click to explore</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Connection lines (animated on hover) */}
-                <div className="absolute top-1/2 left-1/2 w-12 h-px bg-accent/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -translate-y-1/2 origin-left rotate-45"></div>
-                <div className="absolute top-1/2 left-1/2 w-8 h-px bg-accent/30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 transform -translate-y-1/2 origin-left -rotate-45"></div>
+                {/* Connection Line to Geographic Flow */}
+                <div className="absolute top-1/2 left-1/2 w-px h-8 bg-gradient-to-b from-primary/60 to-transparent transform -translate-x-1/2 -translate-y-full"></div>
               </div>
             ))}
-
-            {/* Floating elements */}
-            <div className="absolute top-6 right-6 opacity-20">
-              <div className="w-8 h-8 border-2 border-accent rounded-full animate-pulse"></div>
-            </div>
-            <div className="absolute bottom-6 left-6 opacity-20">
-              <div className="w-6 h-6 border-2 border-primary rotate-45 animate-pulse"></div>
-            </div>
-            
-            {/* Golden ratio spiral decoration */}
-            <div className="absolute top-4 left-4 opacity-10">
-              <svg width="40" height="40" viewBox="0 0 40 40" className="text-accent">
-                <path
-                  d="M20 2 Q35 10 30 25 Q25 35 10 30 Q2 20 15 15 Q25 12 22 20"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                />
-              </svg>
-            </div>
           </div>
 
-          {/* Legend */}
-          <div className="mt-8 text-center">
-            <div className="inline-flex items-center space-x-2 px-6 py-3 bg-muted rounded-full">
-              <MapPin className="h-4 w-4 text-accent" />
-              <span className="text-sm text-muted-foreground">Hover over destinations to explore</span>
+          {/* Google Maps Integration Placeholder */}
+          <div className="mt-16 p-8 border-2 border-dashed border-accent/30 rounded-2xl bg-muted/20 text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/10 rounded-full mb-4">
+              <Navigation className="h-8 w-8 text-accent" />
             </div>
+            <h3 className="text-xl font-serif font-bold text-primary mb-2">
+              Interactive Google Maps Integration
+            </h3>
+            <p className="text-muted-foreground mb-4 max-w-md mx-auto">
+              Exact city locations and satellite imagery will be displayed here once Google Maps API is integrated.
+            </p>
+            <div className="text-sm text-muted-foreground/70">
+              Ready for Google Maps API • Coordinates prepared • Markers configured
+            </div>
+          </div>
+        </div>
+
+        {/* Legend and Instructions */}
+        <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="inline-flex items-center space-x-2 px-6 py-3 bg-muted rounded-full">
+            <MapPin className="h-4 w-4 text-accent" />
+            <span className="text-sm text-muted-foreground">Click destinations to explore details</span>
+          </div>
+          <div className="inline-flex items-center space-x-2 px-6 py-3 bg-muted rounded-full">
+            <Navigation className="h-4 w-4 text-primary" />
+            <span className="text-sm text-muted-foreground">Geographic coordinates ready for maps</span>
           </div>
         </div>
 
