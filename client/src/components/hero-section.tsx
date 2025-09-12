@@ -9,7 +9,6 @@ import pyramidFromLobbyImage from "@assets/pyramid-from-lobby_1757459228637.jpeg
 import pyramidFromMenaHouseImage from "@assets/the-pyramid-from-mena-house_1757459228638.jpeg";
 
 export default function HeroSection() {
-  const [cairoImageIndex, setCairoImageIndex] = useState(0);
 
   const destinations = [
     {
@@ -17,9 +16,6 @@ export default function HeroSection() {
       title: "Cairo Pyramids Retreat",
       subtitle: "Discover timeless elegance near the Great Pyramids of Giza.",
       images: [
-        elegantHallImage, // Elegant luxury hall
-        khanKhaliliRestaurantImage, // Khan Khalili restaurant dining
-        pyramidFromLobbyImage, // Pyramid view from luxury lobby
         pyramidFromMenaHouseImage, // The pyramid from Mena House
       ],
     },
@@ -33,14 +29,6 @@ export default function HeroSection() {
     },
   ];
 
-  // Separate timers for each destination's carousel
-  useEffect(() => {
-    const cairoTimer = setInterval(() => {
-      setCairoImageIndex((prev) => (prev + 1) % destinations[0].images.length);
-    }, 4000);
-
-    return () => clearInterval(cairoTimer);
-  }, []);
 
 
   return (
@@ -48,20 +36,15 @@ export default function HeroSection() {
       <div className="absolute inset-0 flex">
         {/* Cairo Section */}
         <div className="relative w-1/2 h-full overflow-hidden">
-          {destinations[0].images.map((image, index) => (
-            <div
-              key={`cairo-${index}`}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === cairoImageIndex ? "opacity-100" : "opacity-0"
-              }`}
-              style={{
-                backgroundImage: `url(${image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-              data-testid={`hero-cairo-image-${index}`}
-            />
-          ))}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${destinations[0].images[0]})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+            data-testid="hero-cairo-image-0"
+          />
           <div className="absolute inset-0 bg-primary/40"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white px-8 animate-fade-in">
@@ -72,22 +55,6 @@ export default function HeroSection() {
                 {destinations[0].subtitle}
               </p>
             </div>
-          </div>
-          
-          {/* Cairo image indicators */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
-            {destinations[0].images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCairoImageIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === cairoImageIndex 
-                    ? "bg-accent" 
-                    : "bg-white/50 hover:bg-white/70"
-                }`}
-                data-testid={`hero-cairo-indicator-${index}`}
-              />
-            ))}
           </div>
         </div>
 
