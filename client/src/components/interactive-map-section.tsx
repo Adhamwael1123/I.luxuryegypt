@@ -71,95 +71,9 @@ export default function InteractiveMapSection() {
           </p>
         </div>
 
-        {/* Side-to-Side Interactive Map */}
+        {/* Interactive Egypt Map */}
         <div className="relative">
-          {/* Geographic Flow Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-accent/30 via-primary/50 to-accent/30 transform -translate-y-1/2 rounded-full"></div>
-          
-          {/* Destinations Grid - Side to Side Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 relative">
-            {destinations.map((destination, index) => (
-              <div
-                key={destination.name}
-                className={`relative group cursor-pointer transform transition-all duration-500 hover:scale-105 ${
-                  index % 2 === 0 ? 'lg:translate-y-8' : ''
-                }`}
-                style={{ animationDelay: `${index * 150}ms` }}
-                onClick={() => setSelectedDestination(
-                  selectedDestination === destination.name ? null : destination.name
-                )}
-                data-testid={`destination-${destination.name.toLowerCase().replace(' ', '-')}`}
-              >
-                {/* Destination Card */}
-                <div className={`
-                  bg-gradient-to-br ${destination.color} p-1 rounded-2xl shadow-lg 
-                  group-hover:shadow-2xl transition-all duration-300
-                  ${selectedDestination === destination.name ? 'ring-4 ring-primary/50 scale-105' : ''}
-                `}>
-                  <div className="bg-card/95 backdrop-blur-sm rounded-xl p-6 h-full">
-                    {/* Position Indicator */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-2">
-                        <MapPin className="h-5 w-5 text-accent" />
-                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                          {destination.position.replace('-', ' ')}
-                        </span>
-                      </div>
-                      <Navigation className="h-4 w-4 text-primary opacity-60" />
-                    </div>
-
-                    {/* Destination Name */}
-                    <h3 className="text-xl font-serif font-bold text-primary mb-2 group-hover:text-accent transition-colors">
-                      {destination.name}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                      {destination.description}
-                    </p>
-
-                    {/* Coordinates Display (Prepared for Google Maps) */}
-                    <div className="text-xs text-muted-foreground/70 mb-3 font-mono">
-                      {destination.coordinates.lat.toFixed(4)}°N, {destination.coordinates.lng.toFixed(4)}°E
-                    </div>
-
-                    {/* Attractions Preview */}
-                    <div className={`
-                      transition-all duration-300 overflow-hidden
-                      ${selectedDestination === destination.name ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'}
-                    `}>
-                      <div className="border-t border-border/30 pt-3">
-                        <h4 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wide">
-                          Key Attractions
-                        </h4>
-                        <ul className="text-xs text-muted-foreground space-y-1">
-                          {destination.attractions.map((attraction, i) => (
-                            <li key={i} className="flex items-center space-x-1">
-                              <div className="w-1 h-1 bg-accent rounded-full"></div>
-                              <span>{attraction}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    {/* Interaction Hint */}
-                    <div className="mt-4 pt-3 border-t border-border/20">
-                      <div className="flex items-center justify-center space-x-1 text-xs text-muted-foreground/60">
-                        <span>Click to explore</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Connection Line to Geographic Flow */}
-                <div className="absolute top-1/2 left-1/2 w-px h-8 bg-gradient-to-b from-primary/60 to-transparent transform -translate-x-1/2 -translate-y-full"></div>
-              </div>
-            ))}
-          </div>
-
-          {/* Interactive Egypt Map */}
-          <div className="mt-16 bg-gradient-to-br from-accent/5 to-primary/10 rounded-2xl p-8 overflow-hidden">
+          <div className="bg-gradient-to-br from-accent/5 to-primary/10 rounded-2xl p-8 overflow-hidden">
             <div className="text-center mb-8">
               <h3 className="text-2xl font-serif font-bold text-primary mb-2">
                 Interactive Destination Map
