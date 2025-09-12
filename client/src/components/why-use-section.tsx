@@ -46,59 +46,67 @@ export default function WhyUseSection() {
           </h2>
         </div>
 
-        {/* Images Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-hidden">
-          {whyUseItems.map((item) => (
-            <div
-              key={item.id}
-              className={`relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover-elevate active-elevate-2 transition-all duration-500 ${
-                selectedItem?.id === item.id 
-                  ? 'transform -translate-x-4 lg:-translate-x-8 z-20' 
-                  : 'transform translate-x-0'
-              }`}
-              style={{ aspectRatio: '3/4', minHeight: '400px' }}
-              onClick={() => setSelectedItem(selectedItem?.id === item.id ? null : item)}
-              data-testid={`why-use-item-${item.id}`}
-            >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-                <div className="absolute bottom-6 left-6 right-6">
-                  <h3 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">
-                    {item.title}
-                  </h3>
+        {/* Images Row with Content Space */}
+        <div className="relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {whyUseItems.map((item) => (
+              <div key={item.id} className="relative">
+                <div
+                  className={`relative cursor-pointer overflow-visible rounded-2xl shadow-lg hover-elevate active-elevate-2 transition-all duration-700 ease-in-out ${
+                    selectedItem?.id === item.id 
+                      ? 'transform -translate-x-32 z-30' 
+                      : 'transform translate-x-0 z-10'
+                  }`}
+                  style={{ aspectRatio: '3/4', minHeight: '400px' }}
+                  onClick={() => setSelectedItem(selectedItem?.id === item.id ? null : item)}
+                  data-testid={`why-use-item-${item.id}`}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-2xl"
+                  />
+                  
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent rounded-2xl">
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <h3 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">
+                        {item.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Selection indicator */}
+                  {selectedItem?.id === item.id && (
+                    <div className="absolute inset-0 ring-4 ring-accent ring-opacity-60 bg-accent/10 rounded-2xl"></div>
+                  )}
                 </div>
+
+                {/* Revealed Content */}
+                {selectedItem?.id === item.id && (
+                  <div className="absolute top-0 left-0 w-80 h-full bg-white dark:bg-card p-8 flex flex-col justify-center shadow-2xl rounded-2xl z-20 ml-4 border border-border/20 animate-fade-in">
+                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-6">
+                      {selectedItem.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed mb-8 text-sm">
+                      {selectedItem.content}
+                    </p>
+                    <button 
+                      className="inline-flex items-center text-accent font-semibold hover:text-accent/80 transition-colors hover-elevate px-4 py-2 rounded-md border border-accent/20 w-fit"
+                      data-testid="learn-more-button"
+                    >
+                      Learn More
+                    </button>
+                  </div>
+                )}
               </div>
-
-              {/* Selection indicator */}
-              {selectedItem?.id === item.id && (
-                <div className="absolute inset-0 ring-4 ring-accent ring-opacity-60 bg-accent/10"></div>
-              )}
-
-              {/* Revealed Content */}
-              {selectedItem?.id === item.id && (
-                <div className="absolute top-0 left-full w-full h-full bg-white dark:bg-card p-6 flex flex-col justify-center shadow-2xl rounded-r-2xl">
-                  <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-4">
-                    {selectedItem.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed mb-6">
-                    {selectedItem.content}
-                  </p>
-                  <button 
-                    className="inline-flex items-center text-accent font-semibold hover:text-accent/80 transition-colors hover-elevate px-4 py-2 rounded-md border border-accent/20 w-fit"
-                    data-testid="learn-more-button"
-                  >
-                    Learn More
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
+          
+          {/* Spacer for content */}
+          {selectedItem && (
+            <div className="h-4"></div>
+          )}
         </div>
       </div>
     </section>
