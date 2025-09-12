@@ -297,4 +297,18 @@
   .luxury-transition {
     @apply transition-all duration-300 ease-in-out;
   }
+
+  /* Announcement bar scrolling animation */
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-scroll {
+    animation: scroll 40s linear infinite;
+  }
 }
