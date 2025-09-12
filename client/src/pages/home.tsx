@@ -11,6 +11,7 @@ import TestimonialSection from "../components/testimonial-section";
 import InquiryForm from "../components/inquiry-form";
 import InteractiveMapSection from "../components/interactive-map-section";
 import Footer from "../components/footer";
+import ScrollToTopButton from "../components/scroll-to-top-button";
 
 export default function Home() {
   return (
@@ -39,6 +40,7 @@ export default function Home() {
         <InteractiveMapSection />
       </main>
       <Footer />
+      <ScrollToTopButton />
     </div>
   );
 }
