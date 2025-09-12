@@ -46,74 +46,59 @@ export default function WhyUseSection() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Images Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
-            {whyUseItems.map((item) => (
-              <div
-                key={item.id}
-                className="relative group cursor-pointer overflow-hidden rounded-2xl shadow-lg hover-elevate active-elevate-2 transition-all duration-300"
-                style={{ aspectRatio: '3/4' }}
-                onClick={() => setSelectedItem(item)}
-                data-testid={`why-use-item-${item.id}`}
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <h3 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">
-                      {item.title}
-                    </h3>
-                  </div>
+        {/* Images Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-hidden">
+          {whyUseItems.map((item) => (
+            <div
+              key={item.id}
+              className={`relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover-elevate active-elevate-2 transition-all duration-500 ${
+                selectedItem?.id === item.id 
+                  ? 'transform -translate-x-4 lg:-translate-x-8 z-20' 
+                  : 'transform translate-x-0'
+              }`}
+              style={{ aspectRatio: '3/4', minHeight: '400px' }}
+              onClick={() => setSelectedItem(selectedItem?.id === item.id ? null : item)}
+              data-testid={`why-use-item-${item.id}`}
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
+                <div className="absolute bottom-6 left-6 right-6">
+                  <h3 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">
+                    {item.title}
+                  </h3>
                 </div>
-
-                {/* Selection indicator */}
-                {selectedItem?.id === item.id && (
-                  <div className="absolute inset-0 ring-4 ring-accent ring-opacity-60 bg-accent/10"></div>
-                )}
               </div>
-            ))}
-          </div>
 
-          {/* Content Panel */}
-          <div className="lg:pl-8">
-            {selectedItem ? (
-              <div className="animate-fade-in">
-                <h3 className="text-3xl font-serif font-bold text-primary mb-6">
-                  {selectedItem.title}
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                  {selectedItem.content}
-                </p>
-                <button 
-                  className="inline-flex items-center text-accent font-semibold hover:text-accent/80 transition-colors hover-elevate px-4 py-2 rounded-md border border-accent/20"
-                  data-testid="learn-more-button"
-                >
-                  Learn More
-                </button>
-              </div>
-            ) : (
-              <div className="text-center py-16">
-                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-accent/10 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
+              {/* Selection indicator */}
+              {selectedItem?.id === item.id && (
+                <div className="absolute inset-0 ring-4 ring-accent ring-opacity-60 bg-accent/10"></div>
+              )}
+
+              {/* Revealed Content */}
+              {selectedItem?.id === item.id && (
+                <div className="absolute top-0 left-full w-full h-full bg-white dark:bg-card p-6 flex flex-col justify-center shadow-2xl rounded-r-2xl">
+                  <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-4">
+                    {selectedItem.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed mb-6">
+                    {selectedItem.content}
+                  </p>
+                  <button 
+                    className="inline-flex items-center text-accent font-semibold hover:text-accent/80 transition-colors hover-elevate px-4 py-2 rounded-md border border-accent/20 w-fit"
+                    data-testid="learn-more-button"
+                  >
+                    Learn More
+                  </button>
                 </div>
-                <h3 className="text-xl font-serif text-muted-foreground mb-2">
-                  Select an Image
-                </h3>
-                <p className="text-muted-foreground">
-                  Click on any image to discover what makes I.LUXURYEGYPT special
-                </p>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>
