@@ -32,7 +32,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-40 transition-all duration-300 ${
+    <nav className={`relative w-full z-40 transition-all duration-300 ${
       isScrolled 
         ? "bg-background/95 backdrop-blur-sm border-b border-border shadow-sm" 
         : "bg-background/95 backdrop-blur-sm"
