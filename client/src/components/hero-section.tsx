@@ -10,7 +10,6 @@ import pyramidFromMenaHouseImage from "@assets/the-pyramid-from-mena-house_17574
 
 export default function HeroSection() {
   const [cairoImageIndex, setCairoImageIndex] = useState(0);
-  const [aswanImageIndex, setAswanImageIndex] = useState(0);
 
   const destinations = [
     {
@@ -30,9 +29,6 @@ export default function HeroSection() {
       subtitle: "Stay where ancient wonders meet refined Nubian indulgence.",
       images: [
         sunsetFeluccaImage, // Custom sunset felucca on the Nile
-        restaurantImage, // 1902 Restaurant - luxury dining
-        poolImage, // Pool and Nile view - luxury resort
-        suiteImage, // Nile Suite - luxury accommodation
       ],
     },
   ];
@@ -46,13 +42,6 @@ export default function HeroSection() {
     return () => clearInterval(cairoTimer);
   }, []);
 
-  useEffect(() => {
-    const aswanTimer = setInterval(() => {
-      setAswanImageIndex((prev) => (prev + 1) % destinations[1].images.length);
-    }, 4500); // Slightly different timing for visual interest
-
-    return () => clearInterval(aswanTimer);
-  }, []);
 
   return (
     <section className="relative h-screen overflow-hidden" data-testid="hero-section">
@@ -104,20 +93,15 @@ export default function HeroSection() {
 
         {/* Aswan Section */}
         <div className="relative w-1/2 h-full overflow-hidden">
-          {destinations[1].images.map((image, index) => (
-            <div
-              key={`aswan-${index}`}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === aswanImageIndex ? "opacity-100" : "opacity-0"
-              }`}
-              style={{
-                backgroundImage: `url(${image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-              data-testid={`hero-aswan-image-${index}`}
-            />
-          ))}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${destinations[1].images[0]})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+            data-testid="hero-aswan-image-0"
+          />
           <div className="absolute inset-0 bg-primary/40"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white px-8 animate-fade-in">
@@ -128,22 +112,6 @@ export default function HeroSection() {
                 {destinations[1].subtitle}
               </p>
             </div>
-          </div>
-          
-          {/* Aswan image indicators */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
-            {destinations[1].images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setAswanImageIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === aswanImageIndex 
-                    ? "bg-accent" 
-                    : "bg-white/50 hover:bg-white/70"
-                }`}
-                data-testid={`hero-aswan-indicator-${index}`}
-              />
-            ))}
           </div>
         </div>
       </div>
