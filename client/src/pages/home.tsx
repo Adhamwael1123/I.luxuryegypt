@@ -4,6 +4,7 @@ import HeroSection from "../components/hero-section";
 import SiwaVideoSection from "../components/siwa-video-section";
 import BrandBanner from "../components/brand-banner";
 import GuestExperienceIntro from "../components/guest-experience-intro";
+import WhyUseSection from "../components/why-use-section";
 import HighlightsSection from "../components/highlights-section";
 import DestinationBlocks from "../components/destination-blocks";
 import TestimonialSection from "../components/testimonial-section";
@@ -30,6 +31,7 @@ export default function Home() {
             </h2>
           </div>
         </section>
+        <WhyUseSection />
         <HighlightsSection />
         <DestinationBlocks />
         <TestimonialSection />
