@@ -1,4 +1,8 @@
 import { useState } from "react";
+import insideColumnHallImg from "@assets/inside-the-column-hall_1757699232094.jpg";
+import islamicDistrictImg from "@assets/islamic-district-at-dawn_1757699232100.jpg";
+import poolSideDrinkImg from "@assets/pool-side-drink_1757699232100.jpg";
+import siwaPalmTreesImg from "@assets/siwa-palm-trees_1757699232101.jpg";
 
 interface WhyUseItem {
   id: number;
@@ -11,25 +15,25 @@ const whyUseItems: WhyUseItem[] = [
   {
     id: 1,
     title: "Luxury Your Way",
-    image: "@assets/inside-the-column-hall_1757699232094.jpg",
+    image: insideColumnHallImg,
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore."
   },
   {
     id: 2,
     title: "With You All The Way", 
-    image: "@assets/islamic-district-at-dawn_1757699232100.jpg",
+    image: islamicDistrictImg,
     content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit."
   },
   {
     id: 3,
     title: "Travel Thoughtfully",
-    image: "@assets/pool-side-drink_1757699232100.jpg",
+    image: poolSideDrinkImg,
     content: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit."
   },
   {
     id: 4,
     title: "The I.LUXURYEGYPT Family",
-    image: "@assets/siwa-palm-trees_1757699232101.jpg",
+    image: siwaPalmTreesImg,
     content: "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate."
   }
 ];
