@@ -20,15 +20,15 @@ const whyUseItems: WhyUseItem[] = [
   },
   {
     id: 2,
-    title: "With You All The Way", 
-    image: islamicDistrictImg,
-    content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit."
-  },
-  {
-    id: 3,
     title: "Travel Thoughtfully",
     image: poolSideDrinkImg,
     content: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit."
+  },
+  {
+    id: 3,
+    title: "With You All The Way", 
+    image: islamicDistrictImg,
+    content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit."
   },
   {
     id: 4,
