@@ -20,8 +20,8 @@ export default function Home() {
       <Navigation />
       <main>
         <HeroSection />
-        <SiwaVideoSection />
         <BrandBanner />
+        <SiwaVideoSection />
         <GuestExperienceIntro />
         
         {/* Central Banner */}
