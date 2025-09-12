@@ -9,7 +9,6 @@ import HighlightsSection from "../components/highlights-section";
 import DestinationBlocks from "../components/destination-blocks";
 import InteractiveMapSection from "../components/interactive-map-section";
 import TestimonialSection from "../components/testimonial-section";
-import InquiryForm from "../components/inquiry-form";
 import CallToActionSection from "../components/call-to-action-section";
 import Footer from "../components/footer";
 import ScrollToTopButton from "../components/scroll-to-top-button";
@@ -38,7 +37,6 @@ export default function Home() {
         <DestinationBlocks />
         <InteractiveMapSection />
         <TestimonialSection />
-        <InquiryForm />
         <CallToActionSection />
       </main>
       <Footer />
