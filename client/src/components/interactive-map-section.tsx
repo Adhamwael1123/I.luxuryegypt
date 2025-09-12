@@ -281,14 +281,10 @@ export default function InteractiveMapSection() {
         </div>
 
         {/* Legend and Instructions */}
-        <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="mt-12 flex justify-center items-center">
           <div className="inline-flex items-center space-x-2 px-6 py-3 bg-muted rounded-full">
             <MapPin className="h-4 w-4 text-accent" />
             <span className="text-sm text-muted-foreground">Click destinations to explore details</span>
-          </div>
-          <div className="inline-flex items-center space-x-2 px-6 py-3 bg-muted rounded-full">
-            <Navigation className="h-4 w-4 text-primary" />
-            <span className="text-sm text-muted-foreground">Geographic coordinates ready for maps</span>
           </div>
         </div>
 
