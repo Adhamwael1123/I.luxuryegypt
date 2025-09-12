@@ -11,25 +11,25 @@ const whyUseItems: WhyUseItem[] = [
   {
     id: 1,
     title: "Luxury Your Way",
-    image: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6b?w=400&h=600&fit=crop",
+    image: "@assets/inside-the-column-hall_1757699232094.jpg",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore."
   },
   {
     id: 2,
     title: "With You All The Way", 
-    image: "https://images.unsplash.com/photo-1471919743851-c4df8b6ee347?w=400&h=600&fit=crop",
+    image: "@assets/islamic-district-at-dawn_1757699232100.jpg",
     content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit."
   },
   {
     id: 3,
     title: "Travel Thoughtfully",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop",
+    image: "@assets/pool-side-drink_1757699232100.jpg",
     content: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit."
   },
   {
     id: 4,
     title: "The I.LUXURYEGYPT Family",
-    image: "https://images.unsplash.com/photo-1544967882-0515e6a4cd22?w=400&h=600&fit=crop",
+    image: "@assets/siwa-palm-trees_1757699232101.jpg",
     content: "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate."
   }
 ];
