@@ -6,6 +6,7 @@ import BrandBanner from "../components/brand-banner";
 import GuestExperienceIntro from "../components/guest-experience-intro";
 import WhyUseSection from "../components/why-use-section";
 import HighlightsSection from "../components/highlights-section";
+import ToursSection from "../components/destination-blocks";
 import InteractiveMapSection from "../components/interactive-map-section";
 import TestimonialSection from "../components/testimonial-section";
 import CallToActionSection from "../components/call-to-action-section";
@@ -33,6 +34,7 @@ export default function Home() {
         </section>
         <WhyUseSection />
         <HighlightsSection />
+        <ToursSection />
         <InteractiveMapSection />
         <TestimonialSection />
         <CallToActionSection />
