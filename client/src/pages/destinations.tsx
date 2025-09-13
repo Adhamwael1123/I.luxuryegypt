@@ -198,6 +198,7 @@ export default function Destinations() {
                           variant="secondary"
                           className="opacity-90 hover:opacity-100"
                           asChild
+                          data-testid={`button-plan-visit-${destination.id}`}
                         >
                           <Link href="/contact">
                             Plan Your Visit
