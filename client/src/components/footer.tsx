@@ -13,7 +13,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">About & Services</h3>
             <div className="space-y-2">
-              <a href="#" className="block hover:text-accent transition-colors">About Us</a>
+              <a href="/about" className="block hover:text-accent transition-colors">About Us</a>
               <a href="#" className="block hover:text-accent transition-colors">Why Choose Us</a>
               <a href="#" className="block hover:text-accent transition-colors">Experiences</a>
               <a href="#" className="block hover:text-accent transition-colors">Stays</a>

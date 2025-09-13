@@ -39,7 +39,7 @@ export default function Navigation() {
   };
 
   const navItems = [
-    { label: "About", id: "about", type: "scroll" },
+    { label: "About", id: "about", type: "page", href: "/about" },
     { label: "Experiences", id: "experiences", type: "scroll" },
     { label: "Stays", id: "stays", type: "scroll" },
     { label: "Destinations", id: "destinations", type: "scroll" },
