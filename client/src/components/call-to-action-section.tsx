@@ -61,7 +61,7 @@ export default function CallToActionSection() {
                 <Mail className="h-8 w-8 text-accent" />
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Email Us</h3>
-              <p className="text-muted-foreground">hello@iluxuryegypt.com</p>
+              <p className="text-muted-foreground">concierge@iluxuryegypt.com</p>
               <p className="text-sm text-muted-foreground/70 mt-1">Response within 2 hours</p>
             </div>
 
