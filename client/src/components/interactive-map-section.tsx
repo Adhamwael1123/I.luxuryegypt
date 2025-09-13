@@ -81,10 +81,14 @@ export default function InteractiveMapSection() {
             {destinations.map((destination, index) => (
               <div
                 key={destination.name}
-                className={`relative group cursor-pointer transform transition-all duration-500 hover:scale-105 ${
+                className={`relative group cursor-pointer transform transition-all duration-700 ease-out hover:scale-105 hover:-translate-y-2 ${
                   index % 2 === 0 ? 'lg:translate-y-8' : ''
-                }`}
-                style={{ animationDelay: `${index * 150}ms` }}
+                } animate-fade-in`}
+                style={{ 
+                  animationDelay: `${index * 200}ms`,
+                  transitionProperty: 'transform, box-shadow, filter',
+                  transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
                 onClick={() => setSelectedDestination(
                   selectedDestination === destination.name ? null : destination.name
                 )}
@@ -93,23 +97,28 @@ export default function InteractiveMapSection() {
                 {/* Destination Card */}
                 <div className={`
                   bg-gradient-to-br ${destination.color} p-1 rounded-2xl shadow-lg 
-                  group-hover:shadow-2xl transition-all duration-300
+                  group-hover:shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 ease-out
                   ${selectedDestination === destination.name ? 'ring-4 ring-primary/50 scale-105' : ''}
-                `}>
+                `}
+                style={{
+                  transitionProperty: 'box-shadow, transform, filter',
+                  transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }}
+                >
                   <div className="bg-card/95 backdrop-blur-sm rounded-xl p-6 h-full">
                     {/* Position Indicator */}
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-2">
-                        <MapPin className="h-5 w-5 text-accent" />
-                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                        <MapPin className="h-5 w-5 text-accent transition-all duration-300 ease-out group-hover:scale-110 group-hover:text-primary" />
+                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide transition-colors duration-300 ease-out group-hover:text-accent">
                           {destination.position.replace('-', ' ')}
                         </span>
                       </div>
-                      <Navigation className="h-4 w-4 text-primary opacity-60" />
+                      <Navigation className="h-4 w-4 text-primary opacity-60 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:rotate-12 group-hover:scale-110" />
                     </div>
 
                     {/* Destination Name */}
-                    <h3 className="text-xl font-serif font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+                    <h3 className="text-xl font-serif font-bold text-primary mb-2 group-hover:text-accent transition-colors duration-300 ease-out">
                       {destination.name}
                     </h3>
 
@@ -125,9 +134,14 @@ export default function InteractiveMapSection() {
 
                     {/* Attractions Preview */}
                     <div className={`
-                      transition-all duration-300 overflow-hidden
-                      ${selectedDestination === destination.name ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'}
-                    `}>
+                      transition-all duration-700 ease-in-out overflow-hidden
+                      ${selectedDestination === destination.name ? 'max-h-32 opacity-100 transform translate-y-0' : 'max-h-0 opacity-0 transform -translate-y-4'}
+                    `}
+                    style={{
+                      transitionProperty: 'max-height, opacity, transform',
+                      transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+                    }}
+                    >
                       <div className="border-t border-border/30 pt-3">
                         <h4 className="text-xs font-semibold text-primary mb-2 uppercase tracking-wide">
                           Key Attractions
