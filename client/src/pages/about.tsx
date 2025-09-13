@@ -200,134 +200,85 @@ export default function About() {
           </div>
         </section>
 
-        {/* Our Values Section - Editorial Style */}
-        <section className="bg-foreground text-background overflow-hidden" data-testid="section-values">
-          <div className="max-w-none">
-            <div className="text-center py-20 px-4 sm:px-6 lg:px-8">
-              <h2 className="text-5xl md:text-7xl font-serif font-bold mb-6">
-                Our Sacred Promise
+        {/* Our Values Section */}
+        <section className="py-20 bg-background" data-testid="section-values">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <p className="tracking-[0.2em] uppercase text-accent text-sm font-medium mb-4">
+                Our Foundation
+              </p>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-6">
+                Our Values
               </h2>
               <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
-              <p className="text-xl text-background/80 max-w-3xl mx-auto leading-relaxed font-light">
-                In the land where pharaohs once walked and where the Nile has flowed for millennia, 
-                we honor three sacred principles that guide every journey we craft.
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Three principles that guide every extraordinary journey we create.
               </p>
             </div>
             
-            {/* Value 1 - Bespoke Excellence */}
-            <div className="group relative">
-              <div className="grid md:grid-cols-[7fr_5fr] min-h-[80vh]">
-                <div className="relative overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {/* Bespoke Excellence */}
+              <div className="group text-center">
+                <div className="relative aspect-[3/4] mb-6 overflow-hidden rounded-lg shadow-lg">
                   <img 
                     src={luxuryHallImage} 
-                    alt="Bespoke Excellence - Luxury Egyptian Hall"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    alt="Bespoke Excellence"
+                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                    loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-60" />
+                  <div className="absolute inset-0 border border-accent/20 rounded-lg" />
                 </div>
-                <div className="flex items-center justify-center p-12 lg:p-20 bg-foreground">
-                  <div className="max-w-lg">
-                    <p className="tracking-[0.2em] uppercase text-accent/80 text-sm font-medium mb-4">
-                      Our First Promise
-                    </p>
-                    <h3 className="text-4xl md:text-5xl font-serif font-bold mb-6" data-testid="value-title-0">
-                      Bespoke Excellence
-                    </h3>
-                    <div className="w-16 h-px bg-accent mb-8"></div>
-                    <p className="text-lg leading-8 text-background/90 mb-8">
-                      Like the master craftsmen who built the pyramids, we believe in perfection through 
-                      attention to every detail. Your journey is not assembled from templates—it is 
-                      sculpted with the precision of ancient artisans, where every moment is purposefully 
-                      designed to create something extraordinary.
-                    </p>
-                    <p className="text-accent/80 italic font-light">
-                      "Excellence is never an accident. It is always the result of high intention, 
-                      sincere effort, and intelligent execution."
-                    </p>
-                  </div>
-                </div>
+                <h3 className="text-2xl font-serif font-bold text-primary mb-4" data-testid="value-title-0">
+                  Bespoke Excellence
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Every journey is meticulously crafted to exceed your expectations, 
+                  with attention to the finest details that create unforgettable moments.
+                </p>
               </div>
-            </div>
 
-            {/* Value 2 - Cultural Authenticity */}
-            <div className="group relative">
-              <div className="grid md:grid-cols-[5fr_7fr] min-h-[80vh]">
-                <div className="flex items-center justify-center p-12 lg:p-20 bg-foreground order-2 md:order-1">
-                  <div className="max-w-lg">
-                    <p className="tracking-[0.2em] uppercase text-accent/80 text-sm font-medium mb-4">
-                      Our Second Promise
-                    </p>
-                    <h3 className="text-4xl md:text-5xl font-serif font-bold mb-6" data-testid="value-title-1">
-                      Cultural Reverence
-                    </h3>
-                    <div className="w-16 h-px bg-accent mb-8"></div>
-                    <p className="text-lg leading-8 text-background/90 mb-8">
-                      Egypt's soul cannot be captured in guidebooks or tourist trails. We are guardians 
-                      of authentic experiences—private ceremonies at dawn in ancient temples, intimate 
-                      conversations with master craftsmen, and moments that connect you to the eternal 
-                      spirit of this magnificent civilization.
-                    </p>
-                    <p className="text-accent/80 italic font-light">
-                      "To touch the past is to understand the present and envision the future."
-                    </p>
-                  </div>
-                </div>
-                <div className="relative overflow-hidden order-1 md:order-2">
+              {/* Cultural Authenticity */}
+              <div className="group text-center">
+                <div className="relative aspect-[3/4] mb-6 overflow-hidden rounded-lg shadow-lg">
                   <img 
                     src={columnHallImage} 
-                    alt="Cultural Authenticity - Ancient Egyptian Columns"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    alt="Cultural Authenticity"
+                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                    loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-l from-black/50 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-60" />
+                  <div className="absolute inset-0 border border-accent/20 rounded-lg" />
                 </div>
+                <h3 className="text-2xl font-serif font-bold text-primary mb-4" data-testid="value-title-1">
+                  Cultural Authenticity
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Experience Egypt's rich heritage through exclusive access to 
+                  historical sites and genuine connections with local traditions.
+                </p>
               </div>
-            </div>
 
-            {/* Value 3 - Luxury Redefined */}
-            <div className="group relative">
-              <div className="grid md:grid-cols-[7fr_5fr] min-h-[80vh]">
-                <div className="relative overflow-hidden">
+              {/* Luxury Accommodations */}
+              <div className="group text-center">
+                <div className="relative aspect-[3/4] mb-6 overflow-hidden rounded-lg shadow-lg">
                   <img 
                     src={suiteNileImage} 
-                    alt="Luxury Redefined - Premium Nile Suite"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    alt="Luxury Accommodations"
+                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                    loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-60" />
+                  <div className="absolute inset-0 border border-accent/20 rounded-lg" />
                 </div>
-                <div className="flex items-center justify-center p-12 lg:p-20 bg-foreground">
-                  <div className="max-w-lg">
-                    <p className="tracking-[0.2em] uppercase text-accent/80 text-sm font-medium mb-4">
-                      Our Third Promise
-                    </p>
-                    <h3 className="text-4xl md:text-5xl font-serif font-bold mb-6" data-testid="value-title-2">
-                      Luxury Redefined
-                    </h3>
-                    <div className="w-16 h-px bg-accent mb-8"></div>
-                    <p className="text-lg leading-8 text-background/90 mb-8">
-                      True luxury is not about opulence—it is about the freedom to experience wonder 
-                      without compromise. From private access to treasures hidden from the world to 
-                      accommodations that rival the palaces of pharaohs, we create a sanctuary of 
-                      comfort where you can fully immerse in Egypt's magic.
-                    </p>
-                    <p className="text-accent/80 italic font-light">
-                      "Luxury is in each detail—the ultimate expression of caring and craftsmanship."
-                    </p>
-                  </div>
-                </div>
+                <h3 className="text-2xl font-serif font-bold text-primary mb-4" data-testid="value-title-2">
+                  Luxury Accommodations
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Stay in Egypt's most prestigious hotels and resorts, 
+                  handpicked for their exceptional service and unparalleled comfort.
+                </p>
               </div>
-            </div>
-
-            {/* Brand Seal */}
-            <div className="text-center py-20 px-4 sm:px-6 lg:px-8">
-              <div className="w-32 h-32 mx-auto mb-8 border-2 border-accent rounded-full flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-2xl font-serif font-bold text-accent">I.LE</div>
-                  <div className="text-xs tracking-widest text-accent/80">EST. 2010</div>
-                </div>
-              </div>
-              <p className="text-accent font-light italic text-lg">
-                Crafted with reverence for Egypt's eternal legacy
-              </p>
             </div>
           </div>
         </section>
