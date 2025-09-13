@@ -39,7 +39,7 @@ export default function ToursSection() {
               }}
               data-testid={`tour-card-${index}`}
             >
-              <div className="relative h-[400px] overflow-hidden">
+              <div className="relative h-[700px] overflow-hidden">
                 <img
                   src={tour.imageUrl}
                   alt={tour.title}
