@@ -284,37 +284,70 @@ export default function About() {
         </section>
 
         {/* Meet Our Team */}
-        <section className="py-20 bg-background">
+        <section className="py-20 bg-muted">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
+              <p className="tracking-[0.2em] uppercase text-accent text-sm font-medium mb-4">
+                Our Experts
+              </p>
               <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-6">
                 Meet Our Team
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Passionate experts dedicated to crafting your perfect Egyptian luxury experience.
+              <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                The passionate curators behind every extraordinary Egyptian journey, bringing decades of expertise 
+                and an intimate knowledge of Egypt's hidden treasures.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               {team.map((member, index) => (
-                <Card key={index} className="text-center shadow-lg hover:shadow-xl transition-all duration-300 hover-elevate">
-                  <div className="relative h-80 overflow-hidden">
-                    <img 
-                      src={member.image} 
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4 text-white text-left">
-                      <h3 className="text-xl font-serif font-bold mb-1">{member.name}</h3>
-                      <p className="text-accent font-medium">{member.role}</p>
+                <div key={index} className="group">
+                  <div className="relative mb-8">
+                    <div className="aspect-[4/5] overflow-hidden rounded-lg shadow-xl">
+                      <img 
+                        src={member.image} 
+                        alt={member.name}
+                        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    </div>
+                    
+                    {/* Floating name card */}
+                    <div className="absolute -bottom-6 left-6 right-6 bg-background rounded-lg shadow-xl p-6 border border-accent/10">
+                      <h3 className="text-xl font-serif font-bold text-primary mb-1">
+                        {member.name}
+                      </h3>
+                      <p className="text-accent font-medium text-sm tracking-wide uppercase">
+                        {member.role}
+                      </p>
                     </div>
                   </div>
-                  <CardContent className="p-6">
-                    <p className="text-muted-foreground leading-relaxed">{member.description}</p>
-                  </CardContent>
-                </Card>
+                  
+                  {/* Description below */}
+                  <div className="pt-8">
+                    <p className="text-muted-foreground leading-relaxed text-center">
+                      {member.description}
+                    </p>
+                  </div>
+                </div>
               ))}
+            </div>
+            
+            {/* Team philosophy */}
+            <div className="mt-20 text-center max-w-4xl mx-auto">
+              <div className="bg-background rounded-xl p-8 md:p-12 shadow-lg border border-accent/10">
+                <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-6">
+                  Our Philosophy
+                </h3>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  "We believe that luxury travel is not just about where you go, but how deeply you connect 
+                  with a destination. Our team doesn't just plan trips—we craft transformative journeys that 
+                  honor Egypt's timeless heritage while exceeding your every expectation."
+                </p>
+                <div className="w-16 h-px bg-accent mx-auto"></div>
+              </div>
             </div>
           </div>
         </section>
@@ -363,35 +396,39 @@ export default function About() {
         </section>
 
         {/* Call to Action */}
-        <section className="py-20 bg-primary">
-          <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary-foreground mb-6">
-              Begin Your Egyptian Journey
-            </h2>
-            <p className="text-xl text-primary-foreground/90 mb-8 leading-relaxed">
-              Ready to experience Egypt like never before? Let our luxury travel specialists craft your perfect adventure.
-            </p>
-            <div className="flex justify-center space-x-4">
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  variant="secondary"
-                  className="px-8 py-4 text-lg"
-                  data-testid="button-contact-us"
-                >
-                  Contact Our Specialists
-                </Button>
-              </Link>
-              <Link href="/">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="px-8 py-4 text-lg bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
-                  data-testid="button-explore-experiences"
-                >
-                  Explore Experiences
-                </Button>
-              </Link>
+        <section className="py-20 bg-background relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-background to-primary/5"></div>
+          <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <div className="bg-background/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-2xl border border-accent/20">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-6">
+                Begin Your Egyptian Journey
+              </h2>
+              <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
+              <p className="text-xl text-muted-foreground mb-10 leading-relaxed max-w-2xl mx-auto">
+                Ready to experience Egypt like never before? Let our luxury travel specialists craft your perfect adventure 
+                in the land of ancient wonders.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Link href="/contact">
+                  <Button
+                    size="lg"
+                    className="px-8 py-4 text-lg min-w-[200px]"
+                    data-testid="button-contact-us"
+                  >
+                    Contact Our Specialists
+                  </Button>
+                </Link>
+                <Link href="/">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="px-8 py-4 text-lg min-w-[200px]"
+                    data-testid="button-explore-experiences"
+                  >
+                    Explore Experiences
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
