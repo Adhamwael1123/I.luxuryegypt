@@ -22,21 +22,23 @@ export default function CallToActionSection() {
             <Button 
               size="lg" 
               variant="default"
-              className="text-lg px-8 py-4 h-auto font-semibold min-w-[200px]"
+              className="text-lg px-8 py-4 h-auto font-semibold min-w-[200px] transform transition-all duration-300 hover:scale-105 hover:shadow-xl animate-fade-in group"
+              style={{ animationDelay: '0.5s' }}
               data-testid="button-start-planning"
             >
-              <Calendar className="h-5 w-5 mr-2" />
+              <Calendar className="h-5 w-5 mr-2 transition-transform duration-300 group-hover:rotate-12" />
               Start Planning
-              <ArrowRight className="h-5 w-5 ml-2" />
+              <ArrowRight className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
             
             <Button 
               size="lg" 
               variant="outline"
-              className="text-lg px-8 py-4 h-auto font-semibold min-w-[200px]"
+              className="text-lg px-8 py-4 h-auto font-semibold min-w-[200px] transform transition-all duration-300 hover:scale-105 hover:shadow-xl animate-fade-in group"
+              style={{ animationDelay: '0.7s' }}
               data-testid="button-speak-expert"
             >
-              <Phone className="h-5 w-5 mr-2" />
+              <Phone className="h-5 w-5 mr-2 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
               Speak to Expert
             </Button>
           </div>
