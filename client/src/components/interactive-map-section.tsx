@@ -10,7 +10,7 @@ export default function InteractiveMapSection() {
       position: "north",
       coordinates: { lat: 31.2001, lng: 29.9187 },
       description: "Mediterranean pearl with ancient heritage",
-      color: "from-blue-500 to-cyan-500",
+      color: "from-primary to-accent",
       attractions: ["Bibliotheca Alexandrina", "Citadel of Qaitbay", "Montaza Palace"]
     },
     { 
@@ -18,7 +18,7 @@ export default function InteractiveMapSection() {
       position: "central-north",
       coordinates: { lat: 30.0444, lng: 31.2357 },
       description: "Ancient wonders meet modern luxury",
-      color: "from-amber-500 to-yellow-500",
+      color: "from-accent to-secondary",
       attractions: ["Great Pyramids of Giza", "Egyptian Museum", "Islamic Cairo"]
     },
     { 
@@ -26,7 +26,7 @@ export default function InteractiveMapSection() {
       position: "western",
       coordinates: { lat: 29.2030, lng: 25.5197 },
       description: "Desert oasis sanctuary",
-      color: "from-green-500 to-emerald-500",
+      color: "from-secondary to-primary",
       attractions: ["Siwa Salt Lakes", "Temple of the Oracle", "Shali Fortress"]
     },
     { 
@@ -34,7 +34,7 @@ export default function InteractiveMapSection() {
       position: "central-south",
       coordinates: { lat: 25.6872, lng: 32.6396 },
       description: "Valley of the Kings and Queens",
-      color: "from-purple-500 to-violet-500",
+      color: "from-primary to-secondary",
       attractions: ["Valley of the Kings", "Karnak Temple", "Luxor Temple"]
     },
     { 
@@ -42,7 +42,7 @@ export default function InteractiveMapSection() {
       position: "eastern",
       coordinates: { lat: 27.2579, lng: 33.8116 },
       description: "Pristine coral reefs and luxury resorts",
-      color: "from-red-500 to-rose-500",
+      color: "from-accent to-primary",
       attractions: ["Hurghada Resorts", "Marsa Alam", "Ras Mohammed National Park"]
     },
     { 
@@ -50,7 +50,7 @@ export default function InteractiveMapSection() {
       position: "south",
       coordinates: { lat: 24.0889, lng: 32.8998 },
       description: "Gateway to Nubian heritage",
-      color: "from-orange-500 to-red-500",
+      color: "from-secondary to-accent",
       attractions: ["Philae Temple", "High Dam", "Nubian Villages"]
     }
   ];
