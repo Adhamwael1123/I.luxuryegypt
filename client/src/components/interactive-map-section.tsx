@@ -97,12 +97,12 @@ export default function InteractiveMapSection() {
                 {/* Destination Card */}
                 <div className={`
                   bg-gradient-to-br ${destination.color} p-1 rounded-2xl shadow-lg 
-                  group-hover:shadow-2xl group-hover:shadow-primary/20 transition-all duration-500 ease-out
+                  group-hover:shadow-2xl group-hover:shadow-primary/20 transition-all duration-700 ease-out
                   ${selectedDestination === destination.name ? 'ring-4 ring-primary/50 scale-105' : ''}
                 `}
                 style={{
-                  transitionProperty: 'box-shadow, transform, filter',
-                  transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                  transitionProperty: 'box-shadow, transform, filter, border-color',
+                  transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
                 >
                   <div className="bg-card/95 backdrop-blur-sm rounded-xl p-6 h-full">
@@ -134,12 +134,13 @@ export default function InteractiveMapSection() {
 
                     {/* Attractions Preview */}
                     <div className={`
-                      transition-all duration-700 ease-in-out overflow-hidden
-                      ${selectedDestination === destination.name ? 'max-h-32 opacity-100 transform translate-y-0' : 'max-h-0 opacity-0 transform -translate-y-4'}
+                      transition-all duration-700 ease-out overflow-hidden
+                      ${selectedDestination === destination.name ? 'max-h-32 opacity-100 transform translate-y-0' : 'max-h-0 opacity-0 transform -translate-y-2'}
                     `}
                     style={{
-                      transitionProperty: 'max-height, opacity, transform',
-                      transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
+                      transitionProperty: 'max-height, opacity, transform, margin',
+                      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                      transitionDelay: selectedDestination === destination.name ? '100ms' : '0ms'
                     }}
                     >
                       <div className="border-t border-border/30 pt-3">
