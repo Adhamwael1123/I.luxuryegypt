@@ -42,7 +42,7 @@ export default function Navigation() {
     { label: "About", id: "about", type: "page", href: "/about" },
     { label: "Destinations", id: "destinations", type: "page", href: "/destinations" },
     { label: "Experiences", id: "experiences", type: "scroll" },
-    { label: "Stays", id: "stays", type: "scroll" },
+    { label: "Stays", id: "stays", type: "page", href: "/stay" },
     { label: "Contact", id: "contact", type: "page", href: "/contact" },
   ];
 
