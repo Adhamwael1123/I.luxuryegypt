@@ -355,6 +355,10 @@
     grid-row-end: span 55;
   }
 
+  .masonry-item.tall {
+    grid-row-end: span 65;
+  }
+
   /* Responsive masonry adjustments */
   @media (max-width: 768px) {
     .masonry-grid {
@@ -364,7 +368,8 @@
     
     .masonry-item.small,
     .masonry-item.medium,
-    .masonry-item.large {
+    .masonry-item.large,
+    .masonry-item.tall {
       grid-row-end: auto;
     }
   }
