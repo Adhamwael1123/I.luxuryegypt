@@ -10,11 +10,11 @@ const tailormadeCard = {
   id: 'tailormade-journey',
   name: 'Tailormade Journey',
   description: 'Crafted around your specific interests, Tailormade Journeys are private just for you, your companions, and your A&K local guide, who helps you get the most out of every day of your journey.',
-  size: 'medium',
+  size: 'info-card',
   type: 'info'
 };
 
-// Global destination regions 
+// Global destination regions with varied sizes for masonry layout
 const destinations = [
   {
     id: 'africa',
@@ -31,7 +31,7 @@ const destinations = [
     tagline: 'Ultimate Polar Expeditions',
     image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     highlights: ['Penguin Colonies', 'Arctic Wildlife', 'Ice Landscapes'],
-    size: 'tall',
+    size: 'extra-tall',
     type: 'region'
   },
   {
@@ -58,7 +58,7 @@ const destinations = [
     tagline: 'Rich History & Cultural Treasures',
     image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     highlights: ['Historic Cities', 'Art & Architecture', 'Culinary Experiences'],
-    size: 'large',
+    size: 'small',
     type: 'region'
   },
   {
@@ -85,7 +85,7 @@ const destinations = [
     tagline: 'Tropical Paradise & Island Life',
     image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     highlights: ['Pristine Beaches', 'Crystal Waters', 'Island Hopping'],
-    size: 'medium',
+    size: 'small',
     type: 'region'
   },
   {
@@ -112,7 +112,7 @@ const destinations = [
     tagline: 'Vast Wilderness & Iconic Cities',
     image: 'https://images.unsplash.com/photo-1563659916-b4ef70cc6201?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     highlights: ['National Parks', 'Urban Experiences', 'Natural Wonders'],
-    size: 'medium',
+    size: 'large',
     type: 'region'
   }
 ];
@@ -182,7 +182,7 @@ export default function Destinations() {
               >
                 {destination.type === 'info' ? (
                   // Tailormade Journey Card
-                  <div className="h-full bg-white rounded-xl shadow-lg p-8 transition-all duration-500 ease-out group-hover:shadow-2xl">
+                  <div className="card-content rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl">
                     <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-4">
                       {destination.name}
                     </h3>
@@ -201,56 +201,54 @@ export default function Destinations() {
                   </div>
                 ) : (
                   // Regular Destination Card
-                  <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02]">
-                    <div className="aspect-[4/5] md:aspect-[3/4] relative">
-                      <img
-                        src={'image' in destination ? destination.image : ''}
-                        alt={destination.name}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                        loading="lazy"
-                      />
+                  <div className="card-content relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02]">
+                    <img
+                      src={'image' in destination ? destination.image : ''}
+                      alt={destination.name}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    
+                    {/* Content overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                      <h3 className="text-2xl md:text-3xl font-serif font-bold mb-2" data-testid={`destination-name-${destination.id}`}>
+                        {destination.name}
+                      </h3>
+                      <p className="text-accent/90 font-medium mb-4 tracking-wide">
+                        {'tagline' in destination ? destination.tagline : ''}
+                      </p>
                       
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                      
-                      {/* Content overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                        <h3 className="text-2xl md:text-3xl font-serif font-bold mb-2" data-testid={`destination-name-${destination.id}`}>
-                          {destination.name}
-                        </h3>
-                        <p className="text-accent/90 font-medium mb-4 tracking-wide">
-                          {'tagline' in destination ? destination.tagline : ''}
-                        </p>
-                        
-                        {/* Highlights - visible on hover */}
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {('highlights' in destination ? destination.highlights : []).slice(0, 2).map((highlight: string, index: number) => (
-                              <span
-                                key={index}
-                                className="text-xs bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full"
-                              >
-                                {highlight}
-                              </span>
-                            ))}
-                          </div>
-                          <Button
-                            size="sm"
-                            variant="secondary"
-                            className="opacity-90 hover:opacity-100"
-                            asChild
-                            data-testid={`button-plan-visit-${destination.id}`}
-                          >
-                            <Link href="/contact">
-                              Plan Your Visit
-                            </Link>
-                          </Button>
+                      {/* Highlights - visible on hover */}
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {('highlights' in destination ? destination.highlights : []).slice(0, 2).map((highlight: string, index: number) => (
+                            <span
+                              key={index}
+                              className="text-xs bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full"
+                            >
+                              {highlight}
+                            </span>
+                          ))}
                         </div>
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="opacity-90 hover:opacity-100"
+                          asChild
+                          data-testid={`button-plan-visit-${destination.id}`}
+                        >
+                          <Link href="/contact">
+                            Plan Your Visit
+                          </Link>
+                        </Button>
                       </div>
-
-                      {/* Accent border */}
-                      <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/30 rounded-xl transition-colors duration-300" />
                     </div>
+
+                    {/* Accent border */}
+                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/30 rounded-xl transition-colors duration-300" />
                   </div>
                 )}
               </div>
