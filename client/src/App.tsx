@@ -9,6 +9,11 @@ import Contact from "@/pages/contact";
 import About from "@/pages/about";
 import Destinations from "@/pages/destinations";
 import Stay from "@/pages/stay";
+import PrivacyPolicy from "@/pages/privacy-policy";
+import TermsConditions from "@/pages/terms-conditions";
+import CookiePolicy from "@/pages/cookie-policy";
+import Disclaimer from "@/pages/disclaimer";
+import ResponsibleTravel from "@/pages/responsible-travel";
 
 function Router() {
   return (
@@ -18,6 +23,11 @@ function Router() {
       <Route path="/destinations" component={Destinations} />
       <Route path="/stay" component={Stay} />
       <Route path="/contact" component={Contact} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
+      <Route path="/terms-conditions" component={TermsConditions} />
+      <Route path="/cookie-policy" component={CookiePolicy} />
+      <Route path="/disclaimer" component={Disclaimer} />
+      <Route path="/responsible-travel" component={ResponsibleTravel} />
       <Route component={NotFound} />
     </Switch>
   );
