@@ -4,8 +4,14 @@ import Footer from "../components/footer";
 import ScrollToTopButton from "../components/scroll-to-top-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Star, MapPin, Wifi, Car, Utensils, Waves, Sparkles, Shield } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Star, MapPin, Wifi, Car, Utensils, Waves, Sparkles, Shield, Search, Filter, X } from "lucide-react";
 import { Link } from "wouter";
+import { useState, useMemo } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 // Import luxury Egyptian images
 import suiteNileImage from "@assets/suite-nile_1757457083796.jpg";
@@ -22,7 +28,301 @@ import luxorImage from "@assets/luxor_1757531163688.jpg";
 import siwaImage from "@assets/siwa_1757531163689.jpg";
 import redSeaImage from "@assets/red-sea_1757531163688.jpg";
 
+// Hotel interface
+interface Hotel {
+  id: string;
+  name: string;
+  location: string;
+  region: string;
+  type: string;
+  rating: number;
+  priceTier: string;
+  amenities: string[];
+  image: string;
+  description: string;
+  featured: boolean;
+}
+
 export default function Stay() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("all");
+  const [selectedType, setSelectedType] = useState("all");
+  const [selectedRating, setSelectedRating] = useState("all");
+  const [sortBy, setSortBy] = useState("recommended");
+  const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
+  const [showAllHotels, setShowAllHotels] = useState(false);
+
+  // Expanded hotel data
+  const allHotels: Hotel[] = [
+    {
+      id: "mena-house",
+      name: "Mena House Hotel",
+      location: "Giza",
+      region: "Cairo & Giza",
+      type: "Palace",
+      rating: 5,
+      priceTier: "$$$$",
+      amenities: ["Pyramid Views", "Historic Heritage", "Luxury Spa", "Fine Dining"],
+      image: menahousePyramidImage,
+      description: "Historic palace hotel with direct views of the Great Pyramids. A legendary retreat where royalty and celebrities have stayed for over a century.",
+      featured: true
+    },
+    {
+      id: "sofitel-winter-palace",
+      name: "Sofitel Winter Palace",
+      location: "Luxor",
+      region: "Luxor",
+      type: "Palace",
+      rating: 5,
+      priceTier: "$$$$",
+      amenities: ["Nile Gardens", "Royal Heritage", "Pool Complex", "Historic Charm"],
+      image: luxorImage,
+      description: "Victorian grandeur on the banks of the Nile. This legendary hotel has hosted dignitaries and explorers since 1886.",
+      featured: true
+    },
+    {
+      id: "adrere-amellal",
+      name: "Adrère Amellal",
+      location: "Siwa Oasis",
+      region: "Siwa",
+      type: "Eco-Lodge",
+      rating: 4,
+      priceTier: "$$$",
+      amenities: ["Eco-Friendly", "Desert Views", "Natural Architecture", "Wellness"],
+      image: siwaImage,
+      description: "Eco-luxury desert lodge built entirely from natural materials. Experience the serene beauty of the Sahara in sustainable comfort.",
+      featured: true
+    },
+    {
+      id: "four-seasons-nile-plaza",
+      name: "Four Seasons Hotel Cairo at Nile Plaza",
+      location: "Cairo",
+      region: "Cairo & Giza",
+      type: "Resort",
+      rating: 5,
+      priceTier: "$$$$",
+      amenities: ["Nile Views", "Luxury Spa", "Fine Dining", "Business Center"],
+      image: suiteNileImage,
+      description: "Modern luxury with panoramic Nile views in the heart of Cairo. Contemporary elegance meets Egyptian hospitality.",
+      featured: true
+    },
+    {
+      id: "oberoi-philae",
+      name: "The Oberoi Philae",
+      location: "Aswan",
+      region: "Aswan",
+      type: "Cruise",
+      rating: 5,
+      priceTier: "$$$$",
+      amenities: ["Nile Cruise", "All-Inclusive", "Historic Sites", "Luxury Suites"],
+      image: poolRiverImage,
+      description: "Luxury Nile cruise ship offering an intimate journey through ancient Egypt with world-class amenities.",
+      featured: false
+    },
+    {
+      id: "steigenberger-cecil",
+      name: "Steigenberger Cecil Hotel",
+      location: "Alexandria",
+      region: "Alexandria",
+      type: "Historic",
+      rating: 4,
+      priceTier: "$$$",
+      amenities: ["Historic Charm", "City Center", "Traditional Decor", "Restaurant"],
+      image: luxuryHallImage,
+      description: "Historic hotel in Alexandria's cultural heart, blending colonial elegance with modern comfort.",
+      featured: false
+    },
+    {
+      id: "movenpick-resort-hurghada",
+      name: "Mövenpick Resort Hurghada",
+      location: "Hurghada",
+      region: "Red Sea",
+      type: "Resort",
+      rating: 4,
+      priceTier: "$$$",
+      amenities: ["Beach Access", "Diving Center", "Pool Complex", "Family-Friendly"],
+      image: redSeaImage,
+      description: "Beachfront resort perfect for diving enthusiasts and families seeking Red Sea luxury.",
+      featured: false
+    },
+    {
+      id: "sanctuary-sun-boat",
+      name: "Sanctuary Sun Boat IV",
+      location: "Luxor-Aswan",
+      region: "Luxor",
+      type: "Cruise",
+      rating: 5,
+      priceTier: "$$$$",
+      amenities: ["River Cruise", "All-Inclusive", "Expert Guides", "Premium Suites"],
+      image: columnHallImage,
+      description: "Boutique Nile cruise ship with only 36 suites, offering personalized luxury and expert Egyptology guides.",
+      featured: false
+    },
+    {
+      id: "hilton-luxor",
+      name: "Hilton Luxor Resort & Spa",
+      location: "Luxor",
+      region: "Luxor",
+      type: "Resort",
+      rating: 4,
+      priceTier: "$$$",
+      amenities: ["Spa", "Pool", "Nile Views", "Conference Facilities"],
+      image: islamicDistrictImage,
+      description: "Modern resort on the Nile with stunning views of ancient temples and contemporary amenities.",
+      featured: false
+    },
+    {
+      id: "kempinski-soma-bay",
+      name: "Kempinski Hotel Soma Bay",
+      location: "Soma Bay",
+      region: "Red Sea",
+      type: "Resort",
+      rating: 5,
+      priceTier: "$$$$",
+      amenities: ["Beach Access", "Golf Course", "Spa", "Diving"],
+      image: poolsideDrinkImage,
+      description: "Luxury resort with championship golf course and world-class spa overlooking the Red Sea.",
+      featured: false
+    },
+    {
+      id: "maritim-jolie-ville",
+      name: "Maritim Jolie Ville Resort",
+      location: "Sharm El Sheikh",
+      region: "Red Sea",
+      type: "Resort",
+      rating: 4,
+      priceTier: "$$$",
+      amenities: ["Private Beach", "Diving Center", "Multiple Pools", "Kids Club"],
+      image: siwaPalmTreesImage,
+      description: "Family-friendly resort in Naama Bay with excellent diving facilities and entertainment.",
+      featured: false
+    },
+    {
+      id: "sonesta-star-goddess",
+      name: "Sonesta Star Goddess",
+      location: "Luxor-Aswan",
+      region: "Luxor",
+      type: "Cruise",
+      rating: 4,
+      priceTier: "$$$",
+      amenities: ["Nile Cruise", "Pool", "Spa", "Entertainment"],
+      image: khanKhaliliImage,
+      description: "Elegant Nile cruise ship offering comfortable accommodations and comprehensive temple tours.",
+      featured: false
+    },
+    {
+      id: "old-cataract-aswan",
+      name: "Sofitel Legend Old Cataract",
+      location: "Aswan",
+      region: "Aswan",
+      type: "Historic",
+      rating: 5,
+      priceTier: "$$$$",
+      amenities: ["Historic Legacy", "Nile Views", "Luxury Spa", "Terrace Dining"],
+      image: pyramidLobbyImage,
+      description: "Legendary hotel where Agatha Christie wrote 'Death on the Nile', offering timeless luxury on the Nile.",
+      featured: false
+    },
+    {
+      id: "rixos-sharm",
+      name: "Rixos Sharm El Sheikh",
+      location: "Sharm El Sheikh",
+      region: "Red Sea",
+      type: "Resort",
+      rating: 5,
+      priceTier: "$$$$",
+      amenities: ["All-Inclusive", "Private Beach", "Water Sports", "Kids Club"],
+      image: redSeaImage,
+      description: "Ultra all-inclusive resort with pristine beaches and extensive facilities for families and couples.",
+      featured: false
+    },
+    {
+      id: "steigenberger-aldau",
+      name: "Steigenberger Al Dau Beach Hotel",
+      location: "Hurghada",
+      region: "Red Sea",
+      type: "Resort",
+      rating: 4,
+      priceTier: "$$$",
+      amenities: ["Private Beach", "Coral Reef", "Multiple Restaurants", "Spa"],
+      image: poolRiverImage,
+      description: "Beachfront hotel with direct access to pristine coral reefs and excellent snorkeling.",
+      featured: false
+    },
+    {
+      id: "jaz-mirabel-beach",
+      name: "Jaz Mirabel Beach Resort",
+      location: "Sharm El Sheikh",
+      region: "Red Sea",
+      type: "Resort",
+      rating: 4,
+      priceTier: "$$$",
+      amenities: ["Beach Access", "Animation", "Multiple Pools", "All-Inclusive"],
+      image: suiteNileImage,
+      description: "Vibrant resort with excellent entertainment and dining options in the heart of Sharm El Sheikh.",
+      featured: false
+    },
+    {
+      id: "carnival-cruise",
+      name: "MS Carnival Nile Cruise",
+      location: "Luxor-Aswan",
+      region: "Luxor",
+      type: "Cruise",
+      rating: 4,
+      priceTier: "$$",
+      amenities: ["Budget-Friendly", "Pool", "Traditional Decor", "Temple Tours"],
+      image: columnHallImage,
+      description: "Comfortable Nile cruise ship offering excellent value with traditional Egyptian hospitality.",
+      featured: false
+    },
+    {
+      id: "iberotel-makadi",
+      name: "Iberotel Makadi Beach",
+      location: "Makadi Bay",
+      region: "Red Sea",
+      type: "Resort",
+      rating: 4,
+      priceTier: "$$$",
+      amenities: ["Private Bay", "Water Sports", "Spa", "Multiple Dining"],
+      image: islamicDistrictImage,
+      description: "Secluded resort in protected Makadi Bay with pristine beaches and coral reefs.",
+      featured: false
+    },
+    {
+      id: "nour-el-balah",
+      name: "Nour El Balah Siwa",
+      location: "Siwa Oasis",
+      region: "Siwa",
+      type: "Eco-Lodge",
+      rating: 3,
+      priceTier: "$$",
+      amenities: ["Desert Experience", "Traditional Architecture", "Organic Food", "Star Gazing"],
+      image: siwaPalmTreesImage,
+      description: "Authentic desert experience with traditional Siwan architecture and organic cuisine.",
+      featured: false
+    },
+    {
+      id: "cairo-marriott",
+      name: "Cairo Marriott Hotel & Omar Khayyam Casino",
+      location: "Cairo",
+      region: "Cairo & Giza",
+      type: "Resort",
+      rating: 4,
+      priceTier: "$$$",
+      amenities: ["Palace Gardens", "Casino", "Multiple Restaurants", "Pool"],
+      image: luxuryHallImage,
+      description: "Historic palace converted to luxury hotel with beautiful gardens and diverse dining options.",
+      featured: false
+    }
+  ];
+
+  // All available amenities for filtering
+  const allAmenities = useMemo(() => {
+    const amenitiesSet = new Set<string>();
+    allHotels.forEach(hotel => hotel.amenities.forEach(amenity => amenitiesSet.add(amenity)));
+    return Array.from(amenitiesSet).sort();
+  }, [allHotels]);
+
   const accommodationTypes = [
     {
       icon: <Star className="h-8 w-8 text-accent" />,
@@ -50,32 +350,61 @@ export default function Stay() {
     }
   ];
 
-  const featuredHotels = [
-    {
-      name: "Mena House Hotel",
-      location: "Giza",
-      description: "Historic palace hotel with direct views of the Great Pyramids. A legendary retreat where royalty and celebrities have stayed for over a century.",
-      image: menahousePyramidImage,
-      amenities: ["Pyramid Views", "Historic Heritage", "Luxury Spa", "Fine Dining"],
-      rating: 5
-    },
-    {
-      name: "Sofitel Winter Palace",
-      location: "Luxor", 
-      description: "Victorian grandeur on the banks of the Nile. This legendary hotel has hosted dignitaries and explorers since 1886.",
-      image: luxorImage,
-      amenities: ["Nile Gardens", "Royal Heritage", "Pool Complex", "Historic Charm"],
-      rating: 5
-    },
-    {
-      name: "Adrère Amellal",
-      location: "Siwa Oasis",
-      description: "Eco-luxury desert lodge built entirely from natural materials. Experience the serene beauty of the Sahara in sustainable comfort.",
-      image: siwaImage,
-      amenities: ["Eco-Friendly", "Desert Views", "Natural Architecture", "Wellness"],
-      rating: 4
-    }
-  ];
+  // Filter and sort logic
+  const filteredAndSortedHotels = useMemo(() => {
+    let filtered = allHotels.filter(hotel => {
+      const matchesSearch = hotel.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           hotel.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           hotel.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesRegion = selectedRegion === "all" || hotel.region === selectedRegion;
+      const matchesType = selectedType === "all" || hotel.type === selectedType;
+      const matchesRating = selectedRating === "all" || hotel.rating >= parseInt(selectedRating);
+      const matchesAmenities = selectedAmenities.length === 0 || 
+                              selectedAmenities.some(amenity => hotel.amenities.includes(amenity));
+      
+      return matchesSearch && matchesRegion && matchesType && matchesRating && matchesAmenities;
+    });
+
+    // Sort hotels
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case "name":
+          return a.name.localeCompare(b.name);
+        case "rating":
+          return b.rating - a.rating;
+        case "location":
+          return a.location.localeCompare(b.location);
+        default: // "recommended"
+          if (a.featured && !b.featured) return -1;
+          if (!a.featured && b.featured) return 1;
+          return b.rating - a.rating;
+      }
+    });
+
+    return filtered;
+  }, [allHotels, searchTerm, selectedRegion, selectedType, selectedRating, selectedAmenities, sortBy]);
+
+  const featuredHotels = allHotels.filter(hotel => hotel.featured);
+  const displayedHotels = showAllHotels ? filteredAndSortedHotels : filteredAndSortedHotels.slice(0, 12);
+
+  const clearAllFilters = () => {
+    setSearchTerm("");
+    setSelectedRegion("all");
+    setSelectedType("all");
+    setSelectedRating("all");
+    setSelectedAmenities([]);
+    setSortBy("recommended");
+  };
+
+  const toggleAmenity = (amenity: string) => {
+    setSelectedAmenities(prev => 
+      prev.includes(amenity) 
+        ? prev.filter(a => a !== amenity)
+        : [...prev, amenity]
+    );
+  };
+
+  const hasActiveFilters = searchTerm || selectedRegion !== "all" || selectedType !== "all" || selectedRating !== "all" || selectedAmenities.length > 0 || sortBy !== "recommended";
 
   const luxuryFeatures = [
     {
@@ -117,6 +446,94 @@ export default function Stay() {
         className={`w-4 h-4 ${i < rating ? 'text-accent fill-accent' : 'text-muted-foreground'}`}
       />
     ));
+  };
+
+  // Compact Hotel Card Component
+  const HotelCard = ({ hotel, isSpotlight = false }: { hotel: Hotel; isSpotlight?: boolean }) => {
+    const cardClasses = isSpotlight
+      ? "group cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:-translate-y-2"
+      : "group cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-accent/30";
+    
+    const imageHeight = isSpotlight ? "h-80" : "h-48";
+    const contentPadding = isSpotlight ? "p-6" : "p-4";
+    
+    return (
+      <Card className={cardClasses} data-testid={`hotel-card-${hotel.id}`}>
+        <div className={`relative ${imageHeight} overflow-hidden`}>
+          <img
+            src={hotel.image}
+            alt={`${hotel.name} luxury hotel in ${hotel.location}, Egypt`}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            loading="lazy"
+            style={{ aspectRatio: '3/2' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          
+          {/* Rating overlay */}
+          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1">
+            <div className="flex items-center space-x-1">
+              {renderStars(hotel.rating)}
+              <span className="ml-1 text-primary font-semibold text-xs">{hotel.rating}</span>
+            </div>
+          </div>
+          
+          {/* Featured badge */}
+          {hotel.featured && (
+            <div className="absolute top-3 left-3">
+              <Badge className="bg-accent text-accent-foreground text-xs font-medium">
+                Featured
+              </Badge>
+            </div>
+          )}
+        </div>
+        
+        <CardContent className={contentPadding}>
+          <div className="flex items-start justify-between mb-2">
+            <h3 className={`font-serif font-bold text-primary leading-tight ${isSpotlight ? 'text-xl' : 'text-lg'}`}>
+              {hotel.name}
+            </h3>
+            <div className="text-right ml-2">
+              <div className="text-accent font-bold text-sm">{hotel.priceTier}</div>
+            </div>
+          </div>
+          
+          <div className="flex items-center text-muted-foreground mb-3">
+            <MapPin className="w-4 h-4 mr-1 text-accent" />
+            <span className="text-sm font-medium">{hotel.location}</span>
+            <span className="mx-2 text-xs">•</span>
+            <span className="text-xs">{hotel.type}</span>
+          </div>
+          
+          {isSpotlight && (
+            <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2">
+              {hotel.description}
+            </p>
+          )}
+          
+          <div className="flex flex-wrap gap-1 mb-4">
+            {hotel.amenities.slice(0, isSpotlight ? 4 : 3).map((amenity, idx) => (
+              <Badge
+                key={idx}
+                variant="secondary"
+                className="text-xs bg-accent/10 text-accent hover:bg-accent/20 border-0"
+              >
+                {amenity}
+              </Badge>
+            ))}
+          </div>
+          
+          <Link href="/contact">
+            <Button 
+              className="w-full" 
+              size={isSpotlight ? "default" : "sm"}
+              data-testid={`button-inquire-${hotel.id}`}
+            >
+              Inquire Now
+            </Button>
+          </Link>
+        </CardContent>
+      </Card>
+    );
   };
 
   return (
@@ -197,15 +614,15 @@ export default function Stay() {
           </div>
         </section>
 
-        {/* Featured Hotels Section */}
+        {/* Spotlight Featured Hotels Section */}
         <section className="py-20 bg-muted">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <p className="tracking-[0.2em] uppercase text-accent text-sm font-medium mb-4">
-                Featured Properties
+                Spotlight Properties
               </p>
               <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-6">
-                Exceptional Hotels
+                Featured Luxury Hotels
               </h2>
               <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -213,66 +630,250 @@ export default function Stay() {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              {featuredHotels.map((hotel, index) => (
-                <div key={index} className="group">
-                  <div className="relative mb-6">
-                    <div className="aspect-[4/5] overflow-hidden rounded-lg shadow-xl">
-                      <img 
-                        src={hotel.image} 
-                        alt={hotel.name}
-                        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      
-                      {/* Rating overlay */}
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2">
-                        <div className="flex items-center space-x-1">
-                          {renderStars(hotel.rating)}
-                          <span className="ml-1 text-primary font-semibold text-sm">{hotel.rating}/5</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Floating hotel info card */}
-                    <div className="absolute -bottom-6 left-6 right-6 bg-background rounded-lg shadow-xl p-6 border border-accent/10">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-serif font-bold text-primary">
-                          {hotel.name}
-                        </h3>
-                        <div className="flex items-center text-accent">
-                          <MapPin className="w-4 h-4 mr-1" />
-                          <span className="text-sm font-medium">{hotel.location}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Description and amenities */}
-                  <div className="pt-8">
-                    <p className="text-muted-foreground leading-relaxed mb-4">
-                      {hotel.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {hotel.amenities.slice(0, 3).map((amenity, idx) => (
-                        <span
-                          key={idx}
-                          className="text-xs bg-accent/10 text-accent px-3 py-1 rounded-full font-medium"
-                        >
-                          {amenity}
-                        </span>
-                      ))}
-                    </div>
-                    <Link href="/contact">
-                      <Button className="w-full" data-testid={`button-book-${index}`}>
-                        Book This Hotel
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {featuredHotels.map((hotel) => (
+                <HotelCard key={hotel.id} hotel={hotel} isSpotlight={true} />
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Hotels Filter and Grid Section */}
+        <section className="py-20 bg-background">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-6">
+                All Luxury Accommodations
+              </h2>
+              <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Discover our complete collection of handpicked luxury hotels across Egypt.
+              </p>
+            </div>
+
+            {/* Filter Bar */}
+            <div className="bg-card rounded-lg p-6 shadow-lg border border-accent/10 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
+                {/* Search */}
+                <div className="lg:col-span-2">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                    <Input
+                      placeholder="Search hotels..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10"
+                      data-testid="hotel-search-input"
+                    />
+                  </div>
+                </div>
+
+                {/* Region Filter */}
+                <Select value={selectedRegion} onValueChange={setSelectedRegion}>
+                  <SelectTrigger data-testid="region-filter">
+                    <SelectValue placeholder="All Regions" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Regions</SelectItem>
+                    <SelectItem value="Cairo & Giza">Cairo & Giza</SelectItem>
+                    <SelectItem value="Luxor">Luxor</SelectItem>
+                    <SelectItem value="Aswan">Aswan</SelectItem>
+                    <SelectItem value="Red Sea">Red Sea</SelectItem>
+                    <SelectItem value="Alexandria">Alexandria</SelectItem>
+                    <SelectItem value="Siwa">Siwa</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                {/* Type Filter */}
+                <Select value={selectedType} onValueChange={setSelectedType}>
+                  <SelectTrigger data-testid="type-filter">
+                    <SelectValue placeholder="All Types" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Types</SelectItem>
+                    <SelectItem value="Palace">Palace</SelectItem>
+                    <SelectItem value="Resort">Resort</SelectItem>
+                    <SelectItem value="Cruise">Nile Cruise</SelectItem>
+                    <SelectItem value="Historic">Historic</SelectItem>
+                    <SelectItem value="Eco-Lodge">Eco-Lodge</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                {/* Rating Filter */}
+                <Select value={selectedRating} onValueChange={setSelectedRating}>
+                  <SelectTrigger data-testid="rating-filter">
+                    <SelectValue placeholder="All Ratings" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Ratings</SelectItem>
+                    <SelectItem value="5">5 Stars</SelectItem>
+                    <SelectItem value="4">4+ Stars</SelectItem>
+                    <SelectItem value="3">3+ Stars</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                {/* Amenities Filter */}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button 
+                      variant="outline" 
+                      className="justify-between"
+                      data-testid="amenities-filter"
+                      aria-label="Filter by amenities"
+                    >
+                      <span>
+                        {selectedAmenities.length > 0 
+                          ? `${selectedAmenities.length} Amenities`
+                          : "Amenities"
+                        }
+                      </span>
+                      <Filter className="ml-2 h-4 w-4" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-64" align="start">
+                    <div className="space-y-3">
+                      <h4 className="font-medium text-sm">Filter by Amenities</h4>
+                      <div className="grid grid-cols-1 gap-2 max-h-64 overflow-y-auto">
+                        {allAmenities.map((amenity) => (
+                          <div key={amenity} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`amenity-${amenity}`}
+                              checked={selectedAmenities.includes(amenity)}
+                              onCheckedChange={() => toggleAmenity(amenity)}
+                              data-testid={`amenity-checkbox-${amenity.toLowerCase().replace(/\s+/g, '-')}`}
+                            />
+                            <label
+                              htmlFor={`amenity-${amenity}`}
+                              className="text-sm font-normal cursor-pointer"
+                            >
+                              {amenity}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                      {selectedAmenities.length > 0 && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setSelectedAmenities([])}
+                          className="w-full mt-2"
+                          data-testid="clear-amenities-button"
+                        >
+                          Clear Amenities
+                        </Button>
+                      )}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                {/* Sort */}
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger data-testid="sort-filter">
+                    <SelectValue placeholder="Sort By" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="recommended">Recommended</SelectItem>
+                    <SelectItem value="rating">Highest Rated</SelectItem>
+                    <SelectItem value="name">Name A-Z</SelectItem>
+                    <SelectItem value="location">Location</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Active Filters Summary and Clear */}
+              {hasActiveFilters && (
+                <div className="mt-4 pt-4 border-t border-accent/10">
+                  <div className="flex items-center justify-between flex-wrap gap-4">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {searchTerm && (
+                        <Badge variant="secondary" className="bg-accent/10 text-accent">
+                          Search: "{searchTerm}"
+                        </Badge>
+                      )}
+                      {selectedRegion !== "all" && (
+                        <Badge variant="secondary" className="bg-accent/10 text-accent">
+                          Region: {selectedRegion}
+                        </Badge>
+                      )}
+                      {selectedType !== "all" && (
+                        <Badge variant="secondary" className="bg-accent/10 text-accent">
+                          Type: {selectedType}
+                        </Badge>
+                      )}
+                      {selectedRating !== "all" && (
+                        <Badge variant="secondary" className="bg-accent/10 text-accent">
+                          {selectedRating}+ Stars
+                        </Badge>
+                      )}
+                      {selectedAmenities.length > 0 && (
+                        <Badge variant="secondary" className="bg-accent/10 text-accent">
+                          {selectedAmenities.length} Amenities
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm text-muted-foreground">
+                        Showing {filteredAndSortedHotels.length} of {allHotels.length} hotels
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={clearAllFilters}
+                        className="text-muted-foreground hover:text-primary"
+                        data-testid="clear-all-filters-button"
+                        aria-label="Clear all active filters"
+                      >
+                        <X className="w-4 h-4 mr-2" />
+                        Clear All Filters
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Hotels Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {displayedHotels.map((hotel) => (
+                <HotelCard key={hotel.id} hotel={hotel} isSpotlight={false} />
+              ))}
+            </div>
+
+            {/* Show More Button */}
+            {!showAllHotels && filteredAndSortedHotels.length > 12 && (
+              <div className="text-center mt-12">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={() => setShowAllHotels(true)}
+                  className="px-8 py-4"
+                  data-testid="show-more-hotels-button"
+                  aria-label={`Show all ${filteredAndSortedHotels.length} hotels`}
+                >
+                  Show All {filteredAndSortedHotels.length} Hotels
+                </Button>
+              </div>
+            )}
+
+            {/* No Results */}
+            {filteredAndSortedHotels.length === 0 && (
+              <div className="text-center py-12">
+                <div className="text-muted-foreground mb-4">
+                  <Filter className="w-12 h-12 mx-auto mb-4 opacity-50" aria-hidden="true" />
+                  <h3 className="text-xl font-semibold mb-2">No hotels found</h3>
+                  <p>Try adjusting your search criteria or clearing the filters.</p>
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={clearAllFilters}
+                  className="mt-4"
+                  data-testid="no-results-clear-filters-button"
+                  aria-label="Clear all filters to show all hotels"
+                >
+                  Clear All Filters
+                </Button>
+              </div>
+            )}
           </div>
         </section>
 
