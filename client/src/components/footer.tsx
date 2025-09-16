@@ -1,4 +1,5 @@
 import { MapPin, Mail, Phone } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Footer() {
   return (
@@ -13,7 +14,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">About & Services</h3>
             <div className="space-y-2">
-              <a href="/about" className="block hover:text-accent transition-colors">About Us</a>
+              <Link href="/about" className="block hover:text-accent transition-colors">About Us</Link>
               <a href="#" className="block hover:text-accent transition-colors">Why Choose Us</a>
               <a href="#" className="block hover:text-accent transition-colors">Experiences</a>
               <a href="#" className="block hover:text-accent transition-colors">Stays</a>
@@ -33,11 +34,11 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Legal & Policies</h3>
             <div className="space-y-2">
-              <a href="#" className="block hover:text-accent transition-colors">Privacy Policy</a>
-              <a href="#" className="block hover:text-accent transition-colors">Terms & Conditions</a>
-              <a href="#" className="block hover:text-accent transition-colors">Cookie Policy</a>
-              <a href="#" className="block hover:text-accent transition-colors">Responsible Travel</a>
-              <a href="#" className="block hover:text-accent transition-colors">Disclaimer</a>
+              <Link href="/privacy-policy" className="block hover:text-accent transition-colors">Privacy Policy</Link>
+              <Link href="/terms-conditions" className="block hover:text-accent transition-colors">Terms & Conditions</Link>
+              <Link href="/cookie-policy" className="block hover:text-accent transition-colors">Cookie Policy</Link>
+              <Link href="/responsible-travel" className="block hover:text-accent transition-colors">Responsible Travel</Link>
+              <Link href="/disclaimer" className="block hover:text-accent transition-colors">Disclaimer</Link>
             </div>
           </div>
           
