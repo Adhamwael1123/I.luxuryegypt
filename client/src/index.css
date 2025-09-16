@@ -3,62 +3,44 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Masonry Grid Layout for Stay Page */
+/* Masonry Grid Layout */
 .masonry-grid {
-  column-count: 1;
+  columns: 1;
   column-gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 @media (min-width: 640px) {
   .masonry-grid {
-    column-count: 2;
+    columns: 2;
+    column-gap: 2rem;
   }
 }
 
 @media (min-width: 1024px) {
   .masonry-grid {
-    column-count: 3;
+    columns: 3;
+    column-gap: 2rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .masonry-grid {
+    columns: 3;
+    column-gap: 2.5rem;
   }
 }
 
 .masonry-item {
   break-inside: avoid;
-  margin-bottom: 1.5rem;
+  page-break-inside: avoid;
+  -webkit-column-break-inside: avoid;
   display: inline-block;
   width: 100%;
-}
-
-/* Size variations for masonry items */
-.masonry-item.small .card-content {
-  min-height: 300px;
-}
-
-.masonry-item.medium .card-content {
-  min-height: 400px;
-}
-
-.masonry-item.large .card-content {
-  min-height: 500px;
-}
-
-.masonry-item.tall .card-content {
-  min-height: 600px;
-}
-
-.masonry-item.extra-tall .card-content {
-  min-height: 700px;
-}
-
-.masonry-item.info-card .card-content {
-  min-height: 300px;
-  background: linear-gradient(135deg, var(--accent) / 0.05, var(--primary) / 0.1);
-  border: 1px solid var(--accent) / 0.2;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  margin-bottom: 2rem;
+  vertical-align: top;
 }
 
 /* Card content styling */
@@ -68,6 +50,38 @@
   border-radius: 0.75rem;
   box-shadow: 0 10px 25px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05);
   transition: all 0.5s ease-out;
+  width: 100%;
+}
+
+/* Size variations for masonry items */
+.masonry-item.small .card-content {
+  height: 300px;
+}
+
+.masonry-item.medium .card-content {
+  height: 380px;
+}
+
+.masonry-item.large .card-content {
+  height: 450px;
+}
+
+.masonry-item.tall .card-content {
+  height: 520px;
+}
+
+.masonry-item.extra-tall .card-content {
+  height: 600px;
+}
+
+.masonry-item.info-card .card-content {
+  height: 320px;
+  background: linear-gradient(135deg, hsl(var(--accent)) / 0.05, hsl(var(--primary)) / 0.1);
+  border: 1px solid hsl(var(--accent)) / 0.2;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* 3D Flip Animation Utilities */
@@ -396,107 +410,5 @@
     animation: scroll 40s linear infinite;
   }
 
-  /* True Masonry Layout using CSS Columns - A&K Style */
-  .masonry-grid {
-    column-count: 1;
-    column-gap: 20px;
-    column-fill: auto;
-  }
-
-  .masonry-item {
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 20px;
-    break-inside: avoid;
-    page-break-inside: avoid;
-    -webkit-column-break-inside: avoid;
-  }
-
-  /* Different heights for varied masonry layout */
-  .masonry-item.small {
-    height: auto;
-  }
-
-  .masonry-item.medium {
-    height: auto;
-  }
-
-  .masonry-item.large {
-    height: auto;
-  }
-
-  .masonry-item.tall {
-    height: auto;
-  }
-
-  .masonry-item.extra-tall {
-    height: auto;
-  }
-
-  /* Card content sizing for A&K style variety */
-  .masonry-item .card-content {
-    width: 100%;
-  }
-
-  .masonry-item.small .card-content {
-    height: 280px;
-  }
-
-  .masonry-item.medium .card-content {
-    height: 350px;
-  }
-
-  .masonry-item.large .card-content {
-    height: 420px;
-  }
-
-  .masonry-item.tall .card-content {
-    height: 480px;
-  }
-
-  .masonry-item.extra-tall .card-content {
-    height: 550px;
-  }
-
-  /* Info card specific styling */
-  .masonry-item.info-card .card-content {
-    height: 300px;
-    background: white;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  /* Responsive masonry columns */
-  @media (max-width: 640px) {
-    .masonry-grid {
-      column-count: 1;
-      column-gap: 16px;
-    }
-    .masonry-item {
-      margin-bottom: 16px;
-    }
-  }
-
-  @media (min-width: 641px) and (max-width: 1024px) {
-    .masonry-grid {
-      column-count: 2;
-      column-gap: 20px;
-    }
-  }
-
-  @media (min-width: 1025px) and (max-width: 1400px) {
-    .masonry-grid {
-      column-count: 3;
-      column-gap: 24px;
-    }
-  }
-
-  @media (min-width: 1401px) {
-    .masonry-grid {
-      column-count: 4;
-      column-gap: 24px;
-    }
-  }
+  
 }
