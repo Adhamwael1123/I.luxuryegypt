@@ -3,6 +3,73 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Masonry Grid Layout for Stay Page */
+.masonry-grid {
+  column-count: 1;
+  column-gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .masonry-grid {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .masonry-grid {
+    column-count: 3;
+  }
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Size variations for masonry items */
+.masonry-item.small .card-content {
+  min-height: 300px;
+}
+
+.masonry-item.medium .card-content {
+  min-height: 400px;
+}
+
+.masonry-item.large .card-content {
+  min-height: 500px;
+}
+
+.masonry-item.tall .card-content {
+  min-height: 600px;
+}
+
+.masonry-item.extra-tall .card-content {
+  min-height: 700px;
+}
+
+.masonry-item.info-card .card-content {
+  min-height: 300px;
+  background: linear-gradient(135deg, var(--accent) / 0.05, var(--primary) / 0.1);
+  border: 1px solid var(--accent) / 0.2;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Card content styling */
+.card-content {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05);
+  transition: all 0.5s ease-out;
+}
+
 /* 3D Flip Animation Utilities */
 .perspective-1000 {
   perspective: 1000px;
