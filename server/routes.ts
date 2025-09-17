@@ -1,8 +1,23 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertInquirySchema } from "@shared/schema";
+import { 
+  insertInquirySchema, 
+  insertUserSchema,
+  insertPageSchema,
+  insertPostSchema,
+  loginSchema
+} from "@shared/schema";
 import { z } from "zod";
+import { 
+  hashPassword, 
+  verifyPassword, 
+  generateToken, 
+  requireAuth, 
+  requireAdmin, 
+  requireEditor,
+  type AuthenticatedRequest
+} from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API Routes for I.LuxuryEgypt inquiry form
@@ -50,8 +65,176 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Authentication Routes
+  
+  // Login
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { username, password } = loginSchema.parse(req.body);
+      
+      // Find user
+      const user = await storage.getUserByUsername(username);
+      if (!user) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+      }
+      
+      // Verify password
+      const isValidPassword = await verifyPassword(password, user.password);
+      if (!isValidPassword) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+      }
+      
+      // Generate token
+      const token = generateToken(user);
+      
+      res.json({
+        success: true,
+        message: 'Login successful',
+        token,
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role
+        }
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: 'Invalid input data' });
+      }
+      console.error('Login error:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
+  // Register (admin only)
+  app.post("/api/auth/register", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const userData = insertUserSchema.parse(req.body);
+      
+      // Check if username already exists
+      const existingUser = await storage.getUserByUsername(userData.username);
+      if (existingUser) {
+        return res.status(400).json({ message: 'Username already exists' });
+      }
+      
+      // Hash password
+      const hashedPassword = await hashPassword(userData.password);
+      
+      // Create user
+      const user = await storage.createUser({
+        ...userData,
+        password: hashedPassword
+      });
+      
+      res.status(201).json({
+        success: true,
+        message: 'User created successfully',
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role
+        }
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Registration error:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
+  // Verify token
+  app.get("/api/auth/verify", requireAuth, async (req, res) => {
+    const authReq = req as AuthenticatedRequest;
+    res.json({
+      success: true,
+      user: {
+        id: authReq.user!.id,
+        username: authReq.user!.username,
+        email: authReq.user!.email,
+        role: authReq.user!.role
+      }
+    });
+  });
+  
+  // CMS Routes
+  
+  // Pages
+  app.get("/api/cms/pages", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const pages = await storage.getPages();
+      res.json({ success: true, pages });
+    } catch (error) {
+      console.error('Error fetching pages:', error);
+      res.status(500).json({ message: 'Error fetching pages' });
+    }
+  });
+  
+  app.post("/api/cms/pages", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const pageData = insertPageSchema.parse(req.body);
+      
+      const page = await storage.createPage({
+        ...pageData,
+        createdBy: authReq.user!.id
+      });
+      
+      res.status(201).json({ success: true, page });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error creating page:', error);
+      res.status(500).json({ message: 'Error creating page' });
+    }
+  });
+  
+  // Posts
+  app.get("/api/cms/posts", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const posts = await storage.getPosts();
+      res.json({ success: true, posts });
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      res.status(500).json({ message: 'Error fetching posts' });
+    }
+  });
+  
+  app.post("/api/cms/posts", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const postData = insertPostSchema.parse(req.body);
+      
+      const post = await storage.createPost({
+        ...postData,
+        createdBy: authReq.user!.id
+      });
+      
+      res.status(201).json({ success: true, post });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error creating post:', error);
+      res.status(500).json({ message: 'Error creating post' });
+    }
+  });
+  
   // Get all inquiries (for admin purposes)
-  app.get("/api/inquiries", async (req, res) => {
+  app.get("/api/inquiries", requireAuth, requireEditor, async (req, res) => {
     try {
       const inquiries = await storage.getInquiries();
       res.json({

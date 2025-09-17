@@ -27,6 +27,8 @@ import TermsConditions from "@/pages/terms-conditions";
 import CookiePolicy from "@/pages/cookie-policy";
 import Disclaimer from "@/pages/disclaimer";
 import ResponsibleTravel from "@/pages/responsible-travel";
+import AdminLogin from "@/pages/admin-login";
+import AdminDashboard from "@/pages/admin-dashboard";
 
 function Router() {
   const [location] = useLocation();
@@ -54,6 +56,9 @@ function Router() {
         <Route path="/cookie-policy" component={() => <PageTransition><CookiePolicy /></PageTransition>} />
         <Route path="/disclaimer" component={() => <PageTransition><Disclaimer /></PageTransition>} />
         <Route path="/responsible-travel" component={() => <PageTransition><ResponsibleTravel /></PageTransition>} />
+        {/* Admin Routes */}
+        <Route path="/admin/login" component={() => <AdminLogin />} />
+        <Route path="/admin" component={() => <AdminDashboard />} />
         <Route component={() => <PageTransition><NotFound /></PageTransition>} />
       </Switch>
     </AnimatePresence>
