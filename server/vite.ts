@@ -40,9 +40,6 @@ export async function setupVite(app: Express, server: Server) {
     appType: "custom",
   });
 
-  // Add JSON 404 handler for API routes BEFORE Vite middlewares
-  app.use("/api", (_req, res) => res.status(404).json({ message: "Not found" }));
-  
   app.use(vite.middlewares);
   
   // Catch-all for SPA routing - only for GET requests that don't start with /api
@@ -82,6 +79,11 @@ export async function setupVite(app: Express, server: Server) {
       vite.ssrFixStacktrace(e as Error);
       next(e);
     }
+  });
+
+  // Add JSON 404 handler for API routes AFTER Vite middlewares as final fallback
+  app.use("/api/*", (_req, res) => {
+    res.status(404).json({ message: "API endpoint not found" });
   });
 }
 

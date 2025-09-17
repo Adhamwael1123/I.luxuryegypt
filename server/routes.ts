@@ -163,8 +163,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
   
-  // Seed default admin user (for development)
+  // Seed default admin user (DEVELOPMENT ONLY)
   app.post("/api/auth/seed", async (req, res) => {
+    // Only allow in development environment
+    if (process.env.NODE_ENV === "production") {
+      return res.status(403).json({
+        success: false,
+        message: "Admin seeding is only allowed in development mode"
+      });
+    }
+    
     try {
       // Check if admin already exists
       const existingAdmin = await storage.getUserByUsername("admin");

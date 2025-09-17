@@ -8,8 +8,12 @@ export interface AuthenticatedRequest extends Request {
   user?: User;
 }
 
-// JWT secret key - in production, this should be in environment variables
-const JWT_SECRET = process.env.JWT_SECRET || "your-super-secret-jwt-key-change-this-in-production";
+// JWT secret key - REQUIRED for security
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  console.error("FATAL: JWT_SECRET environment variable is required for security");
+  process.exit(1);
+}
 const JWT_EXPIRES_IN = "7d";
 
 // Hash password
