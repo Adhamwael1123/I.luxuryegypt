@@ -15,7 +15,7 @@ localPort = 5000
 externalPort = 80
 
 [[ports]]
-localPort = 37617
+localPort = 37669
 externalPort = 3001
 
 [[ports]]
@@ -54,7 +54,7 @@ outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run dev"
+args = "JWT_SECRET=\"luxury-egypt-travel-app-secret-key-2025\" npm run dev"
 waitForPort = 5000
 
 [agent]
