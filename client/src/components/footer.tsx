@@ -110,7 +110,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center">
-          <p>&copy; 2025 Afford Egypt. All rights reserved. | <span className="relative inline-block overflow-hidden"><a href="https://traveldigitalera.com/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">Powered and Polished by Travel Digital Era</a><span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer -translate-x-full"></span></span></p>
+          <p>&copy; 2025 Afford Egypt. All rights reserved. | <span className="relative overflow-hidden inline-block align-baseline"><a href="https://traveldigitalera.com/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors relative z-10">Powered and Polished by Travel Digital Era</a><span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer -translate-x-full"></span></span></p>
         </div>
       </div>
     </footer>
