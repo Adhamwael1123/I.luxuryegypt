@@ -195,4 +195,287 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+// Memory Storage Implementation for Development
+export class MemoryStorage implements IStorage {
+  private users = new Map<string, User>();
+  private inquiries = new Map<string, Inquiry>();
+  private pages = new Map<string, Page>();
+  private sections = new Map<string, Section>();
+  private posts = new Map<string, Post>();
+  private mediaFiles = new Map<string, Media>();
+
+  constructor() {
+    // Pre-populate with default admin user
+    this.seedDefaultUser();
+  }
+
+  private async seedDefaultUser() {
+    const defaultAdmin: User = {
+      id: randomUUID(),
+      username: "admin",
+      email: "admin@luxortravel.com",
+      password: "$2b$10$jya3D5zQkarnCNp7ex9E1eQFFdHa5pQgvriM2BK5yiPM/BNO77Hf.", // bcrypt hash of "admin123"
+      role: "admin",
+      createdAt: new Date()
+    };
+    
+    this.users.set(defaultAdmin.id, defaultAdmin);
+  }
+
+  // User methods
+  async getUser(id: string): Promise<User | undefined> {
+    return this.users.get(id);
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    for (const user of this.users.values()) {
+      if (user.username === username) {
+        return user;
+      }
+    }
+    return undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const user: User = {
+      ...insertUser,
+      id: randomUUID(),
+      createdAt: new Date()
+    };
+    this.users.set(user.id, user);
+    return user;
+  }
+
+  // Inquiry methods
+  async createInquiry(insertInquiry: InsertInquiry): Promise<Inquiry> {
+    const inquiry: Inquiry = {
+      id: randomUUID(),
+      fullName: insertInquiry.fullName,
+      email: insertInquiry.email,
+      phone: insertInquiry.phone || null,
+      destination: insertInquiry.destination || null,
+      preferredDates: insertInquiry.preferredDates || null,
+      specialRequests: insertInquiry.specialRequests || null,
+      createdAt: new Date()
+    };
+    this.inquiries.set(inquiry.id, inquiry);
+    return inquiry;
+  }
+
+  async getInquiries(): Promise<Inquiry[]> {
+    return Array.from(this.inquiries.values()).sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }
+
+  async getInquiry(id: string): Promise<Inquiry | undefined> {
+    return this.inquiries.get(id);
+  }
+
+  // Page methods
+  async createPage(insertPage: InsertPage): Promise<Page> {
+    const page: Page = {
+      id: randomUUID(),
+      slug: insertPage.slug,
+      titleEn: insertPage.titleEn,
+      titleEs: insertPage.titleEs || null,
+      titleFr: insertPage.titleFr || null,
+      titleJp: insertPage.titleJp || null,
+      metaTitle: insertPage.metaTitle || null,
+      metaDescription: insertPage.metaDescription || null,
+      status: insertPage.status || "draft",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      createdBy: insertPage.createdBy || null
+    };
+    this.pages.set(page.id, page);
+    return page;
+  }
+
+  async getPages(): Promise<Page[]> {
+    const pagesArray: Page[] = [];
+    for (const page of this.pages.values()) {
+      pagesArray.push(page);
+    }
+    return pagesArray.sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }
+
+  async getPage(id: string): Promise<Page | undefined> {
+    return this.pages.get(id);
+  }
+
+  async getPageBySlug(slug: string): Promise<Page | undefined> {
+    for (const page of this.pages.values()) {
+      if (page.slug === slug) {
+        return page;
+      }
+    }
+    return undefined;
+  }
+
+  async updatePage(id: string, updateData: Partial<InsertPage>): Promise<Page | undefined> {
+    const existingPage = this.pages.get(id);
+    if (!existingPage) return undefined;
+
+    const updatedPage: Page = {
+      ...existingPage,
+      ...updateData,
+      updatedAt: new Date()
+    };
+    this.pages.set(id, updatedPage);
+    return updatedPage;
+  }
+
+  async deletePage(id: string): Promise<boolean> {
+    return this.pages.delete(id);
+  }
+
+  // Section methods
+  async createSection(insertSection: InsertSection): Promise<Section> {
+    const section: Section = {
+      id: randomUUID(),
+      pageId: insertSection.pageId,
+      type: insertSection.type,
+      orderIndex: insertSection.orderIndex || 0,
+      contentJson: insertSection.contentJson,
+      createdAt: new Date()
+    };
+    this.sections.set(section.id, section);
+    return section;
+  }
+
+  async getSectionsByPageId(pageId: string): Promise<Section[]> {
+    const sectionsArray: Section[] = [];
+    for (const section of this.sections.values()) {
+      if (section.pageId === pageId) {
+        sectionsArray.push(section);
+      }
+    }
+    return sectionsArray.sort((a, b) => (a.orderIndex || 0) - (b.orderIndex || 0));
+  }
+
+  async updateSection(id: string, updateData: Partial<InsertSection>): Promise<Section | undefined> {
+    const existingSection = this.sections.get(id);
+    if (!existingSection) return undefined;
+
+    const updatedSection: Section = {
+      ...existingSection,
+      ...updateData
+    };
+    this.sections.set(id, updatedSection);
+    return updatedSection;
+  }
+
+  async deleteSection(id: string): Promise<boolean> {
+    return this.sections.delete(id);
+  }
+
+  // Post methods
+  async createPost(insertPost: InsertPost): Promise<Post> {
+    const post: Post = {
+      id: randomUUID(),
+      slug: insertPost.slug,
+      titleEn: insertPost.titleEn,
+      titleEs: insertPost.titleEs || null,
+      titleFr: insertPost.titleFr || null,
+      titleJp: insertPost.titleJp || null,
+      bodyEn: insertPost.bodyEn || null,
+      bodyEs: insertPost.bodyEs || null,
+      bodyFr: insertPost.bodyFr || null,
+      bodyJp: insertPost.bodyJp || null,
+      featuredImage: insertPost.featuredImage || null,
+      excerpt: insertPost.excerpt || null,
+      status: insertPost.status || "draft",
+      publishedAt: insertPost.publishedAt || null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      createdBy: insertPost.createdBy || null
+    };
+    this.posts.set(post.id, post);
+    return post;
+  }
+
+  async getPosts(): Promise<Post[]> {
+    const postsArray: Post[] = [];
+    for (const post of this.posts.values()) {
+      postsArray.push(post);
+    }
+    return postsArray.sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }
+
+  async getPost(id: string): Promise<Post | undefined> {
+    return this.posts.get(id);
+  }
+
+  async getPostBySlug(slug: string): Promise<Post | undefined> {
+    for (const post of this.posts.values()) {
+      if (post.slug === slug) {
+        return post;
+      }
+    }
+    return undefined;
+  }
+
+  async updatePost(id: string, updateData: Partial<InsertPost>): Promise<Post | undefined> {
+    const existingPost = this.posts.get(id);
+    if (!existingPost) return undefined;
+
+    const updatedPost: Post = {
+      ...existingPost,
+      ...updateData,
+      updatedAt: new Date()
+    };
+    this.posts.set(id, updatedPost);
+    return updatedPost;
+  }
+
+  async deletePost(id: string): Promise<boolean> {
+    return this.posts.delete(id);
+  }
+
+  // Media methods
+  async createMedia(insertMedia: InsertMedia): Promise<Media> {
+    const media: Media = {
+      id: randomUUID(),
+      filename: insertMedia.filename,
+      originalName: insertMedia.originalName,
+      mimeType: insertMedia.mimeType,
+      size: insertMedia.size,
+      url: insertMedia.url,
+      altEn: insertMedia.altEn || null,
+      altEs: insertMedia.altEs || null,
+      altFr: insertMedia.altFr || null,
+      altJp: insertMedia.altJp || null,
+      caption: insertMedia.caption || null,
+      createdAt: new Date(),
+      uploadedBy: insertMedia.uploadedBy || null
+    };
+    this.mediaFiles.set(media.id, media);
+    return media;
+  }
+
+  async getMedia(): Promise<Media[]> {
+    const mediaArray: Media[] = [];
+    for (const media of this.mediaFiles.values()) {
+      mediaArray.push(media);
+    }
+    return mediaArray.sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }
+
+  async getMediaById(id: string): Promise<Media | undefined> {
+    return this.mediaFiles.get(id);
+  }
+
+  async deleteMedia(id: string): Promise<boolean> {
+    return this.mediaFiles.delete(id);
+  }
+}
+
+// Use in-memory storage for development (prevents database connection issues)
+export const storage = new MemoryStorage();
