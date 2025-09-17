@@ -23,14 +23,14 @@ export default function Navigation() {
       setIsMobileMenuOpen(false);
       return;
     }
-    
+
     // If not on home page, navigate to home first
     if (location !== "/") {
       window.location.href = `/#${sectionId}`;
       setIsMobileMenuOpen(false);
       return;
     }
-    
+
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -62,7 +62,7 @@ export default function Navigation() {
               </h1>
             </Link>
           </div>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">

@@ -1,8 +1,11 @@
-import { Switch, Route } from "wouter";
+
+import { Switch, Route, useLocation } from "wouter";
+import { AnimatePresence } from "framer-motion";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import PageTransition from "@/components/page-transition";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Contact from "@/pages/contact";
@@ -26,30 +29,34 @@ import Disclaimer from "@/pages/disclaimer";
 import ResponsibleTravel from "@/pages/responsible-travel";
 
 function Router() {
+  const [location] = useLocation();
+
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/destinations" component={Destinations} />
-      <Route path="/destinations/alexandria" component={Alexandria} />
-      <Route path="/destinations/aswan" component={Aswan} />
-      <Route path="/destinations/cairo" component={Cairo} />
-      <Route path="/destinations/dahab" component={Dahab} />
-      <Route path="/destinations/giza" component={Giza} />
-      <Route path="/destinations/hurghada" component={Hurghada} />
-      <Route path="/destinations/luxor" component={Luxor} />
-      <Route path="/destinations/sharm-el-sheikh" component={SharmElSheikh} />
-      <Route path="/destinations/siwa-oasis" component={SiwaOasis} />
-      <Route path="/experiences" component={Experiences} />
-      <Route path="/stay" component={Stay} />
-      <Route path="/contact" component={Contact} />
-      <Route path="/privacy-policy" component={PrivacyPolicy} />
-      <Route path="/terms-conditions" component={TermsConditions} />
-      <Route path="/cookie-policy" component={CookiePolicy} />
-      <Route path="/disclaimer" component={Disclaimer} />
-      <Route path="/responsible-travel" component={ResponsibleTravel} />
-      <Route component={NotFound} />
-    </Switch>
+    <AnimatePresence mode="wait" initial={false}>
+      <Switch location={location} key={location}>
+        <Route path="/" component={() => <PageTransition><Home /></PageTransition>} />
+        <Route path="/about" component={() => <PageTransition><About /></PageTransition>} />
+        <Route path="/destinations" component={() => <PageTransition><Destinations /></PageTransition>} />
+        <Route path="/destinations/alexandria" component={() => <PageTransition><Alexandria /></PageTransition>} />
+        <Route path="/destinations/aswan" component={() => <PageTransition><Aswan /></PageTransition>} />
+        <Route path="/destinations/cairo" component={() => <PageTransition><Cairo /></PageTransition>} />
+        <Route path="/destinations/dahab" component={() => <PageTransition><Dahab /></PageTransition>} />
+        <Route path="/destinations/giza" component={() => <PageTransition><Giza /></PageTransition>} />
+        <Route path="/destinations/hurghada" component={() => <PageTransition><Hurghada /></PageTransition>} />
+        <Route path="/destinations/luxor" component={() => <PageTransition><Luxor /></PageTransition>} />
+        <Route path="/destinations/sharm-el-sheikh" component={() => <PageTransition><SharmElSheikh /></PageTransition>} />
+        <Route path="/destinations/siwa-oasis" component={() => <PageTransition><SiwaOasis /></PageTransition>} />
+        <Route path="/experiences" component={() => <PageTransition><Experiences /></PageTransition>} />
+        <Route path="/stay" component={() => <PageTransition><Stay /></PageTransition>} />
+        <Route path="/contact" component={() => <PageTransition><Contact /></PageTransition>} />
+        <Route path="/privacy-policy" component={() => <PageTransition><PrivacyPolicy /></PageTransition>} />
+        <Route path="/terms-conditions" component={() => <PageTransition><TermsConditions /></PageTransition>} />
+        <Route path="/cookie-policy" component={() => <PageTransition><CookiePolicy /></PageTransition>} />
+        <Route path="/disclaimer" component={() => <PageTransition><Disclaimer /></PageTransition>} />
+        <Route path="/responsible-travel" component={() => <PageTransition><ResponsibleTravel /></PageTransition>} />
+        <Route component={() => <PageTransition><NotFound /></PageTransition>} />
+      </Switch>
+    </AnimatePresence>
   );
 }
 
