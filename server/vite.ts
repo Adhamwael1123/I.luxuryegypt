@@ -55,9 +55,9 @@ export async function setupVite(app: Express, server: Server) {
     // Skip asset-like URLs
     if (url.includes(".") && !url.endsWith("/")) return next();
     
-    // Only serve HTML to clients that accept it
-    const acceptHeader = req.headers.accept || "";
-    if (!acceptHeader.includes("text/html")) return next();
+    // Only serve HTML to clients that accept it (relaxed for curl and other tools)
+    const accept = req.headers.accept;
+    if (accept && !accept.includes("text/html") && accept !== "*/*") return next();
 
     try {
       const clientTemplate = path.resolve(
