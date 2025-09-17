@@ -181,7 +181,7 @@ export default function Dahab() {
               Bedouin experiences and luxury beachfront accommodations.
             </p>
             <Link href="/contact">
-              <Button size="lg" className="px-8 py-4 text-lg" data-testid="button-contact-dahab">
+              <Button size="lg" className="px-8 py-4 text-lg text-white" data-testid="button-contact-dahab">
                 Start Planning Your Dahab Adventure
               </Button>
             </Link>

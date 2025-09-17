@@ -177,7 +177,7 @@ export default function Luxor() {
               and luxury Nile cruise departures.
             </p>
             <Link href="/contact">
-              <Button size="lg" className="px-8 py-4 text-lg" data-testid="button-contact-luxor">
+              <Button size="lg" className="px-8 py-4 text-lg text-white" data-testid="button-contact-luxor">
                 Start Planning Your Luxor Adventure
               </Button>
             </Link>

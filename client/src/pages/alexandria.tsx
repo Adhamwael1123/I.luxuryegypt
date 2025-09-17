@@ -196,7 +196,7 @@ export default function Alexandria() {
             From private archaeological tours to sunset sailing, we'll craft your perfect Alexandria adventure.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" variant="secondary" className="px-8 py-4 text-lg min-w-[220px]" asChild data-testid="button-contact-alexandria-specialists">
+            <Button size="lg" variant="secondary" className="px-8 py-4 text-lg min-w-[220px] text-white" asChild data-testid="button-contact-alexandria-specialists">
               <Link href="/contact">Contact Our Alexandria Specialists</Link>
             </Button>
             <Button size="lg" variant="outline" className="px-8 py-4 text-lg min-w-[220px] border-white text-white hover:bg-white hover:text-primary" asChild data-testid="button-view-all-egypt-destinations">

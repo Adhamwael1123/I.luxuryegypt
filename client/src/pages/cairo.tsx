@@ -177,7 +177,7 @@ export default function Cairo() {
               that make this city truly unforgettable.
             </p>
             <Link href="/contact">
-              <Button size="lg" className="px-8 py-4 text-lg" data-testid="button-contact-cairo">
+              <Button size="lg" className="px-8 py-4 text-lg text-white" data-testid="button-contact-cairo">
                 Start Planning Your Cairo Adventure
               </Button>
             </Link>

@@ -177,7 +177,7 @@ export default function Giza() {
               and private evening experiences.
             </p>
             <Link href="/contact">
-              <Button size="lg" className="px-8 py-4 text-lg" data-testid="button-contact-giza">
+              <Button size="lg" className="px-8 py-4 text-lg text-white" data-testid="button-contact-giza">
                 Start Planning Your Giza Adventure
               </Button>
             </Link>

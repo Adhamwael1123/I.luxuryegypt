@@ -179,7 +179,7 @@ export default function Aswan() {
               temple visits and authentic Nubian cultural encounters.
             </p>
             <Link href="/contact">
-              <Button size="lg" className="px-8 py-4 text-lg" data-testid="button-contact-aswan">
+              <Button size="lg" className="px-8 py-4 text-lg text-white" data-testid="button-contact-aswan">
                 Start Planning Your Aswan Adventure
               </Button>
             </Link>

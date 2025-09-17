@@ -180,7 +180,7 @@ export default function SiwaOasis() {
               cultural experiences and oracle temple explorations.
             </p>
             <Link href="/contact">
-              <Button size="lg" className="px-8 py-4 text-lg" data-testid="button-contact-siwa">
+              <Button size="lg" className="px-8 py-4 text-lg text-white" data-testid="button-contact-siwa">
                 Start Planning Your Siwa Adventure
               </Button>
             </Link>
