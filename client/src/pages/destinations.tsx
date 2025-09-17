@@ -31,7 +31,7 @@ const destinations = [
     id: 'alexandria',
     name: 'Alexandria',
     tagline: 'Mediterranean Pearl of Egypt',
-    image: alexandriaImage,
+    image: aswanImage,
     highlights: ['Bibliotheca Alexandrina', 'Citadel of Qaitbay', 'Montaza Palace', 'Corniche Waterfront'],
     size: 'large',
     type: 'destination'
@@ -40,7 +40,7 @@ const destinations = [
     id: 'aswan',
     name: 'Aswan',
     tagline: 'Gateway to Nubian Heritage',
-    image: aswanImage,
+    image: cairoImage,
     highlights: ['Philae Temple', 'High Dam', 'Nubian Villages', 'Felucca Sailing'],
     size: 'medium',
     type: 'destination'
@@ -49,7 +49,7 @@ const destinations = [
     id: 'cairo',
     name: 'Cairo',
     tagline: 'The City of a Thousand Minarets',
-    image: cairoImage,
+    image: aswanImage,
     highlights: ['Islamic Cairo', 'Khan el-Khalili Bazaar', 'Saladin Citadel', 'Al-Azhar Mosque'],
     size: 'extra-tall',
     type: 'destination'
@@ -58,7 +58,7 @@ const destinations = [
     id: 'giza',
     name: 'Giza',
     tagline: 'Home of the Great Pyramids',
-    image: gizaImage,
+    image: alexandriaImage,
     highlights: ['Great Pyramids', 'Great Sphinx', 'Solar Boat Museum', 'Sound & Light Show'],
     size: 'large',
     type: 'destination'
@@ -67,7 +67,7 @@ const destinations = [
     id: 'hurghada',
     name: 'Hurghada',
     tagline: 'Red Sea Diving Paradise',
-    image: hurghadaImage,
+    image: siwaImage,
     highlights: ['Coral Reefs', 'World-class Diving', 'Marina Boulevard', 'Desert Safari'],
     size: 'tall',
     type: 'destination'
@@ -76,7 +76,7 @@ const destinations = [
     id: 'luxor',
     name: 'Luxor',
     tagline: 'The World\'s Greatest Open-Air Museum',
-    image: luxorExistingImage,
+    image: hurghadaImage,
     highlights: ['Valley of the Kings', 'Karnak Temple', 'Luxor Temple', 'Hatshepsut Temple'],
     size: 'extra-tall',
     type: 'destination'
@@ -85,7 +85,7 @@ const destinations = [
     id: 'sharm-el-sheikh',
     name: 'Sharm El-Sheikh',
     tagline: 'Sinai\'s Resort Paradise',
-    image: sharmImage,
+    image: dahahImage,
     highlights: ['Ras Mohammed Park', 'Naama Bay', 'Blue Hole Diving', 'St. Catherine Monastery'],
     size: 'medium',
     type: 'destination'
@@ -94,7 +94,7 @@ const destinations = [
     id: 'siwa-oasis',
     name: 'Siwa Oasis',
     tagline: 'Desert Sanctuary & Ancient Oracle',
-    image: siwaImage,
+    image: sharmImage,
     highlights: ['Temple of the Oracle', 'Cleopatra Springs', 'Shali Fortress', 'Salt Lakes'],
     size: 'tall',
     type: 'destination'
@@ -103,7 +103,7 @@ const destinations = [
     id: 'dahab',
     name: 'Dahab',
     tagline: 'Bohemian Red Sea Gem',
-    image: dahahImage,
+    image: sharmImage,
     highlights: ['Blue Hole', 'Lighthouse Reef', 'Bedouin Culture', 'Windsurfing'],
     size: 'small',
     type: 'destination'
