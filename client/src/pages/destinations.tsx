@@ -165,27 +165,27 @@ export default function Destinations() {
         </div>
       </section>
 
-      {/* Destinations Grid */}
+      {/* Destinations Masonry Grid */}
       <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="masonry-grid">
             {[...filteredDestinations, tailormadeCard].map((destination) => (
               <div
                 key={destination.id}
-                className="group cursor-pointer h-full"
+                className={`masonry-item ${destination.size} group cursor-pointer`}
                 data-testid={`destination-${destination.id}`}
               >
                 {destination.type === 'info' ? (
                   // Tailormade Journey Card
-                  <div className="bg-gradient-to-br from-primary/5 to-accent/10 p-8 rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl border border-accent/20 h-full flex flex-col">
+                  <div className="card-content rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl">
                     <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-4">
                       {destination.name}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">
+                    <p className="text-muted-foreground leading-relaxed mb-6">
                       {'description' in destination ? destination.description : ''}
                     </p>
                     <Button 
-                      className="w-full mt-auto" 
+                      className="w-full" 
                       asChild
                       data-testid="button-tailormade-view-details"
                     >
@@ -196,7 +196,7 @@ export default function Destinations() {
                   </div>
                 ) : (
                   // Regular Destination Card
-                  <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02] h-80 md:h-96">
+                  <div className="card-content relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02]">
                     <img
                       src={'image' in destination ? destination.image : ''}
                       alt={destination.name}
