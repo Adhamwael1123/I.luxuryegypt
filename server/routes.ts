@@ -163,6 +163,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
   
+  // Seed default admin user (for development)
+  app.post("/api/auth/seed", async (req, res) => {
+    try {
+      // Check if admin already exists
+      const existingAdmin = await storage.getUserByUsername("admin");
+      if (existingAdmin) {
+        return res.json({
+          success: true,
+          message: "Admin user already exists"
+        });
+      }
+      
+      // Create default admin user
+      const hashedPassword = await hashPassword("admin123");
+      const adminUser = await storage.createUser({
+        username: "admin",
+        email: "admin@luxortravel.com",
+        password: hashedPassword,
+        role: "admin"
+      });
+      
+      res.json({
+        success: true,
+        message: "Default admin user created successfully",
+        credentials: {
+          username: "admin",
+          password: "admin123"
+        }
+      });
+    } catch (error) {
+      console.error('Error seeding admin user:', error);
+      res.status(500).json({ message: 'Error creating admin user' });
+    }
+  });
+  
   // CMS Routes
   
   // Pages

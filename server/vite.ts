@@ -40,9 +40,27 @@ export async function setupVite(app: Express, server: Server) {
     appType: "custom",
   });
 
+  // Add JSON 404 handler for API routes BEFORE Vite middlewares
+  app.use("/api", (_req, res) => res.status(404).json({ message: "Not found" }));
+  
   app.use(vite.middlewares);
+  
+  // Catch-all for SPA routing - only for GET requests that don't start with /api
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
+    
+    // Skip non-GET requests
+    if (req.method !== "GET") return next();
+    
+    // Skip API routes
+    if (url.startsWith("/api")) return next();
+    
+    // Skip asset-like URLs
+    if (url.includes(".") && !url.endsWith("/")) return next();
+    
+    // Only serve HTML to clients that accept it
+    const acceptHeader = req.headers.accept || "";
+    if (!acceptHeader.includes("text/html")) return next();
 
     try {
       const clientTemplate = path.resolve(
