@@ -5,6 +5,17 @@ import ScrollToTopButton from '@/components/scroll-to-top-button';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 
+// Import Egyptian destination images
+import alexandriaImage from '@assets/photo-1742262361725-ed34e4cbbcee_1758110281630.avif';
+import aswanImage from '@assets/photo-1697546889969-27f7b5be8664_1758110296124.avif';
+import cairoImage from '@assets/photo-1633033254409-bd538e785f51_1758110317428.avif';
+import gizaImage from '@assets/photo-1553993500-d70955b75b5c_1758110346741.avif';
+import hurghadaImage from '@assets/photo-1643806294274-2db9dcbfe7a5_1758110400291.avif';
+import luxorExistingImage from '@assets/luxor_1757531163688.jpg';
+import sharmImage from '@assets/photo-1584114130913-0852aeb8fe8c_1758110469649.avif';
+import siwaImage from '@assets/photo-1627930855511-42cb0c457ee7_1758110488830.avif';
+import dahahImage from '@assets/photo-1629229370300-207a44ac54cd_1758110419478.avif';
+
 // Tailormade Journey card data
 const tailormadeCard = {
   id: 'tailormade-journey',
@@ -14,106 +25,88 @@ const tailormadeCard = {
   type: 'info'
 };
 
-// Global destination regions with varied sizes for masonry layout
+// Egyptian destinations with varied sizes for masonry layout
 const destinations = [
   {
-    id: 'africa',
-    name: 'Africa',
-    tagline: 'Wild Adventures Await',
-    image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['Safari Expeditions', 'Cultural Immersion', 'Victoria Falls'],
+    id: 'alexandria',
+    name: 'Alexandria',
+    tagline: 'Mediterranean Pearl of Egypt',
+    image: alexandriaImage,
+    highlights: ['Bibliotheca Alexandrina', 'Citadel of Qaitbay', 'Montaza Palace', 'Corniche Waterfront'],
     size: 'large',
-    type: 'region'
+    type: 'destination'
   },
   {
-    id: 'antarctica-arctic',
-    name: 'Antarctica & The Arctic',
-    tagline: 'Ultimate Polar Expeditions',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['Penguin Colonies', 'Arctic Wildlife', 'Ice Landscapes'],
+    id: 'aswan',
+    name: 'Aswan',
+    tagline: 'Gateway to Nubian Heritage',
+    image: aswanImage,
+    highlights: ['Philae Temple', 'High Dam', 'Nubian Villages', 'Felucca Sailing'],
+    size: 'medium',
+    type: 'destination'
+  },
+  {
+    id: 'cairo',
+    name: 'Cairo',
+    tagline: 'The City of a Thousand Minarets',
+    image: cairoImage,
+    highlights: ['Islamic Cairo', 'Khan el-Khalili Bazaar', 'Saladin Citadel', 'Al-Azhar Mosque'],
     size: 'extra-tall',
-    type: 'region'
+    type: 'destination'
   },
   {
-    id: 'asia',
-    name: 'Asia',
-    tagline: 'Ancient Traditions & Modern Wonders',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['Temple Complexes', 'Cultural Heritage', 'Natural Beauty'],
-    size: 'medium',
-    type: 'region'
-  },
-  {
-    id: 'australasia',
-    name: 'Australasia',
-    tagline: 'Diverse Landscapes & Unique Wildlife',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['Great Barrier Reef', 'Outback Adventures', 'Maori Culture'],
-    size: 'tall',
-    type: 'region'
-  },
-  {
-    id: 'europe',
-    name: 'Europe',
-    tagline: 'Rich History & Cultural Treasures',
-    image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['Historic Cities', 'Art & Architecture', 'Culinary Experiences'],
-    size: 'small',
-    type: 'region'
-  },
-  {
-    id: 'central-america',
-    name: 'Central America',
-    tagline: 'Colonial Charm & Natural Wonders',
-    image: 'https://images.unsplash.com/photo-1518621012360-d75747b6c1b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['Maya Heritage', 'Cloud Forests', 'Colonial Architecture'],
-    size: 'medium',
-    type: 'region'
-  },
-  {
-    id: 'south-america',
-    name: 'South America',
-    tagline: 'Dramatic Landscapes & Vibrant Cultures',
-    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['Machu Picchu', 'Amazon Rainforest', 'Patagonia'],
-    size: 'medium',
-    type: 'region'
-  },
-  {
-    id: 'caribbean',
-    name: 'Caribbean',
-    tagline: 'Tropical Paradise & Island Life',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['Pristine Beaches', 'Crystal Waters', 'Island Hopping'],
-    size: 'small',
-    type: 'region'
-  },
-  {
-    id: 'indian-ocean',
-    name: 'Indian Ocean',
-    tagline: 'Secluded Islands & Luxury Retreats',
-    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['Private Islands', 'Diving & Snorkeling', 'Luxury Resorts'],
-    size: 'tall',
-    type: 'region'
-  },
-  {
-    id: 'middle-east-north-africa',
-    name: 'Middle East & North Africa',
-    tagline: 'Ancient Civilizations & Desert Magic',
-    image: 'https://images.unsplash.com/photo-1575550959106-5a7defe28b56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['Historic Sites', 'Desert Adventures', 'Cultural Heritage'],
-    size: 'medium',
-    type: 'region'
-  },
-  {
-    id: 'north-america',
-    name: 'North America',
-    tagline: 'Vast Wilderness & Iconic Cities',
-    image: 'https://images.unsplash.com/photo-1563659916-b4ef70cc6201?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    highlights: ['National Parks', 'Urban Experiences', 'Natural Wonders'],
+    id: 'giza',
+    name: 'Giza',
+    tagline: 'Home of the Great Pyramids',
+    image: gizaImage,
+    highlights: ['Great Pyramids', 'Great Sphinx', 'Solar Boat Museum', 'Sound & Light Show'],
     size: 'large',
-    type: 'region'
+    type: 'destination'
+  },
+  {
+    id: 'hurghada',
+    name: 'Hurghada',
+    tagline: 'Red Sea Diving Paradise',
+    image: hurghadaImage,
+    highlights: ['Coral Reefs', 'World-class Diving', 'Marina Boulevard', 'Desert Safari'],
+    size: 'tall',
+    type: 'destination'
+  },
+  {
+    id: 'luxor',
+    name: 'Luxor',
+    tagline: 'The World\'s Greatest Open-Air Museum',
+    image: luxorExistingImage,
+    highlights: ['Valley of the Kings', 'Karnak Temple', 'Luxor Temple', 'Hatshepsut Temple'],
+    size: 'extra-tall',
+    type: 'destination'
+  },
+  {
+    id: 'sharm-el-sheikh',
+    name: 'Sharm El-Sheikh',
+    tagline: 'Sinai\'s Resort Paradise',
+    image: sharmImage,
+    highlights: ['Ras Mohammed Park', 'Naama Bay', 'Blue Hole Diving', 'St. Catherine Monastery'],
+    size: 'medium',
+    type: 'destination'
+  },
+  {
+    id: 'siwa-oasis',
+    name: 'Siwa Oasis',
+    tagline: 'Desert Sanctuary & Ancient Oracle',
+    image: siwaImage,
+    highlights: ['Temple of the Oracle', 'Cleopatra Springs', 'Shali Fortress', 'Salt Lakes'],
+    size: 'tall',
+    type: 'destination'
+  },
+  {
+    id: 'dahab',
+    name: 'Dahab',
+    tagline: 'Bohemian Red Sea Gem',
+    image: dahahImage,
+    highlights: ['Blue Hole', 'Lighthouse Reef', 'Bedouin Culture', 'Windsurfing'],
+    size: 'small',
+    type: 'destination'
   }
 ];
 
@@ -122,9 +115,9 @@ export default function Destinations() {
 
   const filteredDestinations = destinations.filter(destination => {
     if (selectedFilter === 'all') return true;
-    if (selectedFilter === 'adventure') return ['africa', 'antarctica-arctic', 'south-america', 'north-america'].includes(destination.id);
-    if (selectedFilter === 'cultural') return ['asia', 'europe', 'middle-east-north-africa', 'central-america'].includes(destination.id);
-    if (selectedFilter === 'tropical') return ['caribbean', 'indian-ocean', 'australasia'].includes(destination.id);
+    if (selectedFilter === 'ancient') return ['cairo', 'giza', 'luxor', 'aswan'].includes(destination.id);
+    if (selectedFilter === 'coastal') return ['alexandria', 'hurghada', 'sharm-el-sheikh', 'dahab'].includes(destination.id);
+    if (selectedFilter === 'desert') return ['siwa-oasis', 'giza'].includes(destination.id);
     return true;
   });
 
@@ -136,12 +129,12 @@ export default function Destinations() {
       <section className="pt-20 pb-16 bg-gradient-to-br from-background via-accent/5 to-primary/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary mb-6">
-            Destinations
+            Egyptian Destinations
           </h1>
           <div className="w-32 h-px bg-accent mx-auto mb-8"></div>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Discover extraordinary destinations across the globe. From wild adventures to cultural treasures, 
-            explore the world's most captivating regions through our bespoke luxury experiences.
+            Discover Egypt's most extraordinary destinations. From ancient temples and pyramids to pristine Red Sea coastlines, 
+            explore the land of pharaohs through our bespoke luxury experiences.
           </p>
         </div>
       </section>
@@ -152,9 +145,9 @@ export default function Destinations() {
           <div className="flex flex-wrap justify-center gap-4">
             {[
               { key: 'all', label: 'All Destinations' },
-              { key: 'adventure', label: 'Adventure & Wildlife' },
-              { key: 'cultural', label: 'Cultural Heritage' },
-              { key: 'tropical', label: 'Tropical Paradises' }
+              { key: 'ancient', label: 'Ancient Wonders' },
+              { key: 'coastal', label: 'Red Sea & Mediterranean' },
+              { key: 'desert', label: 'Desert Experiences' }
             ].map((filter) => (
               <Button
                 key={filter.key}

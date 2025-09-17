@@ -19,15 +19,15 @@ export default function InteractiveMapSection() {
       coordinates: { lat: 30.0444, lng: 31.2357 },
       description: "Ancient wonders meet modern luxury",
       color: "from-accent to-secondary",
-      attractions: ["Great Pyramids of Giza", "Egyptian Museum", "Islamic Cairo"]
+      attractions: ["Egyptian Museum", "Islamic Cairo", "Khan el-Khalili Bazaar"]
     },
     { 
-      name: "Siwa", 
-      position: "western",
-      coordinates: { lat: 29.2030, lng: 25.5197 },
-      description: "Desert oasis sanctuary",
-      color: "from-secondary to-primary",
-      attractions: ["Siwa Salt Lakes", "Temple of the Oracle", "Shali Fortress"]
+      name: "Giza", 
+      position: "central-north-west",
+      coordinates: { lat: 29.9792, lng: 31.1342 },
+      description: "Home of the Great Pyramids",
+      color: "from-primary to-accent",
+      attractions: ["Great Pyramids", "Great Sphinx", "Solar Boat Museum"]
     },
     { 
       name: "Luxor", 
@@ -38,20 +38,44 @@ export default function InteractiveMapSection() {
       attractions: ["Valley of the Kings", "Karnak Temple", "Luxor Temple"]
     },
     { 
-      name: "Red Sea", 
-      position: "eastern",
-      coordinates: { lat: 27.2579, lng: 33.8116 },
-      description: "Pristine coral reefs and luxury resorts",
-      color: "from-accent to-primary",
-      attractions: ["Hurghada Resorts", "Marsa Alam", "Ras Mohammed National Park"]
-    },
-    { 
       name: "Aswan", 
       position: "south",
       coordinates: { lat: 24.0889, lng: 32.8998 },
       description: "Gateway to Nubian heritage",
       color: "from-secondary to-accent",
       attractions: ["Philae Temple", "High Dam", "Nubian Villages"]
+    },
+    { 
+      name: "Hurghada", 
+      position: "eastern-central",
+      coordinates: { lat: 27.2574, lng: 33.8129 },
+      description: "Red Sea diving paradise",
+      color: "from-accent to-primary",
+      attractions: ["Coral Reefs", "Marina Boulevard", "Desert Safari"]
+    },
+    { 
+      name: "Sharm El-Sheikh", 
+      position: "eastern-south",
+      coordinates: { lat: 27.9158, lng: 34.3300 },
+      description: "Sinai's resort paradise",
+      color: "from-primary to-secondary",
+      attractions: ["Ras Mohammed Park", "Naama Bay", "Blue Hole Diving"]
+    },
+    { 
+      name: "Dahab", 
+      position: "eastern-southeast",
+      coordinates: { lat: 28.4942, lng: 34.5124 },
+      description: "Bohemian Red Sea gem",
+      color: "from-secondary to-primary",
+      attractions: ["Blue Hole", "Lighthouse Reef", "Bedouin Culture"]
+    },
+    { 
+      name: "Siwa Oasis", 
+      position: "western",
+      coordinates: { lat: 29.2030, lng: 25.5197 },
+      description: "Desert sanctuary & ancient oracle",
+      color: "from-accent to-secondary",
+      attractions: ["Temple of the Oracle", "Cleopatra Springs", "Shali Fortress"]
     }
   ];
 

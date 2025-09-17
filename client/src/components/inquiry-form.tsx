@@ -55,12 +55,17 @@ export default function InquiryForm() {
   };
 
   const destinations = [
-    { value: "cairo", label: "Cairo & Pyramids" },
-    { value: "luxor", label: "Luxor & Valley of Kings" },
-    { value: "aswan", label: "Aswan & Abu Simbel" },
-    { value: "red-sea", label: "Red Sea Resorts" },
     { value: "alexandria", label: "Alexandria" },
+    { value: "aswan", label: "Aswan" },
+    { value: "cairo", label: "Cairo" },
+    { value: "giza", label: "Giza" },
+    { value: "hurghada", label: "Hurghada" },
+    { value: "luxor", label: "Luxor" },
+    { value: "sharm-el-sheikh", label: "Sharm El-Sheikh" },
+    { value: "siwa-oasis", label: "Siwa Oasis" },
+    { value: "dahab", label: "Dahab" },
     { value: "custom", label: "Custom Itinerary" },
+    { value: "general", label: "General Inquiry" },
   ];
 
   if (isSubmitted) {
