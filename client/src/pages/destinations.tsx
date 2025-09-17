@@ -16,6 +16,7 @@ import sharmImage from '@assets/photo-1584114130913-0852aeb8fe8c_1758110469649.a
 import siwaImage from '@assets/photo-1627930855511-42cb0c457ee7_1758110488830.avif';
 import dahahImage from '@assets/photo-1629229370300-207a44ac54cd_1758110419478.avif';
 import newGizaImage from '@assets/photo-1553993500-d70955b75b5c_1758111284493.avif';
+import newDahabImage from '@assets/photo-1660151177491-2e27a9cf6deb_1758111400928.avif';
 
 // Tailormade Journey card data
 const tailormadeCard = {
@@ -104,7 +105,7 @@ const destinations = [
     id: 'dahab',
     name: 'Dahab',
     tagline: 'Bohemian Red Sea Gem',
-    image: sharmImage,
+    image: newDahabImage,
     highlights: ['Blue Hole', 'Lighthouse Reef', 'Bedouin Culture', 'Windsurfing'],
     size: 'small',
     type: 'destination'
