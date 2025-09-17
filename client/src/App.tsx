@@ -8,6 +8,7 @@ import Home from "@/pages/home";
 import Contact from "@/pages/contact";
 import About from "@/pages/about";
 import Destinations from "@/pages/destinations";
+import Alexandria from "@/pages/alexandria";
 import Stay from "@/pages/stay";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsConditions from "@/pages/terms-conditions";
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/destinations" component={Destinations} />
+      <Route path="/destinations/alexandria" component={Alexandria} />
       <Route path="/stay" component={Stay} />
       <Route path="/contact" component={Contact} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />

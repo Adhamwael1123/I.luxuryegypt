@@ -235,8 +235,8 @@ export default function Destinations() {
                           asChild
                           data-testid={`button-plan-visit-${destination.id}`}
                         >
-                          <Link href="/contact">
-                            Plan Your Visit
+                          <Link href={destination.id === 'alexandria' ? '/destinations/alexandria' : '/contact'}>
+                            {destination.id === 'alexandria' ? 'Explore Alexandria' : 'Plan Your Visit'}
                           </Link>
                         </Button>
                       </div>
