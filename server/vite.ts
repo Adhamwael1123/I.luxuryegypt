@@ -88,7 +88,7 @@ export async function setupVite(app: Express, server: Server) {
 }
 
 export function serveStatic(app: Express) {
-  const distPath = path.resolve(import.meta.dirname, "public");
+  const distPath = path.resolve(import.meta.dirname, "..", "dist", "public");
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
@@ -97,6 +97,11 @@ export function serveStatic(app: Express) {
   }
 
   app.use(express.static(distPath));
+
+  // Add JSON 404 handler for API routes in production
+  app.use("/api/*", (_req, res) => {
+    res.status(404).json({ message: "API endpoint not found" });
+  });
 
   // fall through to index.html if the file doesn't exist
   app.use("*", (_req, res) => {

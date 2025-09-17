@@ -14,6 +14,8 @@ if (!JWT_SECRET) {
   console.error("FATAL: JWT_SECRET environment variable is required for security");
   process.exit(1);
 }
+// Type assertion since we've verified JWT_SECRET exists
+const JWT_SECRET_STRING = JWT_SECRET as string;
 const JWT_EXPIRES_IN = "7d";
 
 // Hash password
@@ -35,7 +37,7 @@ export function generateToken(user: User): string {
       email: user.email, 
       role: user.role 
     },
-    JWT_SECRET,
+    JWT_SECRET_STRING,
     { expiresIn: JWT_EXPIRES_IN }
   );
 }
@@ -43,7 +45,7 @@ export function generateToken(user: User): string {
 // Verify JWT token
 export function verifyToken(token: string): any {
   try {
-    return jwt.verify(token, JWT_SECRET);
+    return jwt.verify(token, JWT_SECRET_STRING);
   } catch (error) {
     return null;
   }
