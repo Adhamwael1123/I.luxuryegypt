@@ -15,6 +15,7 @@ import luxorExistingImage from '@assets/luxor_1757531163688.jpg';
 import sharmImage from '@assets/photo-1584114130913-0852aeb8fe8c_1758110469649.avif';
 import siwaImage from '@assets/photo-1627930855511-42cb0c457ee7_1758110488830.avif';
 import dahahImage from '@assets/photo-1629229370300-207a44ac54cd_1758110419478.avif';
+import newGizaImage from '@assets/photo-1553993500-d70955b75b5c_1758111284493.avif';
 
 // Tailormade Journey card data
 const tailormadeCard = {
@@ -49,7 +50,7 @@ const destinations = [
     id: 'cairo',
     name: 'Cairo',
     tagline: 'The City of a Thousand Minarets',
-    image: aswanImage,
+    image: newGizaImage,
     highlights: ['Islamic Cairo', 'Khan el-Khalili Bazaar', 'Saladin Citadel', 'Al-Azhar Mosque'],
     size: 'extra-tall',
     type: 'destination'
