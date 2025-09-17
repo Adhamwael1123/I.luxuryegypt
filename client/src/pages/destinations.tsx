@@ -194,9 +194,9 @@ export default function Destinations() {
                       </Link>
                     </Button>
                   </div>
-                ) : destination.id === 'alexandria' ? (
-                  // Alexandria Destination Card - Fully Clickable
-                  <Link href="/destinations/alexandria" className="block">
+                ) : (
+                  // All Destination Cards - Fully Clickable with proper routing
+                  <Link href={`/destinations/${destination.id}`} className="block">
                     <div className="card-content relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02] cursor-pointer">
                       <img
                         src={'image' in destination ? destination.image : ''}
@@ -217,8 +217,8 @@ export default function Destinations() {
                           {'tagline' in destination ? destination.tagline : ''}
                         </p>
                         
-                        {/* Always visible for Alexandria */}
-                        <div className="opacity-100">
+                        {/* Highlights and button - visible on hover for all destinations */}
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <div className="flex flex-wrap gap-2 mb-4">
                             {('highlights' in destination ? destination.highlights : []).slice(0, 2).map((highlight: string, index: number) => (
                               <span
@@ -233,7 +233,7 @@ export default function Destinations() {
                             className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 opacity-90 hover:opacity-100 pointer-events-none"
                             data-testid={`button-plan-visit-${destination.id}`}
                           >
-                            Explore Alexandria
+                            Explore {destination.name}
                           </span>
                         </div>
                       </div>
@@ -242,57 +242,6 @@ export default function Destinations() {
                       <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/30 rounded-xl transition-colors duration-300" />
                     </div>
                   </Link>
-                ) : (
-                  // Regular Destination Card
-                  <div className="card-content relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02]">
-                    <img
-                      src={'image' in destination ? destination.image : ''}
-                      alt={destination.name}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                      loading="lazy"
-                    />
-                    
-                    {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    
-                    {/* Content overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                      <h3 className="text-2xl md:text-3xl font-serif font-bold mb-2" data-testid={`destination-name-${destination.id}`}>
-                        {destination.name}
-                      </h3>
-                      <p className="text-accent/90 font-medium mb-4 tracking-wide">
-                        {'tagline' in destination ? destination.tagline : ''}
-                      </p>
-                      
-                      {/* Highlights - visible on hover */}
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {('highlights' in destination ? destination.highlights : []).slice(0, 2).map((highlight: string, index: number) => (
-                            <span
-                              key={index}
-                              className="text-xs bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full"
-                            >
-                              {highlight}
-                            </span>
-                          ))}
-                        </div>
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="opacity-90 hover:opacity-100"
-                          asChild
-                          data-testid={`button-plan-visit-${destination.id}`}
-                        >
-                          <Link href="/contact">
-                            Plan Your Visit
-                          </Link>
-                        </Button>
-                      </div>
-                    </div>
-
-                    {/* Accent border */}
-                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/30 rounded-xl transition-colors duration-300" />
-                  </div>
                 )}
               </div>
             ))}

@@ -9,6 +9,14 @@ import Contact from "@/pages/contact";
 import About from "@/pages/about";
 import Destinations from "@/pages/destinations";
 import Alexandria from "@/pages/alexandria";
+import Aswan from "@/pages/aswan";
+import Cairo from "@/pages/cairo";
+import Dahab from "@/pages/dahab";
+import Giza from "@/pages/giza";
+import Hurghada from "@/pages/hurghada";
+import Luxor from "@/pages/luxor";
+import SharmElSheikh from "@/pages/sharm-el-sheikh";
+import SiwaOasis from "@/pages/siwa-oasis";
 import Experiences from "@/pages/experiences";
 import Stay from "@/pages/stay";
 import PrivacyPolicy from "@/pages/privacy-policy";
@@ -24,6 +32,14 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/destinations" component={Destinations} />
       <Route path="/destinations/alexandria" component={Alexandria} />
+      <Route path="/destinations/aswan" component={Aswan} />
+      <Route path="/destinations/cairo" component={Cairo} />
+      <Route path="/destinations/dahab" component={Dahab} />
+      <Route path="/destinations/giza" component={Giza} />
+      <Route path="/destinations/hurghada" component={Hurghada} />
+      <Route path="/destinations/luxor" component={Luxor} />
+      <Route path="/destinations/sharm-el-sheikh" component={SharmElSheikh} />
+      <Route path="/destinations/siwa-oasis" component={SiwaOasis} />
       <Route path="/experiences" component={Experiences} />
       <Route path="/stay" component={Stay} />
       <Route path="/contact" component={Contact} />
