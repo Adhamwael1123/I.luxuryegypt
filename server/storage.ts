@@ -9,8 +9,14 @@ import {
 import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
 
-// Database connection
-const sql = neon(process.env.DATABASE_URL!);
+// Database connection with pooled connection for better SSL handling
+const connectionString = process.env.DATABASE_URL!;
+// Use pooled connection URL if available
+const pooledUrl = connectionString.includes('.us-east-2') 
+  ? connectionString.replace('.us-east-2', '-pooler.us-east-2')
+  : connectionString;
+
+const sql = neon(pooledUrl);
 const db = drizzle(sql);
 
 // modify the interface with any CRUD methods
