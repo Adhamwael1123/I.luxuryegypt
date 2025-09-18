@@ -531,26 +531,38 @@ export default function BlogPost() {
       </section>
 
       {/* Article Content */}
-      <section className="py-16 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-12">
+      <section className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col xl:flex-row gap-16">
             {/* Main Content */}
-            <article className="lg:flex-1">
+            <article className="xl:flex-1 max-w-4xl xl:max-w-none">
+              <div className="mb-12">
+                <div className="w-24 h-px bg-accent mb-8"></div>
+                <div className="text-lg text-muted-foreground leading-relaxed mb-8">
+                  {post.excerpt}
+                </div>
+              </div>
+              
               <div 
-                className="prose prose-lg max-w-none prose-primary"
+                className="prose prose-xl max-w-none prose-primary"
+                style={{
+                  fontSize: '1.125rem',
+                  lineHeight: '1.8',
+                  letterSpacing: '0.01em'
+                }}
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
               
               {/* Tags */}
-              <div className="mt-12 pt-8 border-t border-border">
-                <h4 className="text-lg font-semibold text-primary mb-4">Tags</h4>
-                <div className="flex flex-wrap gap-2">
+              <div className="mt-16 pt-12 border-t border-border">
+                <h4 className="text-2xl font-serif font-bold text-primary mb-6">Related Topics</h4>
+                <div className="flex flex-wrap gap-3">
                   {post.tags.map((tag: string) => (
                     <span
                       key={tag}
-                      className="text-sm bg-accent/10 text-accent px-3 py-1 rounded-full flex items-center gap-1"
+                      className="text-base bg-accent/10 text-accent px-4 py-2 rounded-full flex items-center gap-2 hover:bg-accent/20 transition-colors"
                     >
-                      <Tag className="h-3 w-3" />
+                      <Tag className="h-4 w-4" />
                       {tag}
                     </span>
                   ))}
@@ -559,49 +571,79 @@ export default function BlogPost() {
             </article>
 
             {/* Sidebar */}
-            <aside className="lg:w-80">
+            <aside className="xl:w-96 xl:flex-shrink-0">
+              {/* Article Info */}
+              <Card className="mb-8 bg-muted/30">
+                <CardContent className="p-8">
+                  <h4 className="text-xl font-serif font-bold text-primary mb-6">Article Information</h4>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <User className="h-5 w-5 text-accent" />
+                      <div>
+                        <p className="font-medium text-primary">{post.author}</p>
+                        <p className="text-sm text-muted-foreground">Author</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Calendar className="h-5 w-5 text-accent" />
+                      <div>
+                        <p className="font-medium text-primary">{new Date(post.publishedAt).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}</p>
+                        <p className="text-sm text-muted-foreground">Published</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Clock className="h-5 w-5 text-accent" />
+                      <div>
+                        <p className="font-medium text-primary">{post.readTime}</p>
+                        <p className="text-sm text-muted-foreground">Reading Time</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
               {/* Share Article */}
               <Card className="mb-8">
-                <CardContent className="p-6">
-                  <h4 className="text-lg font-semibold text-primary mb-4 flex items-center gap-2">
-                    <Share2 className="h-5 w-5" />
+                <CardContent className="p-8">
+                  <h4 className="text-xl font-serif font-bold text-primary mb-6 flex items-center gap-3">
+                    <Share2 className="h-6 w-6 text-accent" />
                     Share This Article
                   </h4>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 gap-3">
                     <Button
                       variant="outline"
-                      size="sm"
                       onClick={() => handleShare('facebook')}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-3 justify-start p-4 h-auto"
                     >
-                      <Facebook className="h-4 w-4" />
-                      Facebook
+                      <Facebook className="h-5 w-5" />
+                      Share on Facebook
                     </Button>
                     <Button
                       variant="outline"
-                      size="sm"
                       onClick={() => handleShare('twitter')}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-3 justify-start p-4 h-auto"
                     >
-                      <Twitter className="h-4 w-4" />
-                      Twitter
+                      <Twitter className="h-5 w-5" />
+                      Share on Twitter
                     </Button>
                     <Button
                       variant="outline"
-                      size="sm"
                       onClick={() => handleShare('linkedin')}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-3 justify-start p-4 h-auto"
                     >
-                      <Linkedin className="h-4 w-4" />
-                      LinkedIn
+                      <Linkedin className="h-5 w-5" />
+                      Share on LinkedIn
                     </Button>
                     <Button
                       variant="outline"
-                      size="sm"
                       onClick={() => handleShare('copy')}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-3 justify-start p-4 h-auto"
                     >
-                      <Copy className="h-4 w-4" />
+                      <Copy className="h-5 w-5" />
                       Copy Link
                     </Button>
                   </div>
@@ -610,28 +652,32 @@ export default function BlogPost() {
 
               {/* Related Articles */}
               <Card>
-                <CardContent className="p-6">
-                  <h4 className="text-lg font-semibold text-primary mb-4">Related Articles</h4>
-                  <div className="space-y-4">
+                <CardContent className="p-8">
+                  <h4 className="text-xl font-serif font-bold text-primary mb-6">Related Articles</h4>
+                  <div className="space-y-6">
                     {blogPosts
                       .filter(p => p.id !== post.id && p.category === post.category)
                       .slice(0, 3)
                       .map((relatedPost) => (
                         <Link key={relatedPost.id} href={`/blog/${relatedPost.id}`}>
-                          <div className="group cursor-pointer">
-                            <div className="flex gap-3">
+                          <div className="group cursor-pointer p-4 rounded-lg hover:bg-muted/30 transition-colors">
+                            <div className="flex gap-4">
                               <img
                                 src={relatedPost.image}
                                 alt={relatedPost.title}
-                                className="w-16 h-16 object-cover rounded-md flex-shrink-0"
+                                className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
                               />
                               <div className="flex-1 min-w-0">
-                                <h5 className="text-sm font-medium text-primary group-hover:text-accent transition-colors line-clamp-2 mb-1">
+                                <h5 className="text-base font-semibold text-primary group-hover:text-accent transition-colors line-clamp-2 mb-2 leading-snug">
                                   {relatedPost.title}
                                 </h5>
-                                <div className="flex items-center text-xs text-muted-foreground">
-                                  <Calendar className="h-3 w-3 mr-1" />
+                                <div className="flex items-center text-sm text-muted-foreground mb-1">
+                                  <Calendar className="h-4 w-4 mr-2" />
                                   {new Date(relatedPost.publishedAt).toLocaleDateString()}
+                                </div>
+                                <div className="flex items-center text-sm text-muted-foreground">
+                                  <Clock className="h-4 w-4 mr-2" />
+                                  {relatedPost.readTime}
                                 </div>
                               </div>
                             </div>
