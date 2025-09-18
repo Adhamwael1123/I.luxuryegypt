@@ -1,16 +1,19 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
-import { Clock, Users, MapPin, Star, Calendar } from "lucide-react";
+import { Clock, Users, MapPin, Star, Calendar, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 
 // Categories with Tours Data
 const categories = [
   {
     key: 'family',
-    label: 'Family Holidays',
+    label: 'Family Luxury',
     description: 'Perfect adventures designed for families to explore Egypt together with engaging activities for all ages.',
+    image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
     tours: [
       {
         id: 'pyramid-adventure',
@@ -54,48 +57,83 @@ const categories = [
     ]
   },
   {
-    key: 'luxury',
-    label: 'Luxury Holidays',
-    description: 'Indulge in the finest Egyptian experiences with premium accommodations, private guides, and exclusive access.',
+    key: 'nile-cruise',
+    label: 'Nile Cruise',
+    description: 'Sail through ancient Egypt aboard luxury vessels, experiencing timeless beauty along the legendary Nile River.',
+    image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
     tours: [
       {
-        id: 'ancient-capital-discovery',
-        name: 'Ancient Capital Discovery',
-        location: 'Cairo & Giza',
-        duration: '3 Days',
-        groupSize: '2-8 People',
-        price: 'From $1,250',
-        rating: 4.8,
-        image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Private Guides', 'Luxury Hotels', 'Exclusive Access', 'Premium Dining'],
-        description: 'Private guided tours of pyramids, museums, and Islamic architecture with luxury accommodations.',
-        itinerary: 'Stay in 5-star hotels, enjoy private museum tours, exclusive pyramid access, and dine at Cairo\'s finest restaurants.'
-      },
-      {
-        id: 'theban-necropolis-experience',
-        name: 'Theban Necropolis Experience',
-        location: 'Luxor',
-        duration: '2 Days',
-        groupSize: '2-6 People',
-        price: 'From $950',
-        rating: 5.0,
-        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Royal Tombs', 'Private Ceremonies', 'Luxury Accommodation', 'Expert Egyptologists'],
-        description: 'Exclusive access to royal tombs and private temple ceremonies in the ancient Theban necropolis.',
-        itinerary: 'Private early morning tomb visits, exclusive temple ceremonies, luxury Nile-view accommodation, and expert archaeological guidance.'
-      },
-      {
-        id: 'red-sea-luxury-resort',
-        name: 'Red Sea Luxury Resort',
-        location: 'Hurghada',
+        id: 'luxury-nile-cruise',
+        name: 'Luxury Nile River Cruise',
+        location: 'Aswan to Luxor',
         duration: '5 Days',
-        groupSize: '2-8 People',
-        price: 'From $1,800',
+        groupSize: '2-20 People',
+        price: 'From $1,200',
         rating: 4.9,
-        image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['5-Star Resort', 'Private Diving', 'Spa Treatments', 'Beachfront Luxury'],
-        description: 'Five-star beachfront resort with private diving excursions and world-class spa treatments.',
-        itinerary: 'Luxury beachfront suite, private yacht excursions, world-class diving with marine biologists, and rejuvenating spa experiences.'
+        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['5-Star Vessel', 'Temple Visits', 'Onboard Dining', 'Sunset Views'],
+        description: 'Experience Egypt from the water aboard a luxury Nile cruise with guided temple visits and world-class amenities.',
+        itinerary: 'Luxury cruise with stops at Kom Ombo, Edfu, and Esna temples, plus visits to Valley of Kings and Karnak Temple.'
+      },
+      {
+        id: 'private-dahabiya-cruise',
+        name: 'Private Dahabiya Cruise',
+        location: 'Nile River',
+        duration: '7 Days',
+        groupSize: '2-8 People',
+        price: 'From $4,500',
+        rating: 5.0,
+        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Private Yacht', 'Personal Crew', 'Exclusive Access', 'Gourmet Cuisine'],
+        description: 'Ultra-luxury sailing yacht with personal crew and private guide for the ultimate Nile experience.',
+        itinerary: 'Private luxury dahabiya with dedicated crew, exclusive temple access outside tourist hours, gourmet onboard dining, and personalized itinerary.'
+      }
+    ]
+  },
+  {
+    key: 'classic',
+    label: 'Classic Egypt',
+    description: 'Discover Egypt\'s most iconic sites and timeless wonders in comprehensive classic tours.',
+    image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
+    tours: [
+      {
+        id: 'pyramids-museum-classic',
+        name: 'Pyramids & Egyptian Museum',
+        location: 'Cairo & Giza',
+        duration: '2 Days',
+        groupSize: '2-12 People',
+        price: 'From $380',
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Great Pyramids', 'Sphinx', 'Egyptian Museum', 'Khan el-Khalili'],
+        description: 'Private tours of the Great Pyramids, Sphinx, and world-renowned Egyptian Museum.',
+        itinerary: 'Explore the Great Pyramids complex, visit the enigmatic Sphinx, discover treasures at the Egyptian Museum, and shop at Khan el-Khalili bazaar.'
+      },
+      {
+        id: 'valley-kings-karnak',
+        name: 'Valley of Kings & Karnak',
+        location: 'Luxor',
+        duration: '3 Days',
+        groupSize: '2-15 People',
+        price: 'From $520',
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Valley of Kings', 'Karnak Temple', 'Luxor Temple', 'Nile Views'],
+        description: 'Luxury Nile cruise with exclusive access to royal tombs and magnificent temples.',
+        itinerary: 'Royal tomb explorations, magnificent Karnak Temple complex, beautiful Luxor Temple, and scenic Nile River experiences.'
+      },
+      {
+        id: 'nubian-heritage-philae',
+        name: 'Nubian Heritage & Philae Temple',
+        location: 'Aswan',
+        duration: '2 Days',
+        groupSize: '2-10 People',
+        price: 'From $420',
+        rating: 4.7,
+        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Philae Temple', 'Nubian Villages', 'Abu Simbel', 'High Dam'],
+        description: 'Explore Nubian villages, visit Philae Temple, and experience the majesty of Abu Simbel.',
+        itinerary: 'Colorful Nubian village visits, beautiful Philae Temple on its island, magnificent Abu Simbel temples, and modern High Dam engineering marvel.'
       }
     ]
   },
@@ -103,6 +141,7 @@ const categories = [
     key: 'spiritual',
     label: 'Spiritual Journeys',
     description: 'Connect with ancient Egyptian spirituality through sacred sites, meditation, and transformative experiences.',
+    image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
     tours: [
       {
         id: 'sacred-geometry-wisdom',
@@ -149,6 +188,7 @@ const categories = [
     key: 'adventure',
     label: 'Adventure Tours',
     description: 'Explore Egypt\'s hidden treasures, mystical deserts, and off-the-beaten-path destinations for the adventurous spirit.',
+    image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop',
     tours: [
       {
         id: 'white-desert-camping',
@@ -192,55 +232,10 @@ const categories = [
     ]
   },
   {
-    key: 'classic',
-    label: 'Classic Egypt',
-    description: 'Discover Egypt\'s most iconic sites and timeless wonders in comprehensive classic tours.',
-    tours: [
-      {
-        id: 'pyramids-museum-classic',
-        name: 'Pyramids & Egyptian Museum',
-        location: 'Cairo & Giza',
-        duration: '2 Days',
-        groupSize: '2-12 People',
-        price: 'From $380',
-        rating: 4.9,
-        image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Great Pyramids', 'Sphinx', 'Egyptian Museum', 'Khan el-Khalili'],
-        description: 'Private tours of the Great Pyramids, Sphinx, and world-renowned Egyptian Museum.',
-        itinerary: 'Explore the Great Pyramids complex, visit the enigmatic Sphinx, discover treasures at the Egyptian Museum, and shop at Khan el-Khalili bazaar.'
-      },
-      {
-        id: 'valley-kings-karnak',
-        name: 'Valley of Kings & Karnak',
-        location: 'Luxor',
-        duration: '3 Days',
-        groupSize: '2-15 People',
-        price: 'From $520',
-        rating: 4.8,
-        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Valley of Kings', 'Karnak Temple', 'Luxor Temple', 'Nile Views'],
-        description: 'Luxury Nile cruise with exclusive access to royal tombs and magnificent temples.',
-        itinerary: 'Royal tomb explorations, magnificent Karnak Temple complex, beautiful Luxor Temple, and scenic Nile River experiences.'
-      },
-      {
-        id: 'nubian-heritage-philae',
-        name: 'Nubian Heritage & Philae Temple',
-        location: 'Aswan',
-        duration: '2 Days',
-        groupSize: '2-10 People',
-        price: 'From $420',
-        rating: 4.7,
-        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Philae Temple', 'Nubian Villages', 'Abu Simbel', 'High Dam'],
-        description: 'Explore Nubian villages, visit Philae Temple, and experience the majesty of Abu Simbel.',
-        itinerary: 'Colorful Nubian village visits, beautiful Philae Temple on its island, magnificent Abu Simbel temples, and modern High Dam engineering marvel.'
-      }
-    ]
-  },
-  {
     key: 'ultra-luxury',
-    label: 'Ultra-Luxury',
+    label: 'Ultra Luxury',
     description: 'The pinnacle of Egyptian luxury travel with exclusive access, private vessels, and unparalleled service.',
+    image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
     tours: [
       {
         id: 'imperial-cairo-experience',
@@ -256,8 +251,8 @@ const categories = [
         itinerary: 'Stay in presidential suites, private after-hours museum access, Michelin-starred dining, personal Egyptologist, and luxury helicopter transfers.'
       },
       {
-        id: 'private-dahabiya-cruise',
-        name: 'Private Dahabiya Cruise',
+        id: 'private-dahabiya-ultra',
+        name: 'Private Dahabiya Ultra Experience',
         location: 'Nile River',
         duration: '7 Days',
         groupSize: '2-8 People',
@@ -286,26 +281,20 @@ const categories = [
 ];
 
 export default function Experiences() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTour, setSelectedTour] = useState<string | null>(null);
 
-  const getCategoryData = () => {
-    if (selectedCategory === 'all') {
-      return {
-        key: 'all',
-        label: 'All Experiences',
-        description: 'Explore all our carefully curated Egyptian adventures across different categories.',
-        tours: categories.flatMap(cat => cat.tours)
-      };
-    }
-    return categories.find(cat => cat.key === selectedCategory);
+  const currentCategory = selectedCategory ? categories.find(cat => cat.key === selectedCategory) : null;
+
+  const handleCategoryClick = (categoryKey: string) => {
+    setSelectedCategory(categoryKey);
+    setSelectedTour(null);
   };
 
-  const currentCategory = getCategoryData();
-  const categoryOptions = [
-    { key: 'all', label: 'All Experiences' },
-    ...categories.map(cat => ({ key: cat.key, label: cat.label }))
-  ];
+  const handleBackToCategories = () => {
+    setSelectedCategory(null);
+    setSelectedTour(null);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -325,165 +314,214 @@ export default function Experiences() {
         </div>
       </section>
 
-      {/* Filter Section */}
-      <section className="py-8 bg-background border-b border-accent/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categoryOptions.map((category) => (
-              <Button
-                key={category.key}
-                variant={selectedCategory === category.key ? 'default' : 'outline'}
-                onClick={() => setSelectedCategory(category.key)}
-                className="min-w-[140px]"
-                data-testid={`filter-${category.key}`}
-              >
-                {category.label}
-              </Button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Category Description */}
-      {currentCategory && selectedCategory !== 'all' && (
-        <section className="py-8 bg-muted/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              {currentCategory.label}
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              {currentCategory.description}
-            </p>
-          </div>
-        </section>
-      )}
-
-      {/* Tours Grid */}
-      <section className="py-16 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {currentCategory?.tours.map((tour) => (
-              <div
-                key={tour.id}
-                className="group cursor-pointer"
-                data-testid={`tour-${tour.id}`}
-              >
-                <div className="bg-card rounded-xl overflow-hidden shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02]">
-                  {/* Package Image */}
+      {!selectedCategory ? (
+        // Category Cards Grid
+        <section className="py-16 bg-background">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
+                Choose Your Adventure
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Select from our carefully curated experience categories to discover your perfect Egyptian journey.
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {categories.map((category, index) => (
+                <Card
+                  key={category.key}
+                  className="group cursor-pointer overflow-hidden hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02]"
+                  onClick={() => handleCategoryClick(category.key)}
+                  data-testid={`category-${category.key}`}
+                >
                   <div className="relative h-64 overflow-hidden">
                     <img
-                      src={tour.image}
-                      alt={tour.name}
+                      src={category.image}
+                      alt={category.label}
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                       loading="lazy"
                     />
-                    <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
-                      <Star className="h-4 w-4 text-accent fill-accent" />
-                      <span className="text-sm font-medium">{tour.rating}</span>
-                    </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
-                      <div className="flex items-center gap-2 text-accent font-medium text-sm mb-1">
-                        <MapPin className="h-3 w-3" />
-                        <span>{tour.location}</span>
-                      </div>
-                      <h3 className="text-2xl font-serif font-bold text-white">{tour.name}</h3>
+                      <h3 className="text-2xl font-serif font-bold text-white mb-2">{category.label}</h3>
+                      <p className="text-accent font-medium text-sm">
+                        {category.tours.length} Experience{category.tours.length !== 1 ? 's' : ''}
+                      </p>
                     </div>
                   </div>
-
-                  {/* Package Content */}
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        <span>{tour.duration}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        <span>{tour.groupSize}</span>
-                      </div>
-                    </div>
-
-                    <p className="text-muted-foreground mb-4 leading-relaxed">
-                      {tour.description}
+                  
+                  <CardContent className="p-6">
+                    <p className="text-muted-foreground leading-relaxed">
+                      {category.description}
                     </p>
-
-                    {/* Highlights */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {tour.highlights.map((highlight: string, index: number) => (
-                        <span
-                          key={index}
-                          className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full"
-                        >
-                          {highlight}
-                        </span>
-                      ))}
+                    <div className="mt-4 flex items-center text-accent font-medium">
+                      <span>Explore Category</span>
+                      <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
                     </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : (
+        // Selected Category Tours
+        <>
+          {/* Category Header with Back Button */}
+          <section className="py-8 bg-muted/30">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <Button
+                variant="outline"
+                onClick={handleBackToCategories}
+                className="mb-6"
+                data-testid="back-to-categories"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Categories
+              </Button>
+              
+              <div className="text-center">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
+                  {currentCategory?.label}
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                  {currentCategory?.description}
+                </p>
+              </div>
+            </div>
+          </section>
 
-                    {/* Price and Action */}
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-2xl font-serif font-bold text-primary">{tour.price}</p>
-                        <p className="text-sm text-muted-foreground">per person</p>
+          {/* Tours Grid */}
+          <section className="py-16 bg-background">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {currentCategory?.tours.map((tour) => (
+                  <div
+                    key={tour.id}
+                    className="group cursor-pointer"
+                    data-testid={`tour-${tour.id}`}
+                  >
+                    <div className="bg-card rounded-xl overflow-hidden shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02]">
+                      {/* Package Image */}
+                      <div className="relative h-64 overflow-hidden">
+                        <img
+                          src={tour.image}
+                          alt={tour.name}
+                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                          loading="lazy"
+                        />
+                        <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
+                          <Star className="h-4 w-4 text-accent fill-accent" />
+                          <span className="text-sm font-medium">{tour.rating}</span>
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="flex items-center gap-2 text-accent font-medium text-sm mb-1">
+                            <MapPin className="h-3 w-3" />
+                            <span>{tour.location}</span>
+                          </div>
+                          <h3 className="text-2xl font-serif font-bold text-white">{tour.name}</h3>
+                        </div>
                       </div>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setSelectedTour(selectedTour === tour.id ? null : tour.id)}
-                          data-testid={`button-view-itinerary-${tour.id}`}
-                        >
-                          {selectedTour === tour.id ? 'Hide Details' : 'View Itinerary'}
-                        </Button>
-                        <Button size="sm" asChild data-testid={`button-book-${tour.id}`}>
-                          <Link href="/contact">
-                            Book Now
-                          </Link>
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Tour Itinerary - Expandable */}
-                  {selectedTour === tour.id && (
-                    <div className="border-t border-border bg-muted/30 p-6">
-                      <h4 className="text-lg font-serif font-bold text-primary mb-4 flex items-center gap-2">
-                        <Calendar className="h-5 w-5" />
-                        Tour Itinerary & Details
-                      </h4>
-                      <div className="space-y-4">
-                        <div className="border-l-2 border-accent/30 pl-4">
-                          <div className="flex items-start gap-3">
-                            <div className="flex-shrink-0">
-                              <span className="inline-block w-8 h-8 bg-accent/10 text-accent rounded-full text-sm font-medium flex items-center justify-center">
-                                !
-                              </span>
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="text-sm font-medium text-accent">{tour.duration}</span>
-                                <span className="text-sm text-muted-foreground">•</span>
-                                <span className="text-sm text-muted-foreground flex items-center gap-1">
-                                  <MapPin className="h-3 w-3" />
-                                  {tour.location}
-                                </span>
-                              </div>
-                              <h5 className="font-semibold text-primary mb-1">Complete Itinerary</h5>
-                              <p className="text-sm text-muted-foreground leading-relaxed">
-                                {tour.itinerary}
-                              </p>
-                            </div>
+                      {/* Package Content */}
+                      <div className="p-6">
+                        <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-4 w-4" />
+                            <span>{tour.duration}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Users className="h-4 w-4" />
+                            <span>{tour.groupSize}</span>
+                          </div>
+                        </div>
+
+                        <p className="text-muted-foreground mb-4 leading-relaxed">
+                          {tour.description}
+                        </p>
+
+                        {/* Highlights */}
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {tour.highlights.map((highlight: string, index: number) => (
+                            <span
+                              key={index}
+                              className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full"
+                            >
+                              {highlight}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Price and Action */}
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-2xl font-serif font-bold text-primary">{tour.price}</p>
+                            <p className="text-sm text-muted-foreground">per person</p>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setSelectedTour(selectedTour === tour.id ? null : tour.id)}
+                              data-testid={`button-view-itinerary-${tour.id}`}
+                            >
+                              {selectedTour === tour.id ? 'Hide Details' : 'View Itinerary'}
+                            </Button>
+                            <Button size="sm" asChild data-testid={`button-book-${tour.id}`}>
+                              <Link href="/contact">
+                                Book Now
+                              </Link>
+                            </Button>
                           </div>
                         </div>
                       </div>
+
+                      {/* Tour Itinerary - Expandable */}
+                      {selectedTour === tour.id && (
+                        <div className="border-t border-border bg-muted/30 p-6">
+                          <h4 className="text-lg font-serif font-bold text-primary mb-4 flex items-center gap-2">
+                            <Calendar className="h-5 w-5" />
+                            Tour Itinerary & Details
+                          </h4>
+                          <div className="space-y-4">
+                            <div className="border-l-2 border-accent/30 pl-4">
+                              <div className="flex items-start gap-3">
+                                <div className="flex-shrink-0">
+                                  <span className="inline-block w-8 h-8 bg-accent/10 text-accent rounded-full text-sm font-medium flex items-center justify-center">
+                                    !
+                                  </span>
+                                </div>
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="text-sm font-medium text-accent">{tour.duration}</span>
+                                    <span className="text-sm text-muted-foreground">•</span>
+                                    <span className="text-sm text-muted-foreground flex items-center gap-1">
+                                      <MapPin className="h-3 w-3" />
+                                      {tour.location}
+                                    </span>
+                                  </div>
+                                  <h5 className="font-semibold text-primary mb-1">Complete Itinerary</h5>
+                                  <p className="text-sm text-muted-foreground leading-relaxed">
+                                    {tour.itinerary}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* Call to Action */}
       <section className="py-20 bg-muted">
