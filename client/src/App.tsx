@@ -29,6 +29,7 @@ import UltraLuxury from "@/pages/ultra-luxury";
 import Stay from "@/pages/stay";
 import HotelDetail from "@/pages/hotel-detail";
 import Blog from "@/pages/blog";
+import BlogPost from "@/pages/blog-post";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsConditions from "@/pages/terms-conditions";
 import CookiePolicy from "@/pages/cookie-policy";
@@ -65,6 +66,7 @@ function Router() {
         <Route path="/stay" component={() => <PageTransition><Stay /></PageTransition>} />
         <Route path="/hotel/:id" component={() => <PageTransition><HotelDetail /></PageTransition>} />
         <Route path="/blog" component={() => <PageTransition><Blog /></PageTransition>} />
+        <Route path="/blog/:id" component={() => <PageTransition><BlogPost /></PageTransition>} />
         <Route path="/contact" component={() => <PageTransition><Contact /></PageTransition>} />
         <Route path="/privacy-policy" component={() => <PageTransition><PrivacyPolicy /></PageTransition>} />
         <Route path="/terms-conditions" component={() => <PageTransition><TermsConditions /></PageTransition>} />
