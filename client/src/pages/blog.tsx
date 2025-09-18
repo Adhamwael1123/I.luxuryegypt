@@ -125,12 +125,11 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Search and Filter Section */}
+      {/* Search Section */}
       <section className="py-12 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between mb-12">
-            {/* Search */}
-            <div className="relative w-full lg:w-96">
+          <div className="text-center mb-12">
+            <div className="relative w-full max-w-md mx-auto mb-8">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
                 placeholder="Search articles..."
@@ -140,32 +139,39 @@ export default function Blog() {
               />
             </div>
             
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className="text-sm"
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          {/* Results Count */}
-          <div className="mb-8">
-            <p className="text-muted-foreground">
+            {/* Results Count */}
+            <p className="text-muted-foreground mb-8">
               {filteredPosts.length} article{filteredPosts.length !== 1 ? 's' : ''} found
               {selectedCategory !== 'All Posts' && ` in "${selectedCategory}"`}
               {searchTerm && ` matching "${searchTerm}"`}
             </p>
           </div>
+        </div>
+      </section>
 
-          {/* Blog Posts Grid */}
+      {/* Filter Section */}
+      <section className="py-8 bg-background border-b border-accent/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap justify-center gap-4">
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category)}
+                className="min-w-[140px]"
+                data-testid={`filter-${category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`}
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Blog Posts Section */}
+      <section className="py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
             {filteredPosts.map((post) => (
               <Card key={post.id} className="group overflow-hidden hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02]">
