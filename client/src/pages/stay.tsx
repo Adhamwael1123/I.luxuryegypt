@@ -522,13 +522,13 @@ export default function Stay() {
             ))}
           </div>
           
-          <Link href="/contact">
+          <Link href={`/hotel/${hotel.id}`}>
             <Button 
               className="w-full" 
               size={isSpotlight ? "default" : "sm"}
-              data-testid={`button-inquire-${hotel.id}`}
+              data-testid={`button-read-more-${hotel.id}`}
             >
-              Inquire Now
+              Read More
             </Button>
           </Link>
         </CardContent>

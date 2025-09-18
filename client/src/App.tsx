@@ -1,4 +1,3 @@
-
 import { Switch, Route, useLocation } from "wouter";
 import { AnimatePresence } from "framer-motion";
 import { queryClient } from "./lib/queryClient";
@@ -22,6 +21,7 @@ import SharmElSheikh from "@/pages/sharm-el-sheikh";
 import SiwaOasis from "@/pages/siwa-oasis";
 import Experiences from "@/pages/experiences";
 import Stay from "@/pages/stay";
+import HotelDetail from "@/pages/hotel-detail";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsConditions from "@/pages/terms-conditions";
 import CookiePolicy from "@/pages/cookie-policy";
@@ -50,6 +50,7 @@ function Router() {
         <Route path="/destinations/siwa-oasis" component={() => <PageTransition><SiwaOasis /></PageTransition>} />
         <Route path="/experiences" component={() => <PageTransition><Experiences /></PageTransition>} />
         <Route path="/stay" component={() => <PageTransition><Stay /></PageTransition>} />
+        <Route path="/hotel/:id" component={() => <PageTransition><HotelDetail /></PageTransition>} />
         <Route path="/contact" component={() => <PageTransition><Contact /></PageTransition>} />
         <Route path="/privacy-policy" component={() => <PageTransition><PrivacyPolicy /></PageTransition>} />
         <Route path="/terms-conditions" component={() => <PageTransition><TermsConditions /></PageTransition>} />
