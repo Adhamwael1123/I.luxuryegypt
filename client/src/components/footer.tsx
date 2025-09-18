@@ -15,6 +15,7 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">About & Services</h3>
             <div className="space-y-2">
               <Link href="/about" className="block hover:text-accent transition-colors">About Us</Link>
+              <Link href="/blog" className="block hover:text-accent transition-colors">Blog</Link>
               <a href="#" className="block hover:text-accent transition-colors">Why Choose Us</a>
               <a href="#" className="block hover:text-accent transition-colors">Experiences</a>
               <a href="#" className="block hover:text-accent transition-colors">Stays</a>
