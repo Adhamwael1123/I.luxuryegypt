@@ -5,239 +5,281 @@ import Footer from "@/components/footer";
 import { Clock, Users, MapPin, Star, Calendar } from "lucide-react";
 import { Link } from "wouter";
 
-// Luxury Travel Packages Data
-const packages = [
+// Categories with Tours Data
+const categories = [
   {
-    id: 'pharaohs-legacy',
-    name: 'Pharaohs Legacy',
-    tagline: 'Classic Egypt Experience',
-    duration: '8 Days / 7 Nights',
-    groupSize: '2-12 People',
-    price: 'From $3,250',
-    rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Giza Pyramids', 'Valley of Kings', 'Nile Cruise', 'Abu Simbel'],
-    description: 'Discover the most iconic sites of ancient Egypt in this comprehensive journey through time.',
-    category: 'classic',
+    key: 'family',
+    label: 'Family Holidays',
+    description: 'Perfect adventures designed for families to explore Egypt together with engaging activities for all ages.',
     tours: [
       {
-        day: 'Day 1-2',
+        id: 'pyramid-adventure',
+        name: 'Pyramid Adventure & Museum Discovery',
         location: 'Cairo & Giza',
-        title: 'Pyramids & Egyptian Museum',
-        description: 'Private tours of the Great Pyramids, Sphinx, and world-renowned Egyptian Museum'
+        duration: '2 Days',
+        groupSize: '4-16 People',
+        price: 'From $450',
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Great Pyramids', 'Sphinx Exploration', 'Interactive Museum', 'Family Workshops'],
+        description: 'Interactive pyramid exploration and hands-on museum experiences designed specifically for families.',
+        itinerary: 'Private tours of the Great Pyramids, Sphinx, and world-renowned Egyptian Museum with child-friendly activities and educational games.'
       },
       {
-        day: 'Day 3-4',
-        location: 'Aswan',
-        title: 'Nubian Heritage & Philae Temple',
-        description: 'Explore Nubian villages, visit Philae Temple, and experience the majesty of Abu Simbel'
-      },
-      {
-        day: 'Day 5-7',
+        id: 'pharaoh-valley-quest',
+        name: 'Pharaoh\'s Valley Family Quest',
         location: 'Luxor',
-        title: 'Valley of Kings & Karnak',
-        description: 'Luxury Nile cruise with exclusive access to royal tombs and magnificent temples'
+        duration: '3 Days',
+        groupSize: '4-12 People',
+        price: 'From $680',
+        rating: 4.7,
+        image: 'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Valley of Kings', 'Family Workshops', 'Educational Tours', 'Kid-Friendly Activities'],
+        description: 'Educational tomb visits and family-friendly archaeological workshops in the legendary Valley of Kings.',
+        itinerary: 'Interactive tomb exploration with educational activities, family workshops on ancient Egyptian life, and visits to colorful temples.'
       },
       {
-        day: 'Day 8',
-        location: 'Cairo',
-        title: 'Islamic Cairo & Departure',
-        description: 'Final exploration of medieval Cairo and Khan el-Khalili bazaar'
+        id: 'nile-family-cruise',
+        name: 'Nile Family Cruise',
+        location: 'Aswan to Luxor',
+        duration: '4 Days',
+        groupSize: '6-20 People',
+        price: 'From $850',
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Nile Cruise', 'Nubian Village', 'Cultural Activities', 'Family Entertainment'],
+        description: 'Family-friendly cruise with cultural activities and Nubian village visits along the magical Nile River.',
+        itinerary: 'Comfortable family cruise with onboard activities, visits to Nubian villages, temple explorations, and traditional entertainment.'
       }
     ]
   },
   {
-    id: 'red-sea-luxury',
-    name: 'Red Sea Luxury',
-    tagline: 'Coastal Paradise & Ancient Wonders',
-    duration: '10 Days / 9 Nights',
-    groupSize: '2-8 People',
-    price: 'From $4,500',
-    rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Luxury Resort', 'Private Diving', 'Desert Safari', 'Ancient Temples'],
-    description: 'Combine Egypt\'s ancient treasures with luxury Red Sea relaxation and world-class diving.',
-    category: 'luxury',
+    key: 'luxury',
+    label: 'Luxury Holidays',
+    description: 'Indulge in the finest Egyptian experiences with premium accommodations, private guides, and exclusive access.',
     tours: [
       {
-        day: 'Day 1-3',
+        id: 'ancient-capital-discovery',
+        name: 'Ancient Capital Discovery',
         location: 'Cairo & Giza',
-        title: 'Ancient Capital Discovery',
-        description: 'Private guided tours of pyramids, museums, and Islamic architecture'
+        duration: '3 Days',
+        groupSize: '2-8 People',
+        price: 'From $1,250',
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Private Guides', 'Luxury Hotels', 'Exclusive Access', 'Premium Dining'],
+        description: 'Private guided tours of pyramids, museums, and Islamic architecture with luxury accommodations.',
+        itinerary: 'Stay in 5-star hotels, enjoy private museum tours, exclusive pyramid access, and dine at Cairo\'s finest restaurants.'
       },
       {
-        day: 'Day 4-5',
+        id: 'theban-necropolis-experience',
+        name: 'Theban Necropolis Experience',
         location: 'Luxor',
-        title: 'Theban Necropolis Experience',
-        description: 'Exclusive access to royal tombs and private temple ceremonies'
+        duration: '2 Days',
+        groupSize: '2-6 People',
+        price: 'From $950',
+        rating: 5.0,
+        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Royal Tombs', 'Private Ceremonies', 'Luxury Accommodation', 'Expert Egyptologists'],
+        description: 'Exclusive access to royal tombs and private temple ceremonies in the ancient Theban necropolis.',
+        itinerary: 'Private early morning tomb visits, exclusive temple ceremonies, luxury Nile-view accommodation, and expert archaeological guidance.'
       },
       {
-        day: 'Day 6-9',
+        id: 'red-sea-luxury-resort',
+        name: 'Red Sea Luxury Resort',
         location: 'Hurghada',
-        title: 'Red Sea Luxury Resort',
-        description: 'Five-star beachfront resort with private diving excursions and spa treatments'
-      },
-      {
-        day: 'Day 10',
-        location: 'Cairo',
-        title: 'Final Exploration & Departure',
-        description: 'Last-minute shopping and cultural experiences before departure'
+        duration: '5 Days',
+        groupSize: '2-8 People',
+        price: 'From $1,800',
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['5-Star Resort', 'Private Diving', 'Spa Treatments', 'Beachfront Luxury'],
+        description: 'Five-star beachfront resort with private diving excursions and world-class spa treatments.',
+        itinerary: 'Luxury beachfront suite, private yacht excursions, world-class diving with marine biologists, and rejuvenating spa experiences.'
       }
     ]
   },
   {
-    id: 'desert-mystique',
-    name: 'Desert Mystique',
-    tagline: 'Oases & Ancient Secrets',
-    duration: '12 Days / 11 Nights',
-    groupSize: '2-6 People',
-    price: 'From $5,200',
-    rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Siwa Oasis', 'White Desert', 'Bahariya Oasis', 'Star Gazing'],
-    description: 'Journey into Egypt\'s mystical deserts and hidden oases for an unforgettable adventure.',
-    category: 'adventure',
+    key: 'spiritual',
+    label: 'Spiritual Journeys',
+    description: 'Connect with ancient Egyptian spirituality through sacred sites, meditation, and transformative experiences.',
     tours: [
       {
-        day: 'Day 1-2',
-        location: 'Cairo',
-        title: 'Metropolitan Exploration',
-        description: 'Discover Cairo\'s historic treasures and modern cultural scene'
+        id: 'sacred-geometry-wisdom',
+        name: 'Sacred Geometry & Ancient Wisdom',
+        location: 'Cairo & Giza',
+        duration: '3 Days',
+        groupSize: '2-10 People',
+        price: 'From $880',
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Pyramid Meditation', 'Sacred Geometry', 'Spiritual Guides', 'Ancient Wisdom'],
+        description: 'Private pyramid meditation and sacred geometry workshops exploring ancient Egyptian spiritual knowledge.',
+        itinerary: 'Dawn meditation inside the Great Pyramid, sacred geometry workshops, spiritual guidance sessions, and connection with ancient wisdom.'
       },
       {
-        day: 'Day 3-5',
-        location: 'Bahariya Oasis',
-        title: 'Golden Mummies & Hot Springs',
-        description: 'Explore ancient burial sites and relax in natural hot springs'
-      },
-      {
-        day: 'Day 6-8',
-        location: 'White Desert',
-        title: 'Surreal Landscape Adventure',
-        description: 'Camp under stars in otherworldly white rock formations'
-      },
-      {
-        day: 'Day 9-11',
-        location: 'Siwa Oasis',
-        title: 'Oracle Temple & Cleopatra Springs',
-        description: 'Visit ancient oracle sites and pristine natural pools'
-      }
-    ]
-  },
-  {
-    id: 'nile-empress',
-    name: 'Nile Empress',
-    tagline: 'Ultra-Luxury River Journey',
-    duration: '14 Days / 13 Nights',
-    groupSize: '2-4 People',
-    price: 'From $8,750',
-    rating: 5.0,
-    image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Luxury Dahabiya', 'Private Guides', 'Exclusive Access', 'Presidential Suite'],
-    description: 'The ultimate Egyptian experience aboard a private luxury vessel with unprecedented access.',
-    category: 'ultra-luxury',
-    tours: [
-      {
-        day: 'Day 1-3',
-        location: 'Cairo',
-        title: 'Imperial Cairo Experience',
-        description: 'Private museum tours, exclusive dining, and luxury accommodations'
-      },
-      {
-        day: 'Day 4-10',
-        location: 'Nile River',
-        title: 'Private Dahabiya Cruise',
-        description: 'Ultra-luxury sailing yacht with personal crew and private guide'
-      },
-      {
-        day: 'Day 11-12',
-        location: 'Aswan',
-        title: 'Abu Simbel Private Access',
-        description: 'Exclusive early morning and sunset access to ancient temples'
-      },
-      {
-        day: 'Day 13-14',
-        location: 'Alexandria',
-        title: 'Mediterranean Finale',
-        description: 'Coastal luxury with private yacht excursions and gourmet experiences'
-      }
-    ]
-  },
-  {
-    id: 'family-treasures',
-    name: 'Family Treasures',
-    tagline: 'Multi-Generational Discovery',
-    duration: '9 Days / 8 Nights',
-    groupSize: '4-16 People',
-    price: 'From $2,850',
-    rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Family Activities', 'Educational Tours', 'Kid-Friendly', 'Cultural Workshops'],
-    description: 'Specially designed for families to explore Egypt together with engaging activities for all ages.',
-    category: 'family',
-    tours: [
-      {
-        day: 'Day 1-2',
-        location: 'Cairo',
-        title: 'Pyramid Adventure & Museum Discovery',
-        description: 'Interactive pyramid exploration and hands-on museum experiences'
-      },
-      {
-        day: 'Day 3-4',
-        location: 'Luxor',
-        title: 'Pharaoh\'s Valley Family Quest',
-        description: 'Educational tomb visits and family-friendly archaeological workshops'
-      },
-      {
-        day: 'Day 5-7',
-        location: 'Aswan',
-        title: 'Nile Family Cruise',
-        description: 'Family-friendly cruise with cultural activities and Nubian village visits'
-      },
-      {
-        day: 'Day 8-9',
-        location: 'Cairo',
-        title: 'Bazaar Adventure & Farewell',
-        description: 'Guided shopping experience and traditional Egyptian cooking class'
-      }
-    ]
-  },
-  {
-    id: 'spiritual-journey',
-    name: 'Spiritual Journey',
-    tagline: 'Sacred Sites & Ancient Wisdom',
-    duration: '11 Days / 10 Nights',
-    groupSize: '2-10 People',
-    price: 'From $4,200',
-    rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Temple Ceremonies', 'Meditation Sessions', 'Sacred Geometry', 'Spiritual Guides'],
-    description: 'Connect with ancient Egyptian spirituality through sacred sites and transformative experiences.',
-    category: 'spiritual',
-    tours: [
-      {
-        day: 'Day 1-2',
-        location: 'Cairo',
-        title: 'Sacred Geometry & Ancient Wisdom',
-        description: 'Private pyramid meditation and sacred geometry workshops'
-      },
-      {
-        day: 'Day 3-5',
+        id: 'osiris-pilgrimage',
+        name: 'Temple of Osiris Pilgrimage',
         location: 'Abydos & Dendera',
-        title: 'Temple of Osiris Pilgrimage',
-        description: 'Sacred ceremonies at Egypt\'s most spiritual temples'
+        duration: '4 Days',
+        groupSize: '2-8 People',
+        price: 'From $1,150',
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Osiris Temple', 'Sacred Ceremonies', 'Meditation Sessions', 'Ancient Rituals'],
+        description: 'Sacred ceremonies at Egypt\'s most spiritual temples dedicated to Osiris, god of the afterlife.',
+        itinerary: 'Private temple ceremonies, meditation sessions in sacred spaces, guidance on ancient Egyptian spiritual practices, and transformative rituals.'
       },
       {
-        day: 'Day 6-9',
-        location: 'Luxor',
-        title: 'Valley of Kings Initiation',
-        description: 'Spiritual tours of royal tombs with meditation practices'
-      },
-      {
-        day: 'Day 10-11',
+        id: 'isis-blessing-ceremony',
+        name: 'Isis Temple Blessing Ceremony',
         location: 'Philae Temple',
-        title: 'Isis Temple Blessing Ceremony',
-        description: 'Private sunset ceremony at the temple of the goddess Isis'
+        duration: '2 Days',
+        groupSize: '2-6 People',
+        price: 'From $650',
+        rating: 5.0,
+        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Isis Temple', 'Sunset Ceremony', 'Blessing Ritual', 'Sacred Waters'],
+        description: 'Private sunset ceremony at the temple of the goddess Isis with traditional blessing rituals.',
+        itinerary: 'Private boat transfer to Philae Island, sunset ceremony at Isis Temple, traditional blessing ritual, and meditation by sacred waters.'
+      }
+    ]
+  },
+  {
+    key: 'adventure',
+    label: 'Adventure Tours',
+    description: 'Explore Egypt\'s hidden treasures, mystical deserts, and off-the-beaten-path destinations for the adventurous spirit.',
+    tours: [
+      {
+        id: 'white-desert-camping',
+        name: 'White Desert Camping Adventure',
+        location: 'White Desert',
+        duration: '3 Days',
+        groupSize: '2-8 People',
+        price: 'From $750',
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Desert Camping', 'Star Gazing', 'Rock Formations', '4WD Adventure'],
+        description: 'Camp under stars in otherworldly white rock formations of Egypt\'s most surreal landscape.',
+        itinerary: '4WD desert expedition, camping under star-filled skies, exploration of unique chalk formations, and traditional Bedouin experiences.'
+      },
+      {
+        id: 'siwa-oasis-expedition',
+        name: 'Siwa Oasis Expedition',
+        location: 'Siwa Oasis',
+        duration: '4 Days',
+        groupSize: '2-10 People',
+        price: 'From $950',
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Oracle Temple', 'Salt Lakes', 'Cleopatra Springs', 'Berber Culture'],
+        description: 'Visit ancient oracle sites and pristine natural pools in Egypt\'s most remote and mystical oasis.',
+        itinerary: 'Explore the Oracle Temple of Amun, swim in Cleopatra\'s Springs, sandboarding adventures, and immersion in local Berber culture.'
+      },
+      {
+        id: 'golden-mummies-expedition',
+        name: 'Golden Mummies & Hot Springs',
+        location: 'Bahariya Oasis',
+        duration: '2 Days',
+        groupSize: '2-6 People',
+        price: 'From $580',
+        rating: 4.7,
+        image: 'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Golden Mummies', 'Hot Springs', 'Desert Safari', 'Archaeological Sites'],
+        description: 'Explore ancient burial sites and relax in natural hot springs in the heart of the Western Desert.',
+        itinerary: 'Visit the Valley of Golden Mummies, therapeutic hot spring baths, desert safaris, and exploration of Greco-Roman archaeological sites.'
+      }
+    ]
+  },
+  {
+    key: 'classic',
+    label: 'Classic Egypt',
+    description: 'Discover Egypt\'s most iconic sites and timeless wonders in comprehensive classic tours.',
+    tours: [
+      {
+        id: 'pyramids-museum-classic',
+        name: 'Pyramids & Egyptian Museum',
+        location: 'Cairo & Giza',
+        duration: '2 Days',
+        groupSize: '2-12 People',
+        price: 'From $380',
+        rating: 4.9,
+        image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Great Pyramids', 'Sphinx', 'Egyptian Museum', 'Khan el-Khalili'],
+        description: 'Private tours of the Great Pyramids, Sphinx, and world-renowned Egyptian Museum.',
+        itinerary: 'Explore the Great Pyramids complex, visit the enigmatic Sphinx, discover treasures at the Egyptian Museum, and shop at Khan el-Khalili bazaar.'
+      },
+      {
+        id: 'valley-kings-karnak',
+        name: 'Valley of Kings & Karnak',
+        location: 'Luxor',
+        duration: '3 Days',
+        groupSize: '2-15 People',
+        price: 'From $520',
+        rating: 4.8,
+        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Valley of Kings', 'Karnak Temple', 'Luxor Temple', 'Nile Views'],
+        description: 'Luxury Nile cruise with exclusive access to royal tombs and magnificent temples.',
+        itinerary: 'Royal tomb explorations, magnificent Karnak Temple complex, beautiful Luxor Temple, and scenic Nile River experiences.'
+      },
+      {
+        id: 'nubian-heritage-philae',
+        name: 'Nubian Heritage & Philae Temple',
+        location: 'Aswan',
+        duration: '2 Days',
+        groupSize: '2-10 People',
+        price: 'From $420',
+        rating: 4.7,
+        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Philae Temple', 'Nubian Villages', 'Abu Simbel', 'High Dam'],
+        description: 'Explore Nubian villages, visit Philae Temple, and experience the majesty of Abu Simbel.',
+        itinerary: 'Colorful Nubian village visits, beautiful Philae Temple on its island, magnificent Abu Simbel temples, and modern High Dam engineering marvel.'
+      }
+    ]
+  },
+  {
+    key: 'ultra-luxury',
+    label: 'Ultra-Luxury',
+    description: 'The pinnacle of Egyptian luxury travel with exclusive access, private vessels, and unparalleled service.',
+    tours: [
+      {
+        id: 'imperial-cairo-experience',
+        name: 'Imperial Cairo Experience',
+        location: 'Cairo',
+        duration: '3 Days',
+        groupSize: '2-4 People',
+        price: 'From $2,250',
+        rating: 5.0,
+        image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Private Museums', 'Exclusive Dining', 'Luxury Hotels', 'Personal Butler'],
+        description: 'Private museum tours, exclusive dining, and luxury accommodations with personal concierge service.',
+        itinerary: 'Stay in presidential suites, private after-hours museum access, Michelin-starred dining, personal Egyptologist, and luxury helicopter transfers.'
+      },
+      {
+        id: 'private-dahabiya-cruise',
+        name: 'Private Dahabiya Cruise',
+        location: 'Nile River',
+        duration: '7 Days',
+        groupSize: '2-8 People',
+        price: 'From $4,500',
+        rating: 5.0,
+        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Private Yacht', 'Personal Crew', 'Exclusive Access', 'Gourmet Cuisine'],
+        description: 'Ultra-luxury sailing yacht with personal crew and private guide for the ultimate Nile experience.',
+        itinerary: 'Private luxury dahabiya with dedicated crew, exclusive temple access outside tourist hours, gourmet onboard dining, and personalized itinerary.'
+      },
+      {
+        id: 'abu-simbel-private-access',
+        name: 'Abu Simbel Private Access',
+        location: 'Abu Simbel',
+        duration: '2 Days',
+        groupSize: '2-6 People',
+        price: 'From $1,850',
+        rating: 5.0,
+        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Private Access', 'Sunrise/Sunset Tours', 'Luxury Accommodation', 'Helicopter Transfer'],
+        description: 'Exclusive early morning and sunset access to ancient temples with luxury helicopter transfers.',
+        itinerary: 'Private helicopter transfer, exclusive temple access at sunrise and sunset, luxury desert accommodation, and personal archaeological expert.'
       }
     ]
   }
@@ -245,21 +287,24 @@ const packages = [
 
 export default function Experiences() {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
+  const [selectedTour, setSelectedTour] = useState<string | null>(null);
 
-  const filteredPackages = packages.filter(pkg => {
-    if (selectedCategory === 'all') return true;
-    return pkg.category === selectedCategory;
-  });
+  const getCategoryData = () => {
+    if (selectedCategory === 'all') {
+      return {
+        key: 'all',
+        label: 'All Experiences',
+        description: 'Explore all our carefully curated Egyptian adventures across different categories.',
+        tours: categories.flatMap(cat => cat.tours)
+      };
+    }
+    return categories.find(cat => cat.key === selectedCategory);
+  };
 
-  const categories = [
+  const currentCategory = getCategoryData();
+  const categoryOptions = [
     { key: 'all', label: 'All Experiences' },
-    { key: 'classic', label: 'Classic Tours' },
-    { key: 'luxury', label: 'Luxury Experiences' },
-    { key: 'ultra-luxury', label: 'Ultra-Luxury' },
-    { key: 'adventure', label: 'Adventure' },
-    { key: 'family', label: 'Family' },
-    { key: 'spiritual', label: 'Spiritual' }
+    ...categories.map(cat => ({ key: cat.key, label: cat.label }))
   ];
 
   return (
@@ -284,7 +329,7 @@ export default function Experiences() {
       <section className="py-8 bg-background border-b border-accent/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => (
+            {categoryOptions.map((category) => (
               <Button
                 key={category.key}
                 variant={selectedCategory === category.key ? 'default' : 'outline'}
@@ -299,33 +344,50 @@ export default function Experiences() {
         </div>
       </section>
 
-      {/* Packages Grid */}
+      {/* Category Description */}
+      {currentCategory && selectedCategory !== 'all' && (
+        <section className="py-8 bg-muted/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
+              {currentCategory.label}
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              {currentCategory.description}
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* Tours Grid */}
       <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPackages.map((pkg) => (
+            {currentCategory?.tours.map((tour) => (
               <div
-                key={pkg.id}
+                key={tour.id}
                 className="group cursor-pointer"
-                data-testid={`package-${pkg.id}`}
+                data-testid={`tour-${tour.id}`}
               >
                 <div className="bg-card rounded-xl overflow-hidden shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02]">
                   {/* Package Image */}
                   <div className="relative h-64 overflow-hidden">
                     <img
-                      src={pkg.image}
-                      alt={pkg.name}
+                      src={tour.image}
+                      alt={tour.name}
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                       loading="lazy"
                     />
                     <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
                       <Star className="h-4 w-4 text-accent fill-accent" />
-                      <span className="text-sm font-medium">{pkg.rating}</span>
+                      <span className="text-sm font-medium">{tour.rating}</span>
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
-                      <p className="text-accent font-medium text-sm mb-1">{pkg.tagline}</p>
-                      <h3 className="text-2xl font-serif font-bold text-white">{pkg.name}</h3>
+                      <div className="flex items-center gap-2 text-accent font-medium text-sm mb-1">
+                        <MapPin className="h-3 w-3" />
+                        <span>{tour.location}</span>
+                      </div>
+                      <h3 className="text-2xl font-serif font-bold text-white">{tour.name}</h3>
                     </div>
                   </div>
 
@@ -334,21 +396,21 @@ export default function Experiences() {
                     <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
-                        <span>{pkg.duration}</span>
+                        <span>{tour.duration}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Users className="h-4 w-4" />
-                        <span>{pkg.groupSize}</span>
+                        <span>{tour.groupSize}</span>
                       </div>
                     </div>
 
                     <p className="text-muted-foreground mb-4 leading-relaxed">
-                      {pkg.description}
+                      {tour.description}
                     </p>
 
                     {/* Highlights */}
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {pkg.highlights.map((highlight, index) => (
+                      {tour.highlights.map((highlight: string, index: number) => (
                         <span
                           key={index}
                           className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full"
@@ -361,19 +423,19 @@ export default function Experiences() {
                     {/* Price and Action */}
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-2xl font-serif font-bold text-primary">{pkg.price}</p>
+                        <p className="text-2xl font-serif font-bold text-primary">{tour.price}</p>
                         <p className="text-sm text-muted-foreground">per person</p>
                       </div>
                       <div className="flex gap-2">
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => setSelectedPackage(selectedPackage === pkg.id ? null : pkg.id)}
-                          data-testid={`button-view-tours-${pkg.id}`}
+                          onClick={() => setSelectedTour(selectedTour === tour.id ? null : tour.id)}
+                          data-testid={`button-view-itinerary-${tour.id}`}
                         >
-                          {selectedPackage === pkg.id ? 'Hide Tours' : 'View Tours'}
+                          {selectedTour === tour.id ? 'Hide Details' : 'View Itinerary'}
                         </Button>
-                        <Button size="sm" asChild data-testid={`button-book-${pkg.id}`}>
+                        <Button size="sm" asChild data-testid={`button-book-${tour.id}`}>
                           <Link href="/contact">
                             Book Now
                           </Link>
@@ -382,39 +444,37 @@ export default function Experiences() {
                     </div>
                   </div>
 
-                  {/* Tours Details - Expandable */}
-                  {selectedPackage === pkg.id && (
+                  {/* Tour Itinerary - Expandable */}
+                  {selectedTour === tour.id && (
                     <div className="border-t border-border bg-muted/30 p-6">
                       <h4 className="text-lg font-serif font-bold text-primary mb-4 flex items-center gap-2">
                         <Calendar className="h-5 w-5" />
-                        Tour Itinerary
+                        Tour Itinerary & Details
                       </h4>
                       <div className="space-y-4">
-                        {pkg.tours.map((tour, index) => (
-                          <div key={index} className="border-l-2 border-accent/30 pl-4">
-                            <div className="flex items-start gap-3">
-                              <div className="flex-shrink-0">
-                                <span className="inline-block w-8 h-8 bg-accent/10 text-accent rounded-full text-sm font-medium flex items-center justify-center">
-                                  {index + 1}
+                        <div className="border-l-2 border-accent/30 pl-4">
+                          <div className="flex items-start gap-3">
+                            <div className="flex-shrink-0">
+                              <span className="inline-block w-8 h-8 bg-accent/10 text-accent rounded-full text-sm font-medium flex items-center justify-center">
+                                !
+                              </span>
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="text-sm font-medium text-accent">{tour.duration}</span>
+                                <span className="text-sm text-muted-foreground">•</span>
+                                <span className="text-sm text-muted-foreground flex items-center gap-1">
+                                  <MapPin className="h-3 w-3" />
+                                  {tour.location}
                                 </span>
                               </div>
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-1">
-                                  <span className="text-sm font-medium text-accent">{tour.day}</span>
-                                  <span className="text-sm text-muted-foreground">•</span>
-                                  <span className="text-sm text-muted-foreground flex items-center gap-1">
-                                    <MapPin className="h-3 w-3" />
-                                    {tour.location}
-                                  </span>
-                                </div>
-                                <h5 className="font-semibold text-primary mb-1">{tour.title}</h5>
-                                <p className="text-sm text-muted-foreground leading-relaxed">
-                                  {tour.description}
-                                </p>
-                              </div>
+                              <h5 className="font-semibold text-primary mb-1">Complete Itinerary</h5>
+                              <p className="text-sm text-muted-foreground leading-relaxed">
+                                {tour.itinerary}
+                              </p>
                             </div>
                           </div>
-                        ))}
+                        </div>
                       </div>
                     </div>
                   )}
