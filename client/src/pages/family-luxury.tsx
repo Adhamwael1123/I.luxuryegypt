@@ -63,7 +63,7 @@ export default function FamilyLuxury() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 bg-gradient-to-br from-background via-accent/5 to-primary/10 overflow-hidden">
+      <section className="relative pt-20 pb-20 bg-gradient-to-br from-background via-accent/5 to-primary/10 overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.egypttoursportal.com/images/2022/09/Discover-Ancient-Egypt-in-8-Days-Luxury-Holiday-Egypt-Tours-Portal.jpg')] bg-cover bg-center opacity-10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/experiences">
@@ -124,7 +124,7 @@ export default function FamilyLuxury() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-3 gap-8">
             {familyTours.map((tour) => (
               <Card
                 key={tour.id}
