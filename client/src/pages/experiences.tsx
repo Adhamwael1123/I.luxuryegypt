@@ -13,7 +13,7 @@ const categories = [
     key: 'family',
     label: 'Family Luxury',
     description: 'Perfect adventures designed for families to explore Egypt together with engaging activities for all ages.',
-    image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://www.egypttoursportal.com/images/2022/09/Discover-Ancient-Egypt-in-8-Days-Luxury-Holiday-Egypt-Tours-Portal.jpg',
     tours: [
       {
         id: 'pyramid-adventure',
@@ -49,7 +49,7 @@ const categories = [
         groupSize: '6-20 People',
         price: 'From $850',
         rating: 4.9,
-        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://www.thetimes.com/imageserver/image/%2Fb4c01f06-251f-4b18-b537-a8909772b48b.jpg?crop=1600%2C900%2C0%2C0&resize=1200',
         highlights: ['Nile Cruise', 'Nubian Village', 'Cultural Activities', 'Family Entertainment'],
         description: 'Family-friendly cruise with cultural activities and Nubian village visits along the magical Nile River.',
         itinerary: 'Comfortable family cruise with onboard activities, visits to Nubian villages, temple explorations, and traditional entertainment.'
@@ -60,7 +60,7 @@ const categories = [
     key: 'nile-cruise',
     label: 'Nile Cruise',
     description: 'Sail through ancient Egypt aboard luxury vessels, experiencing timeless beauty along the legendary Nile River.',
-    image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://www.thetimes.com/imageserver/image/%2Fb4c01f06-251f-4b18-b537-a8909772b48b.jpg?crop=1600%2C900%2C0%2C0&resize=1200',
     tours: [
       {
         id: 'luxury-nile-cruise',
@@ -94,7 +94,7 @@ const categories = [
     key: 'classic',
     label: 'Classic Egypt',
     description: 'Discover Egypt\'s most iconic sites and timeless wonders in comprehensive classic tours.',
-    image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://images.pexels.com/photos/2359/sand-desert-statue-pyramid.jpg?_gl=1*1mcocms*_ga*MTUzMjg3NTA0Mi4xNzU4MjA4MjAy*_ga_8JE65Q40S6*czE3NTgyMDgyMDEkbzEkZzEkdDE3NTgyMDg1NDYkajQ4JGwwJGgw',
     tours: [
       {
         id: 'pyramids-museum-classic',
@@ -141,7 +141,7 @@ const categories = [
     key: 'spiritual',
     label: 'Spiritual Journeys',
     description: 'Connect with ancient Egyptian spirituality through sacred sites, meditation, and transformative experiences.',
-    image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://images.pexels.com/photos/33661271/pexels-photo-33661271.jpeg?_gl=1*ywbelw*_ga*MTUzMjg3NTA0Mi4xNzU4MjA4MjAy*_ga_8JE65Q40S6*czE3NTgyMDgyMDEkbzEkZzEkdDE3NTgyMDg2MjIkajM0JGwwJGgw',
     tours: [
       {
         id: 'sacred-geometry-wisdom',
@@ -188,7 +188,7 @@ const categories = [
     key: 'adventure',
     label: 'Adventure Tours',
     description: 'Explore Egypt\'s hidden treasures, mystical deserts, and off-the-beaten-path destinations for the adventurous spirit.',
-    image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1640342105347-3e2699b5fbb3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     tours: [
       {
         id: 'white-desert-camping',
@@ -235,7 +235,7 @@ const categories = [
     key: 'ultra-luxury',
     label: 'Ultra Luxury',
     description: 'The pinnacle of Egyptian luxury travel with exclusive access, private vessels, and unparalleled service.',
-    image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/39926658.jpg?k=5706e07d5b2a27afcfb631edb94dbb1d589cb6803e84733cd3df136a16386f7a&o=&hp=1',
     tours: [
       {
         id: 'imperial-cairo-experience',
