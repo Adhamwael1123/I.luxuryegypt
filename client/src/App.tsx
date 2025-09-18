@@ -21,6 +21,11 @@ import SharmElSheikh from "@/pages/sharm-el-sheikh";
 import SiwaOasis from "@/pages/siwa-oasis";
 import Experiences from "@/pages/experiences";
 import FamilyLuxury from "@/pages/family-luxury";
+import NileCruise from "@/pages/nile-cruise";
+import ClassicEgypt from "@/pages/classic-egypt";
+import SpiritualJourneys from "@/pages/spiritual-journeys";
+import AdventureTours from "@/pages/adventure-tours";
+import UltraLuxury from "@/pages/ultra-luxury";
 import Stay from "@/pages/stay";
 import HotelDetail from "@/pages/hotel-detail";
 import PrivacyPolicy from "@/pages/privacy-policy";
@@ -51,6 +56,11 @@ function Router() {
         <Route path="/destinations/siwa-oasis" component={() => <PageTransition><SiwaOasis /></PageTransition>} />
         <Route path="/experiences" component={() => <PageTransition><Experiences /></PageTransition>} />
         <Route path="/experiences/family-luxury" component={() => <PageTransition><FamilyLuxury /></PageTransition>} />
+        <Route path="/experiences/nile-cruise" component={() => <PageTransition><NileCruise /></PageTransition>} />
+        <Route path="/experiences/classic-egypt" component={() => <PageTransition><ClassicEgypt /></PageTransition>} />
+        <Route path="/experiences/spiritual-journeys" component={() => <PageTransition><SpiritualJourneys /></PageTransition>} />
+        <Route path="/experiences/adventure-tours" component={() => <PageTransition><AdventureTours /></PageTransition>} />
+        <Route path="/experiences/ultra-luxury" component={() => <PageTransition><UltraLuxury /></PageTransition>} />
         <Route path="/stay" component={() => <PageTransition><Stay /></PageTransition>} />
         <Route path="/hotel/:id" component={() => <PageTransition><HotelDetail /></PageTransition>} />
         <Route path="/contact" component={() => <PageTransition><Contact /></PageTransition>} />

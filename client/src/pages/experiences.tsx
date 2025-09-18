@@ -287,9 +287,18 @@ export default function Experiences() {
   const currentCategory = selectedCategory ? categories.find(cat => cat.key === selectedCategory) : null;
 
   const handleCategoryClick = (categoryKey: string) => {
-    // For family luxury, navigate to dedicated page
-    if (categoryKey === 'family') {
-      window.location.href = '/experiences/family-luxury';
+    // Navigate to dedicated category pages
+    const categoryRoutes: { [key: string]: string } = {
+      'family': '/experiences/family-luxury',
+      'nile-cruise': '/experiences/nile-cruise',
+      'classic': '/experiences/classic-egypt',
+      'spiritual': '/experiences/spiritual-journeys',
+      'adventure': '/experiences/adventure-tours',
+      'ultra-luxury': '/experiences/ultra-luxury'
+    };
+    
+    if (categoryRoutes[categoryKey]) {
+      window.location.href = categoryRoutes[categoryKey];
       return;
     }
     
