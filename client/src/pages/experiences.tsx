@@ -287,6 +287,12 @@ export default function Experiences() {
   const currentCategory = selectedCategory ? categories.find(cat => cat.key === selectedCategory) : null;
 
   const handleCategoryClick = (categoryKey: string) => {
+    // For family luxury, navigate to dedicated page
+    if (categoryKey === 'family') {
+      window.location.href = '/experiences/family-luxury';
+      return;
+    }
+    
     setSelectedCategory(categoryKey);
     setSelectedTour(null);
   };

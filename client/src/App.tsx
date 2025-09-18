@@ -20,6 +20,7 @@ import Luxor from "@/pages/luxor";
 import SharmElSheikh from "@/pages/sharm-el-sheikh";
 import SiwaOasis from "@/pages/siwa-oasis";
 import Experiences from "@/pages/experiences";
+import FamilyLuxury from "@/pages/family-luxury";
 import Stay from "@/pages/stay";
 import HotelDetail from "@/pages/hotel-detail";
 import PrivacyPolicy from "@/pages/privacy-policy";
@@ -49,6 +50,7 @@ function Router() {
         <Route path="/destinations/sharm-el-sheikh" component={() => <PageTransition><SharmElSheikh /></PageTransition>} />
         <Route path="/destinations/siwa-oasis" component={() => <PageTransition><SiwaOasis /></PageTransition>} />
         <Route path="/experiences" component={() => <PageTransition><Experiences /></PageTransition>} />
+        <Route path="/experiences/family-luxury" component={() => <PageTransition><FamilyLuxury /></PageTransition>} />
         <Route path="/stay" component={() => <PageTransition><Stay /></PageTransition>} />
         <Route path="/hotel/:id" component={() => <PageTransition><HotelDetail /></PageTransition>} />
         <Route path="/contact" component={() => <PageTransition><Contact /></PageTransition>} />
