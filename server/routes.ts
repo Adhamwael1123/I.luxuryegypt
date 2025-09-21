@@ -1,5 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import express from "express";
+import path from "path";
 import { storage } from "./storage";
 import { 
   insertInquirySchema, 
@@ -558,6 +560,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     }
   });
+
+  // Serve assets from attached_assets folder
+  app.use("/api/assets", express.static(path.resolve(import.meta.dirname, "..", "attached_assets")));
 
   const httpServer = createServer(app);
 
