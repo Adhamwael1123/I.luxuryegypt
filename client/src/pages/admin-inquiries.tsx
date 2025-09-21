@@ -35,10 +35,36 @@ export default function AdminInquiries() {
     }
   }, [setLocation]);
 
-  const { data: inquiries, isLoading } = useQuery({
+  const { data: inquiries, isLoading, error } = useQuery({
     queryKey: ["/api/inquiries"],
-    queryFn: () => apiRequest("/api/inquiries"),
+    queryFn: async () => {
+      const token = localStorage.getItem("adminToken");
+      if (!token) throw new Error("No auth token");
+      
+      const response = await fetch("/api/inquiries", {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+      
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem("adminToken");
+          localStorage.removeItem("adminUser");
+          setLocation("/admin/login");
+          throw new Error("Session expired");
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response.json();
+    },
     enabled: !!localStorage.getItem("adminToken"),
+    retry: (failureCount, error: any) => {
+      if (error?.message === "Session expired") return false;
+      return failureCount < 2;
+    }
   });
 
   const filteredInquiries = inquiries?.inquiries?.filter((inquiry: Inquiry) =>

@@ -21,9 +21,29 @@ export default function AdminDashboard() {
   // Check authentication
   useEffect(() => {
     const token = localStorage.getItem("adminToken");
-    if (!token) {
+    const user = localStorage.getItem("adminUser");
+    
+    if (!token || !user) {
+      localStorage.removeItem("adminToken");
+      localStorage.removeItem("adminUser");
       setLocation("/admin/login");
+      return;
     }
+
+    // Verify token is still valid
+    fetch("/api/auth/verify", {
+      headers: { "Authorization": `Bearer ${token}` }
+    }).then(response => {
+      if (!response.ok) {
+        localStorage.removeItem("adminToken");
+        localStorage.removeItem("adminUser");
+        setLocation("/admin/login");
+      }
+    }).catch(() => {
+      localStorage.removeItem("adminToken");
+      localStorage.removeItem("adminUser");
+      setLocation("/admin/login");
+    });
   }, [setLocation]);
 
   const user = JSON.parse(localStorage.getItem("adminUser") || "{}");
@@ -31,16 +51,45 @@ export default function AdminDashboard() {
   const { data: stats, isLoading } = useQuery({
     queryKey: ["/api/cms/stats"],
     queryFn: async () => {
-      // For now, return mock data since stats endpoint isn't implemented yet
-      return {
-        pages: 5,
-        posts: 12,
-        inquiries: 8,
-        media: 24,
-        hotels: 16
-      } as DashboardStats;
+      const token = localStorage.getItem("adminToken");
+      if (!token) throw new Error("No auth token");
+
+      try {
+        // Fetch real data from multiple endpoints
+        const [hotelsRes, inquiriesRes] = await Promise.all([
+          fetch("/api/cms/hotels", {
+            headers: { "Authorization": `Bearer ${token}` }
+          }),
+          fetch("/api/inquiries", {
+            headers: { "Authorization": `Bearer ${token}` }
+          })
+        ]);
+
+        const hotelsData = hotelsRes.ok ? await hotelsRes.json() : { hotels: [] };
+        const inquiriesData = inquiriesRes.ok ? await inquiriesRes.json() : { inquiries: [] };
+
+        return {
+          pages: 5, // Static for now
+          posts: 12, // Static for now
+          inquiries: inquiriesData.inquiries?.length || 0,
+          media: 24, // Static for now
+          hotels: hotelsData.hotels?.length || 0
+        } as DashboardStats;
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+        // Return default stats on error
+        return {
+          pages: 5,
+          posts: 12,
+          inquiries: 0,
+          media: 24,
+          hotels: 0
+        } as DashboardStats;
+      }
     },
     enabled: !!localStorage.getItem("adminToken"),
+    retry: 1,
+    staleTime: 30000, // Cache for 30 seconds
   });
 
   const handleLogout = () => {

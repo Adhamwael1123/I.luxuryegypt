@@ -36,7 +36,7 @@ export default function AdminHotels() {
     }
   }, [setLocation]);
 
-  const { data: hotels, isLoading } = useQuery({
+  const { data: hotels, isLoading, error } = useQuery({
     queryKey: ["/api/cms/hotels"],
     queryFn: async () => {
       const token = localStorage.getItem("adminToken");
@@ -50,12 +50,22 @@ export default function AdminHotels() {
       });
       
       if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem("adminToken");
+          localStorage.removeItem("adminUser");
+          setLocation("/admin/login");
+          throw new Error("Session expired");
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       return response.json();
     },
     enabled: !!localStorage.getItem("adminToken"),
+    retry: (failureCount, error: any) => {
+      if (error?.message === "Session expired") return false;
+      return failureCount < 2;
+    }
   });
 
   const deleteHotelMutation = useMutation({

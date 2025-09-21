@@ -490,6 +490,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: 'Error fetching hotels' });
     }
   });
+
+  // Dashboard stats endpoint
+  app.get("/api/cms/stats", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const [hotels, inquiries, pages, posts] = await Promise.all([
+        storage.getHotels(),
+        storage.getInquiries(),
+        storage.getPages(),
+        storage.getPosts()
+      ]);
+
+      res.json({
+        success: true,
+        stats: {
+          hotels: hotels.length,
+          inquiries: inquiries.length,
+          pages: pages.length,
+          posts: posts.length,
+          media: 24 // Static for now
+        }
+      });
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error);
+      res.status(500).json({ message: 'Error fetching dashboard stats' });
+    }
+  });
   
   // Get all inquiries (for admin purposes)
   app.get("/api/inquiries", requireAuth, requireEditor, async (req, res) => {

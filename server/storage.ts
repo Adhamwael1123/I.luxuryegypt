@@ -312,7 +312,7 @@ export class MemoryStorage implements IStorage {
         rating: 5,
         priceTier: "$$$$",
         amenities: ["Pyramid Views", "Historic Heritage", "Luxury Spa", "Fine Dining"],
-        image: "/attached_assets/the-pyramid-from-mena-house_1757459228638.jpeg",
+        image: "/api/assets/the-pyramid-from-mena-house_1757459228638.jpeg",
         description: "Historic palace hotel with direct views of the Great Pyramids. A legendary retreat where royalty and celebrities have stayed for over a century.",
         featured: true,
         createdAt: new Date(),
@@ -328,7 +328,7 @@ export class MemoryStorage implements IStorage {
         rating: 5,
         priceTier: "$$$$",
         amenities: ["Nile Gardens", "Royal Heritage", "Pool Complex", "Historic Charm"],
-        image: "/attached_assets/luxor_1757531163688.jpg",
+        image: "/api/assets/luxor_1757531163688.jpg",
         description: "Victorian grandeur on the banks of the Nile. This legendary hotel has hosted dignitaries and explorers since 1886.",
         featured: true,
         createdAt: new Date(),
@@ -344,9 +344,41 @@ export class MemoryStorage implements IStorage {
         rating: 5,
         priceTier: "$$$$",
         amenities: ["Nile Views", "Luxury Spa", "Fine Dining", "Business Center"],
-        image: "/attached_assets/suite-nile_1757457083796.jpg",
+        image: "/api/assets/suite-nile_1757457083796.jpg",
         description: "Modern luxury with panoramic Nile views in the heart of Cairo. Contemporary elegance meets Egyptian hospitality.",
         featured: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: null
+      },
+      {
+        id: randomUUID(),
+        name: "Adrère Amellal",
+        location: "Siwa Oasis",
+        region: "Siwa",
+        type: "Eco-Lodge",
+        rating: 4,
+        priceTier: "$$$",
+        amenities: ["Eco-Friendly", "Desert Views", "Natural Architecture", "Wellness"],
+        image: "/api/assets/siwa_1757531163689.jpg",
+        description: "Eco-luxury desert lodge built entirely from natural materials. Experience the serene beauty of the Sahara in sustainable comfort.",
+        featured: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: null
+      },
+      {
+        id: randomUUID(),
+        name: "Old Winter Palace Hotel",
+        location: "Aswan",
+        region: "Aswan",
+        type: "Heritage",
+        rating: 5,
+        priceTier: "$$$$",
+        amenities: ["Nile Views", "Historic Architecture", "Royal Gardens", "Fine Dining"],
+        image: "/api/assets/suite-nile_1757457083796.jpg",
+        description: "A legendary hotel on the banks of the Nile in Aswan, offering timeless elegance and unparalleled views.",
+        featured: false,
         createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: null
@@ -355,6 +387,44 @@ export class MemoryStorage implements IStorage {
 
     sampleHotels.forEach(hotel => {
       this.hotels.set(hotel.id, hotel);
+    });
+
+    // Add some sample inquiries
+    const sampleInquiries: Inquiry[] = [
+      {
+        id: randomUUID(),
+        fullName: "Sarah Johnson",
+        email: "sarah.johnson@email.com",
+        phone: "+1-555-0123",
+        destination: "Luxor & Aswan",
+        preferredDates: "March 15-25, 2025",
+        specialRequests: "Anniversary celebration, prefer Nile view rooms",
+        createdAt: new Date(Date.now() - 86400000) // 1 day ago
+      },
+      {
+        id: randomUUID(),
+        fullName: "David Chen",
+        email: "david.chen@email.com",
+        phone: "+1-555-0456",
+        destination: "Cairo & Giza",
+        preferredDates: "April 10-20, 2025", 
+        specialRequests: "Photography tour, need early pyramid access",
+        createdAt: new Date(Date.now() - 172800000) // 2 days ago
+      },
+      {
+        id: randomUUID(),
+        fullName: "Emma Rodriguez",
+        email: "emma.rodriguez@email.com",
+        phone: "+1-555-0789",
+        destination: "Siwa Oasis",
+        preferredDates: "May 5-12, 2025",
+        specialRequests: "Wellness retreat focus, dietary restrictions",
+        createdAt: new Date(Date.now() - 259200000) // 3 days ago
+      }
+    ];
+
+    sampleInquiries.forEach(inquiry => {
+      this.inquiries.set(inquiry.id, inquiry);
     });
   }
 
