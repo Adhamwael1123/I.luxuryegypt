@@ -225,13 +225,13 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
-  async getHotel(id: string) {
+  async getHotel(id: string): Promise<Hotel | undefined> {
     try {
       const [hotel] = await db.select().from(hotels).where(eq(hotels.id, id));
-      return hotel || null;
+      return hotel || undefined;
     } catch (error) {
       console.error("Error fetching hotel:", error);
-      return null;
+      return undefined;
     }
   }
 
@@ -434,7 +434,7 @@ export class MemoryStorage implements IStorage {
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    for (const user of this.users.values()) {
+    for (const user of Array.from(this.users.values())) {
       if (user.username === username) {
         return user;
       }
@@ -446,6 +446,7 @@ export class MemoryStorage implements IStorage {
     const user: User = {
       ...insertUser,
       id: randomUUID(),
+      role: insertUser.role || "editor",
       createdAt: new Date()
     };
     this.users.set(user.id, user);
@@ -499,11 +500,7 @@ export class MemoryStorage implements IStorage {
   }
 
   async getPages(): Promise<Page[]> {
-    const pagesArray: Page[] = [];
-    for (const page of this.pages.values()) {
-      pagesArray.push(page);
-    }
-    return pagesArray.sort((a, b) =>
+    return Array.from(this.pages.values()).sort((a, b) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }
@@ -513,7 +510,7 @@ export class MemoryStorage implements IStorage {
   }
 
   async getPageBySlug(slug: string): Promise<Page | undefined> {
-    for (const page of this.pages.values()) {
+    for (const page of Array.from(this.pages.values())) {
       if (page.slug === slug) {
         return page;
       }
@@ -553,13 +550,9 @@ export class MemoryStorage implements IStorage {
   }
 
   async getSectionsByPageId(pageId: string): Promise<Section[]> {
-    const sectionsArray: Section[] = [];
-    for (const section of this.sections.values()) {
-      if (section.pageId === pageId) {
-        sectionsArray.push(section);
-      }
-    }
-    return sectionsArray.sort((a, b) => (a.orderIndex || 0) - (b.orderIndex || 0));
+    return Array.from(this.sections.values())
+      .filter(section => section.pageId === pageId)
+      .sort((a, b) => (a.orderIndex || 0) - (b.orderIndex || 0));
   }
 
   async updateSection(id: string, updateData: Partial<InsertSection>): Promise<Section | undefined> {
@@ -604,11 +597,7 @@ export class MemoryStorage implements IStorage {
   }
 
   async getPosts(): Promise<Post[]> {
-    const postsArray: Post[] = [];
-    for (const post of this.posts.values()) {
-      postsArray.push(post);
-    }
-    return postsArray.sort((a, b) =>
+    return Array.from(this.posts.values()).sort((a, b) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }
@@ -618,7 +607,7 @@ export class MemoryStorage implements IStorage {
   }
 
   async getPostBySlug(slug: string): Promise<Post | undefined> {
-    for (const post of this.posts.values()) {
+    for (const post of Array.from(this.posts.values())) {
       if (post.slug === slug) {
         return post;
       }
@@ -665,11 +654,7 @@ export class MemoryStorage implements IStorage {
   }
 
   async getMedia(): Promise<Media[]> {
-    const mediaArray: Media[] = [];
-    for (const media of this.mediaFiles.values()) {
-      mediaArray.push(media);
-    }
-    return mediaArray.sort((a, b) =>
+    return Array.from(this.mediaFiles.values()).sort((a, b) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }
@@ -729,6 +714,11 @@ export class MemoryStorage implements IStorage {
 
   async deleteHotel(id: string): Promise<boolean> {
     return this.hotels.delete(id);
+  }
+
+  // Delete inquiry method
+  async deleteInquiry(id: string): Promise<boolean> {
+    return this.inquiries.delete(id);
   }
 }
 
