@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "wouter";
 import luxorImage from "@assets/luxor_1757531163688.jpg";
 import redSeaImage from "@assets/red-sea_1757531163688.jpg";
 import siwaImage from "@assets/siwa_1757531163689.jpg";
@@ -6,18 +7,21 @@ import siwaImage from "@assets/siwa_1757531163689.jpg";
 export default function ToursSection() {
   const tours = [
     {
+      id: "pharaohs-legacy",
       title: "Pharaohs' Legacy Tour",
       description: "Journey through 5,000 years of history with private access to iconic temples and tombs.",
       duration: "10 Days",
       imageUrl: luxorImage,
     },
     {
+      id: "red-sea-retreat",
       title: "Red Sea Retreat",
       description: "Luxurious coastal escape with world-class diving, pristine beaches, and exclusive resorts.",
       duration: "7 Days",
       imageUrl: redSeaImage,
     },
     {
+      id: "desert-safari",
       title: "Desert Safari Adventure", 
       description: "Experience the mystical Western Desert with glamping under starlit skies.",
       duration: "5 Days",
@@ -31,14 +35,15 @@ export default function ToursSection() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {tours.map((tour, index) => (
-            <Card
-              key={tour.title}
-              className="group cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:-translate-y-2"
-              style={{
-                animationDelay: `${index * 150}ms`
-              }}
-              data-testid={`tour-card-${index}`}
-            >
+            <Link key={tour.id} href={`/tour/${tour.id}`}>
+              <Card
+                className="group cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:-translate-y-2"
+                style={{
+                  animationDelay: `${index * 150}ms`
+                }}
+                data-testid={`tour-card-${index}`}
+              ></Card>
+            </Link>
               <div className="relative h-[550px] overflow-hidden">
                 <img
                   src={tour.imageUrl}
@@ -76,7 +81,6 @@ export default function ToursSection() {
                   </div>
                 </div>
               </div>
-            </Card>
           ))}
         </div>
         
