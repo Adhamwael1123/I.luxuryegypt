@@ -37,6 +37,11 @@ import Disclaimer from "@/pages/disclaimer";
 import ResponsibleTravel from "@/pages/responsible-travel";
 import AdminLogin from "@/pages/admin-login";
 import AdminDashboard from "@/pages/admin-dashboard";
+import AdminHotels from "@/pages/admin-hotels";
+import AdminPages from "@/pages/admin-pages";
+import AdminPosts from "@/pages/admin-posts";
+import AdminInquiries from "@/pages/admin-inquiries";
+import AdminMedia from "@/pages/admin-media";
 
 function Router() {
   const [location] = useLocation();
@@ -74,8 +79,13 @@ function Router() {
         <Route path="/disclaimer" component={() => <PageTransition><Disclaimer /></PageTransition>} />
         <Route path="/responsible-travel" component={() => <PageTransition><ResponsibleTravel /></PageTransition>} />
         {/* Admin Routes */}
-        <Route path="/admin/login" component={() => <AdminLogin />} />
-        <Route path="/admin" component={() => <AdminDashboard />} />
+        <Route path="/admin/login" component={AdminLogin} />
+        <Route path="/admin" component={AdminDashboard} />
+        <Route path="/admin/hotels" component={AdminHotels} />
+        <Route path="/admin/pages" component={AdminPages} />
+        <Route path="/admin/posts" component={AdminPosts} />
+        <Route path="/admin/inquiries" component={AdminInquiries} />
+        <Route path="/admin/media" component={AdminMedia} />
         <Route component={() => <PageTransition><NotFound /></PageTransition>} />
       </Switch>
     </AnimatePresence>
