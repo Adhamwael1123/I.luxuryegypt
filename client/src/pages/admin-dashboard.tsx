@@ -17,7 +17,7 @@ interface DashboardStats {
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
-  
+
   // Check authentication
   useEffect(() => {
     const token = localStorage.getItem("adminToken");
@@ -259,6 +259,47 @@ export default function AdminDashboard() {
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Development Tools */}
+        <div className="mt-8">
+          <h3 className="text-lg font-semibold mb-4">Development Tools</h3>
+          <div className="flex gap-4">
+            <Button
+              variant="outline"
+              onClick={async () => {
+                try {
+                  const response = await fetch("/api/hotels/seed", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" }
+                  });
+                  const result = await response.json();
+                  alert(result.message);
+                } catch (error) {
+                  alert("Error seeding hotels");
+                }
+              }}
+            >
+              Seed Hotels
+            </Button>
+            <Button
+              variant="outline"
+              onClick={async () => {
+                try {
+                  const response = await fetch("/api/auth/seed", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" }
+                  });
+                  const result = await response.json();
+                  alert(result.message);
+                } catch (error) {
+                  alert("Error seeding admin user");
+                }
+              }}
+            >
+              Seed Admin User
+            </Button>
+          </div>
         </div>
       </main>
     </div>

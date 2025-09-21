@@ -38,13 +38,45 @@ export default function AdminHotels() {
 
   const { data: hotels, isLoading } = useQuery({
     queryKey: ["/api/cms/hotels"],
-    queryFn: () => apiRequest("/api/cms/hotels"),
+    queryFn: async () => {
+      const token = localStorage.getItem("adminToken");
+      if (!token) throw new Error("No auth token");
+      
+      const response = await fetch("/api/cms/hotels", {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response.json();
+    },
     enabled: !!localStorage.getItem("adminToken"),
   });
 
   const deleteHotelMutation = useMutation({
-    mutationFn: (hotelId: string) => 
-      apiRequest(`/api/cms/hotels/${hotelId}`, { method: "DELETE" }),
+    mutationFn: async (hotelId: string) => {
+      const token = localStorage.getItem("adminToken");
+      if (!token) throw new Error("No auth token");
+      
+      const response = await fetch(`/api/cms/hotels/${hotelId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cms/hotels"] });
     },

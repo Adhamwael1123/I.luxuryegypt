@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
-import { 
+import {
   type User, type InsertUser, type Inquiry, type InsertInquiry,
   type Page, type InsertPage, type Section, type InsertSection,
   type Post, type InsertPost, type Media, type InsertMedia,
@@ -13,7 +13,7 @@ import { randomUUID } from "crypto";
 // Database connection with pooled connection for better SSL handling
 const connectionString = process.env.DATABASE_URL!;
 // Use pooled connection URL if available
-const pooledUrl = connectionString.includes('.us-east-2') 
+const pooledUrl = connectionString.includes('.us-east-2')
   ? connectionString.replace('.us-east-2', '-pooler.us-east-2')
   : connectionString;
 
@@ -28,12 +28,13 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  
+
   // Inquiry methods
   createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;
   getInquiries(): Promise<Inquiry[]>;
   getInquiry(id: string): Promise<Inquiry | undefined>;
-  
+  deleteInquiry(id: string): Promise<boolean>;
+
   // Page methods
   createPage(page: InsertPage): Promise<Page>;
   getPages(): Promise<Page[]>;
@@ -41,13 +42,13 @@ export interface IStorage {
   getPageBySlug(slug: string): Promise<Page | undefined>;
   updatePage(id: string, page: Partial<InsertPage>): Promise<Page | undefined>;
   deletePage(id: string): Promise<boolean>;
-  
+
   // Section methods
   createSection(section: InsertSection): Promise<Section>;
   getSectionsByPageId(pageId: string): Promise<Section[]>;
   updateSection(id: string, section: Partial<InsertSection>): Promise<Section | undefined>;
   deleteSection(id: string): Promise<boolean>;
-  
+
   // Post methods
   createPost(post: InsertPost): Promise<Post>;
   getPosts(): Promise<Post[]>;
@@ -55,13 +56,13 @@ export interface IStorage {
   getPostBySlug(slug: string): Promise<Post | undefined>;
   updatePost(id: string, post: Partial<InsertPost>): Promise<Post | undefined>;
   deletePost(id: string): Promise<boolean>;
-  
+
   // Media methods
   createMedia(media: InsertMedia): Promise<Media>;
   getMedia(): Promise<Media[]>;
   getMediaById(id: string): Promise<Media | undefined>;
   deleteMedia(id: string): Promise<boolean>;
-  
+
   // Hotel methods
   createHotel(hotel: InsertHotel): Promise<Hotel>;
   getHotels(): Promise<Hotel[]>;
@@ -202,29 +203,70 @@ export class DatabaseStorage implements IStorage {
     return result.length > 0;
   }
 
+  // Delete inquiry
+  async deleteInquiry(id: string): Promise<boolean> {
+    try {
+      const result = await db.delete(inquiries).where(eq(inquiries.id, id));
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error("Error deleting inquiry:", error);
+      return false;
+    }
+  }
+
   // Hotel methods
-  async createHotel(hotel: InsertHotel): Promise<Hotel> {
-    const result = await db.insert(hotels).values(hotel).returning();
-    return result[0];
+  async getHotels() {
+    try {
+      const hotelsList = await db.select().from(hotels).orderBy(hotels.createdAt);
+      return hotelsList;
+    } catch (error) {
+      console.error("Error fetching hotels:", error);
+      return [];
+    }
   }
 
-  async getHotels(): Promise<Hotel[]> {
-    return await db.select().from(hotels).orderBy(desc(hotels.createdAt));
+  async getHotel(id: string) {
+    try {
+      const [hotel] = await db.select().from(hotels).where(eq(hotels.id, id));
+      return hotel || null;
+    } catch (error) {
+      console.error("Error fetching hotel:", error);
+      return null;
+    }
   }
 
-  async getHotel(id: string): Promise<Hotel | undefined> {
-    const result = await db.select().from(hotels).where(eq(hotels.id, id)).limit(1);
-    return result[0] || undefined;
+  async createHotel(data: InsertHotel & { createdBy: string }) {
+    try {
+      const [hotel] = await db.insert(hotels).values(data).returning();
+      return hotel;
+    } catch (error) {
+      console.error("Error creating hotel:", error);
+      throw error;
+    }
   }
 
-  async updateHotel(id: string, hotel: Partial<InsertHotel>): Promise<Hotel | undefined> {
-    const result = await db.update(hotels).set({ ...hotel, updatedAt: new Date() }).where(eq(hotels.id, id)).returning();
-    return result[0] || undefined;
+  async updateHotel(id: string, data: Partial<InsertHotel>) {
+    try {
+      const [hotel] = await db
+        .update(hotels)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(hotels.id, id))
+        .returning();
+      return hotel || null;
+    } catch (error) {
+      console.error("Error updating hotel:", error);
+      throw error;
+    }
   }
 
   async deleteHotel(id: string): Promise<boolean> {
-    const result = await db.delete(hotels).where(eq(hotels.id, id)).returning();
-    return result.length > 0;
+    try {
+      const result = await db.delete(hotels).where(eq(hotels.id, id));
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error("Error deleting hotel:", error);
+      return false;
+    }
   }
 }
 
@@ -254,7 +296,7 @@ export class MemoryStorage implements IStorage {
       role: "admin",
       createdAt: new Date()
     };
-    
+
     this.users.set(defaultAdmin.id, defaultAdmin);
   }
 
@@ -357,7 +399,7 @@ export class MemoryStorage implements IStorage {
   }
 
   async getInquiries(): Promise<Inquiry[]> {
-    return Array.from(this.inquiries.values()).sort((a, b) => 
+    return Array.from(this.inquiries.values()).sort((a, b) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }
@@ -391,7 +433,7 @@ export class MemoryStorage implements IStorage {
     for (const page of this.pages.values()) {
       pagesArray.push(page);
     }
-    return pagesArray.sort((a, b) => 
+    return pagesArray.sort((a, b) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }
@@ -496,7 +538,7 @@ export class MemoryStorage implements IStorage {
     for (const post of this.posts.values()) {
       postsArray.push(post);
     }
-    return postsArray.sort((a, b) => 
+    return postsArray.sort((a, b) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }
@@ -557,7 +599,7 @@ export class MemoryStorage implements IStorage {
     for (const media of this.mediaFiles.values()) {
       mediaArray.push(media);
     }
-    return mediaArray.sort((a, b) => 
+    return mediaArray.sort((a, b) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }
@@ -593,7 +635,7 @@ export class MemoryStorage implements IStorage {
   }
 
   async getHotels(): Promise<Hotel[]> {
-    return Array.from(this.hotels.values()).sort((a, b) => 
+    return Array.from(this.hotels.values()).sort((a, b) =>
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }

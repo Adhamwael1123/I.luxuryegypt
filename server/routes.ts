@@ -206,6 +206,119 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: 'Error creating admin user' });
     }
   });
+
+  // Seed hotels (DEVELOPMENT ONLY)
+  app.post("/api/hotels/seed", async (req, res) => {
+    // Only allow in development environment
+    if (process.env.NODE_ENV === "production") {
+      return res.status(403).json({
+        success: false,
+        message: "Hotel seeding is only allowed in development mode"
+      });
+    }
+    
+    try {
+      // Check if hotels already exist
+      const existingHotels = await storage.getHotels();
+      if (existingHotels.length > 0) {
+        return res.json({
+          success: true,
+          message: "Hotels already exist in database",
+          count: existingHotels.length
+        });
+      }
+      
+      // Create default admin user if it doesn't exist
+      let adminUser = await storage.getUserByUsername("admin");
+      if (!adminUser) {
+        const hashedPassword = await hashPassword("admin123");
+        adminUser = await storage.createUser({
+          username: "admin",
+          email: "admin@luxortravel.com",
+          password: hashedPassword,
+          role: "admin"
+        });
+      }
+      
+      // Hotel data to seed
+      const hotelsToSeed = [
+        {
+          id: "mena-house",
+          name: "Mena House Hotel",
+          location: "Giza",
+          region: "Cairo & Giza",
+          type: "Palace",
+          rating: 5,
+          priceTier: "$$$$",
+          amenities: ["Pyramid Views", "Historic Heritage", "Luxury Spa", "Fine Dining"],
+          image: "/api/assets/the-pyramid-from-mena-house_1757459228638.jpeg",
+          description: "Historic palace hotel with direct views of the Great Pyramids. A legendary retreat where royalty and celebrities have stayed for over a century.",
+          featured: true,
+          createdBy: adminUser.id
+        },
+        {
+          id: "sofitel-winter-palace",
+          name: "Sofitel Winter Palace",
+          location: "Luxor",
+          region: "Luxor",
+          type: "Palace",
+          rating: 5,
+          priceTier: "$$$$",
+          amenities: ["Nile Gardens", "Royal Heritage", "Pool Complex", "Historic Charm"],
+          image: "/api/assets/luxor_1757531163688.jpg",
+          description: "Victorian grandeur on the banks of the Nile. This legendary hotel has hosted dignitaries and explorers since 1886.",
+          featured: true,
+          createdBy: adminUser.id
+        },
+        {
+          id: "adrere-amellal",
+          name: "Adrère Amellal",
+          location: "Siwa Oasis",
+          region: "Siwa",
+          type: "Eco-Lodge",
+          rating: 4,
+          priceTier: "$$$",
+          amenities: ["Eco-Friendly", "Desert Views", "Natural Architecture", "Wellness"],
+          image: "/api/assets/siwa_1757531163689.jpg",
+          description: "Eco-luxury desert lodge built entirely from natural materials. Experience the serene beauty of the Sahara in sustainable comfort.",
+          featured: true,
+          createdBy: adminUser.id
+        },
+        {
+          id: "four-seasons-nile-plaza",
+          name: "Four Seasons Hotel Cairo at Nile Plaza",
+          location: "Cairo",
+          region: "Cairo & Giza",
+          type: "Resort",
+          rating: 5,
+          priceTier: "$$$$",
+          amenities: ["Nile Views", "Luxury Spa", "Fine Dining", "Business Center"],
+          image: "/api/assets/suite-nile_1757457083796.jpg",
+          description: "Modern luxury with panoramic Nile views in the heart of Cairo. Contemporary elegance meets Egyptian hospitality.",
+          featured: true,
+          createdBy: adminUser.id
+        }
+      ];
+      
+      // Create hotels
+      const createdHotels = [];
+      for (const hotelData of hotelsToSeed) {
+        const { id, ...hotelWithoutId } = hotelData;
+        const hotel = await storage.createHotel(hotelWithoutId);
+        createdHotels.push(hotel);
+      }
+      
+      res.json({
+        success: true,
+        message: "Hotels seeded successfully",
+        count: createdHotels.length,
+        hotels: createdHotels
+      });
+    } catch (error) {
+      console.error('Error seeding hotels:', error);
+      res.status(500).json({ message: 'Error seeding hotels' });
+    }
+  });
   
   // CMS Routes
   

@@ -30,8 +30,6 @@ import luxorImage from "@assets/luxor_1757531163688.jpg";
 import siwaImage from "@assets/siwa_1757531163689.jpg";
 import redSeaImage from "@assets/red-sea_1757531163688.jpg";
 
-// Hotel data is now fetched from API
-
 export default function Stay() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("all");
