@@ -12,6 +12,8 @@ import { Link } from "wouter";
 import { useState, useMemo } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useQuery } from "@tanstack/react-query";
+import type { Hotel } from "@shared/schema";
 
 // Import luxury Egyptian images
 import suiteNileImage from "@assets/suite-nile_1757457083796.jpg";
@@ -28,20 +30,7 @@ import luxorImage from "@assets/luxor_1757531163688.jpg";
 import siwaImage from "@assets/siwa_1757531163689.jpg";
 import redSeaImage from "@assets/red-sea_1757531163688.jpg";
 
-// Hotel interface
-interface Hotel {
-  id: string;
-  name: string;
-  location: string;
-  region: string;
-  type: string;
-  rating: number;
-  priceTier: string;
-  amenities: string[];
-  image: string;
-  description: string;
-  featured: boolean;
-}
+// Hotel data is now fetched from API
 
 export default function Stay() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -52,269 +41,19 @@ export default function Stay() {
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [showAllHotels, setShowAllHotels] = useState(false);
 
-  // Expanded hotel data
-  const allHotels: Hotel[] = [
-    {
-      id: "mena-house",
-      name: "Mena House Hotel",
-      location: "Giza",
-      region: "Cairo & Giza",
-      type: "Palace",
-      rating: 5,
-      priceTier: "$$$$",
-      amenities: ["Pyramid Views", "Historic Heritage", "Luxury Spa", "Fine Dining"],
-      image: menahousePyramidImage,
-      description: "Historic palace hotel with direct views of the Great Pyramids. A legendary retreat where royalty and celebrities have stayed for over a century.",
-      featured: true
+  // Fetch hotels from API
+  const { data: hotelsResponse, isLoading: hotelsLoading, error: hotelsError } = useQuery({
+    queryKey: ["/api/hotels"],
+    queryFn: async () => {
+      const response = await fetch("/api/hotels");
+      if (!response.ok) {
+        throw new Error("Failed to fetch hotels");
+      }
+      return response.json();
     },
-    {
-      id: "sofitel-winter-palace",
-      name: "Sofitel Winter Palace",
-      location: "Luxor",
-      region: "Luxor",
-      type: "Palace",
-      rating: 5,
-      priceTier: "$$$$",
-      amenities: ["Nile Gardens", "Royal Heritage", "Pool Complex", "Historic Charm"],
-      image: luxorImage,
-      description: "Victorian grandeur on the banks of the Nile. This legendary hotel has hosted dignitaries and explorers since 1886.",
-      featured: true
-    },
-    {
-      id: "adrere-amellal",
-      name: "Adrère Amellal",
-      location: "Siwa Oasis",
-      region: "Siwa",
-      type: "Eco-Lodge",
-      rating: 4,
-      priceTier: "$$$",
-      amenities: ["Eco-Friendly", "Desert Views", "Natural Architecture", "Wellness"],
-      image: siwaImage,
-      description: "Eco-luxury desert lodge built entirely from natural materials. Experience the serene beauty of the Sahara in sustainable comfort.",
-      featured: true
-    },
-    {
-      id: "four-seasons-nile-plaza",
-      name: "Four Seasons Hotel Cairo at Nile Plaza",
-      location: "Cairo",
-      region: "Cairo & Giza",
-      type: "Resort",
-      rating: 5,
-      priceTier: "$$$$",
-      amenities: ["Nile Views", "Luxury Spa", "Fine Dining", "Business Center"],
-      image: suiteNileImage,
-      description: "Modern luxury with panoramic Nile views in the heart of Cairo. Contemporary elegance meets Egyptian hospitality.",
-      featured: true
-    },
-    {
-      id: "oberoi-philae",
-      name: "The Oberoi Philae",
-      location: "Aswan",
-      region: "Aswan",
-      type: "Cruise",
-      rating: 5,
-      priceTier: "$$$$",
-      amenities: ["Nile Cruise", "All-Inclusive", "Historic Sites", "Luxury Suites"],
-      image: poolRiverImage,
-      description: "Luxury Nile cruise ship offering an intimate journey through ancient Egypt with world-class amenities.",
-      featured: false
-    },
-    {
-      id: "steigenberger-cecil",
-      name: "Steigenberger Cecil Hotel",
-      location: "Alexandria",
-      region: "Alexandria",
-      type: "Historic",
-      rating: 4,
-      priceTier: "$$$",
-      amenities: ["Historic Charm", "City Center", "Traditional Decor", "Restaurant"],
-      image: luxuryHallImage,
-      description: "Historic hotel in Alexandria's cultural heart, blending colonial elegance with modern comfort.",
-      featured: false
-    },
-    {
-      id: "movenpick-resort-hurghada",
-      name: "Mövenpick Resort Hurghada",
-      location: "Hurghada",
-      region: "Red Sea",
-      type: "Resort",
-      rating: 4,
-      priceTier: "$$$",
-      amenities: ["Beach Access", "Diving Center", "Pool Complex", "Family-Friendly"],
-      image: redSeaImage,
-      description: "Beachfront resort perfect for diving enthusiasts and families seeking Red Sea luxury.",
-      featured: false
-    },
-    {
-      id: "sanctuary-sun-boat",
-      name: "Sanctuary Sun Boat IV",
-      location: "Luxor-Aswan",
-      region: "Luxor",
-      type: "Cruise",
-      rating: 5,
-      priceTier: "$$$$",
-      amenities: ["River Cruise", "All-Inclusive", "Expert Guides", "Premium Suites"],
-      image: columnHallImage,
-      description: "Boutique Nile cruise ship with only 36 suites, offering personalized luxury and expert Egyptology guides.",
-      featured: false
-    },
-    {
-      id: "hilton-luxor",
-      name: "Hilton Luxor Resort & Spa",
-      location: "Luxor",
-      region: "Luxor",
-      type: "Resort",
-      rating: 4,
-      priceTier: "$$$",
-      amenities: ["Spa", "Pool", "Nile Views", "Conference Facilities"],
-      image: islamicDistrictImage,
-      description: "Modern resort on the Nile with stunning views of ancient temples and contemporary amenities.",
-      featured: false
-    },
-    {
-      id: "kempinski-soma-bay",
-      name: "Kempinski Hotel Soma Bay",
-      location: "Soma Bay",
-      region: "Red Sea",
-      type: "Resort",
-      rating: 5,
-      priceTier: "$$$$",
-      amenities: ["Beach Access", "Golf Course", "Spa", "Diving"],
-      image: poolsideDrinkImage,
-      description: "Luxury resort with championship golf course and world-class spa overlooking the Red Sea.",
-      featured: false
-    },
-    {
-      id: "maritim-jolie-ville",
-      name: "Maritim Jolie Ville Resort",
-      location: "Sharm El Sheikh",
-      region: "Red Sea",
-      type: "Resort",
-      rating: 4,
-      priceTier: "$$$",
-      amenities: ["Private Beach", "Diving Center", "Multiple Pools", "Kids Club"],
-      image: siwaPalmTreesImage,
-      description: "Family-friendly resort in Naama Bay with excellent diving facilities and entertainment.",
-      featured: false
-    },
-    {
-      id: "sonesta-star-goddess",
-      name: "Sonesta Star Goddess",
-      location: "Luxor-Aswan",
-      region: "Luxor",
-      type: "Cruise",
-      rating: 4,
-      priceTier: "$$$",
-      amenities: ["Nile Cruise", "Pool", "Spa", "Entertainment"],
-      image: khanKhaliliImage,
-      description: "Elegant Nile cruise ship offering comfortable accommodations and comprehensive temple tours.",
-      featured: false
-    },
-    {
-      id: "old-cataract-aswan",
-      name: "Sofitel Legend Old Cataract",
-      location: "Aswan",
-      region: "Aswan",
-      type: "Historic",
-      rating: 5,
-      priceTier: "$$$$",
-      amenities: ["Historic Legacy", "Nile Views", "Luxury Spa", "Terrace Dining"],
-      image: pyramidLobbyImage,
-      description: "Legendary hotel where Agatha Christie wrote 'Death on the Nile', offering timeless luxury on the Nile.",
-      featured: false
-    },
-    {
-      id: "rixos-sharm",
-      name: "Rixos Sharm El Sheikh",
-      location: "Sharm El Sheikh",
-      region: "Red Sea",
-      type: "Resort",
-      rating: 5,
-      priceTier: "$$$$",
-      amenities: ["All-Inclusive", "Private Beach", "Water Sports", "Kids Club"],
-      image: redSeaImage,
-      description: "Ultra all-inclusive resort with pristine beaches and extensive facilities for families and couples.",
-      featured: false
-    },
-    {
-      id: "steigenberger-aldau",
-      name: "Steigenberger Al Dau Beach Hotel",
-      location: "Hurghada",
-      region: "Red Sea",
-      type: "Resort",
-      rating: 4,
-      priceTier: "$$$",
-      amenities: ["Private Beach", "Coral Reef", "Multiple Restaurants", "Spa"],
-      image: poolRiverImage,
-      description: "Beachfront hotel with direct access to pristine coral reefs and excellent snorkeling.",
-      featured: false
-    },
-    {
-      id: "jaz-mirabel-beach",
-      name: "Jaz Mirabel Beach Resort",
-      location: "Sharm El Sheikh",
-      region: "Red Sea",
-      type: "Resort",
-      rating: 4,
-      priceTier: "$$$",
-      amenities: ["Beach Access", "Animation", "Multiple Pools", "All-Inclusive"],
-      image: suiteNileImage,
-      description: "Vibrant resort with excellent entertainment and dining options in the heart of Sharm El Sheikh.",
-      featured: false
-    },
-    {
-      id: "carnival-cruise",
-      name: "MS Carnival Nile Cruise",
-      location: "Luxor-Aswan",
-      region: "Luxor",
-      type: "Cruise",
-      rating: 4,
-      priceTier: "$$",
-      amenities: ["Budget-Friendly", "Pool", "Traditional Decor", "Temple Tours"],
-      image: columnHallImage,
-      description: "Comfortable Nile cruise ship offering excellent value with traditional Egyptian hospitality.",
-      featured: false
-    },
-    {
-      id: "iberotel-makadi",
-      name: "Iberotel Makadi Beach",
-      location: "Makadi Bay",
-      region: "Red Sea",
-      type: "Resort",
-      rating: 4,
-      priceTier: "$$$",
-      amenities: ["Private Bay", "Water Sports", "Spa", "Multiple Dining"],
-      image: islamicDistrictImage,
-      description: "Secluded resort in protected Makadi Bay with pristine beaches and coral reefs.",
-      featured: false
-    },
-    {
-      id: "nour-el-balah",
-      name: "Nour El Balah Siwa",
-      location: "Siwa Oasis",
-      region: "Siwa",
-      type: "Eco-Lodge",
-      rating: 3,
-      priceTier: "$$",
-      amenities: ["Desert Experience", "Traditional Architecture", "Organic Food", "Star Gazing"],
-      image: siwaPalmTreesImage,
-      description: "Authentic desert experience with traditional Siwan architecture and organic cuisine.",
-      featured: false
-    },
-    {
-      id: "cairo-marriott",
-      name: "Cairo Marriott Hotel & Omar Khayyam Casino",
-      location: "Cairo",
-      region: "Cairo & Giza",
-      type: "Resort",
-      rating: 4,
-      priceTier: "$$$",
-      amenities: ["Palace Gardens", "Casino", "Multiple Restaurants", "Pool"],
-      image: luxuryHallImage,
-      description: "Historic palace converted to luxury hotel with beautiful gardens and diverse dining options.",
-      featured: false
-    }
-  ];
+  });
+
+  const allHotels = hotelsResponse?.hotels || [];
 
   // All available amenities for filtering
   const allAmenities = useMemo(() => {

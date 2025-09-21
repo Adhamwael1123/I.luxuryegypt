@@ -84,6 +84,23 @@ export const media = pgTable("media", {
   uploadedBy: varchar("uploaded_by").references(() => users.id),
 });
 
+export const hotels = pgTable("hotels", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  location: text("location").notNull(),
+  region: text("region").notNull(),
+  type: text("type").notNull(),
+  rating: integer("rating").notNull(),
+  priceTier: text("price_tier").notNull(),
+  amenities: text("amenities").array().notNull(),
+  image: text("image").notNull(),
+  description: text("description").notNull(),
+  featured: boolean("featured").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  createdBy: varchar("created_by").references(() => users.id),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -126,6 +143,23 @@ export const insertMediaSchema = createInsertSchema(media).omit({
   createdAt: true,
 });
 
+export const insertHotelSchema = createInsertSchema(hotels).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  name: z.string().min(1, "Hotel name is required"),
+  location: z.string().min(1, "Location is required"),
+  region: z.string().min(1, "Region is required"),
+  type: z.string().min(1, "Hotel type is required"),
+  rating: z.number().min(1).max(5, "Rating must be between 1 and 5"),
+  priceTier: z.string().min(1, "Price tier is required"),
+  amenities: z.array(z.string()).min(1, "At least one amenity is required"),
+  image: z.string().url("Please provide a valid image URL"),
+  description: z.string().min(1, "Description is required"),
+  featured: z.boolean().default(false),
+});
+
 // Login Schema
 export const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -145,4 +179,6 @@ export type InsertPost = z.infer<typeof insertPostSchema>;
 export type Post = typeof posts.$inferSelect;
 export type InsertMedia = z.infer<typeof insertMediaSchema>;
 export type Media = typeof media.$inferSelect;
+export type InsertHotel = z.infer<typeof insertHotelSchema>;
+export type Hotel = typeof hotels.$inferSelect;
 export type LoginRequest = z.infer<typeof loginSchema>;

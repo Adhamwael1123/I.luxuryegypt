@@ -4,7 +4,8 @@ import {
   type User, type InsertUser, type Inquiry, type InsertInquiry,
   type Page, type InsertPage, type Section, type InsertSection,
   type Post, type InsertPost, type Media, type InsertMedia,
-  users, inquiries, pages, sections, posts, media as mediaTable
+  type Hotel, type InsertHotel,
+  users, inquiries, pages, sections, posts, media as mediaTable, hotels
 } from "@shared/schema";
 import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
@@ -60,6 +61,13 @@ export interface IStorage {
   getMedia(): Promise<Media[]>;
   getMediaById(id: string): Promise<Media | undefined>;
   deleteMedia(id: string): Promise<boolean>;
+  
+  // Hotel methods
+  createHotel(hotel: InsertHotel): Promise<Hotel>;
+  getHotels(): Promise<Hotel[]>;
+  getHotel(id: string): Promise<Hotel | undefined>;
+  updateHotel(id: string, hotel: Partial<InsertHotel>): Promise<Hotel | undefined>;
+  deleteHotel(id: string): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -193,6 +201,31 @@ export class DatabaseStorage implements IStorage {
     const result = await db.delete(mediaTable).where(eq(mediaTable.id, id)).returning();
     return result.length > 0;
   }
+
+  // Hotel methods
+  async createHotel(hotel: InsertHotel): Promise<Hotel> {
+    const result = await db.insert(hotels).values(hotel).returning();
+    return result[0];
+  }
+
+  async getHotels(): Promise<Hotel[]> {
+    return await db.select().from(hotels).orderBy(desc(hotels.createdAt));
+  }
+
+  async getHotel(id: string): Promise<Hotel | undefined> {
+    const result = await db.select().from(hotels).where(eq(hotels.id, id)).limit(1);
+    return result[0] || undefined;
+  }
+
+  async updateHotel(id: string, hotel: Partial<InsertHotel>): Promise<Hotel | undefined> {
+    const result = await db.update(hotels).set({ ...hotel, updatedAt: new Date() }).where(eq(hotels.id, id)).returning();
+    return result[0] || undefined;
+  }
+
+  async deleteHotel(id: string): Promise<boolean> {
+    const result = await db.delete(hotels).where(eq(hotels.id, id)).returning();
+    return result.length > 0;
+  }
 }
 
 // Memory Storage Implementation for Development
@@ -203,10 +236,13 @@ export class MemoryStorage implements IStorage {
   private sections = new Map<string, Section>();
   private posts = new Map<string, Post>();
   private mediaFiles = new Map<string, Media>();
+  private hotels = new Map<string, Hotel>();
 
   constructor() {
     // Pre-populate with default admin user
     this.seedDefaultUser();
+    // Pre-populate with sample hotels
+    this.seedDefaultHotels();
   }
 
   private async seedDefaultUser() {
@@ -220,6 +256,64 @@ export class MemoryStorage implements IStorage {
     };
     
     this.users.set(defaultAdmin.id, defaultAdmin);
+  }
+
+  private async seedDefaultHotels() {
+    // Seed with a few sample hotels from the original Stay page
+    const sampleHotels: Hotel[] = [
+      {
+        id: randomUUID(),
+        name: "Mena House Hotel",
+        location: "Giza",
+        region: "Cairo & Giza",
+        type: "Palace",
+        rating: 5,
+        priceTier: "$$$$",
+        amenities: ["Pyramid Views", "Historic Heritage", "Luxury Spa", "Fine Dining"],
+        image: "/attached_assets/the-pyramid-from-mena-house_1757459228638.jpeg",
+        description: "Historic palace hotel with direct views of the Great Pyramids. A legendary retreat where royalty and celebrities have stayed for over a century.",
+        featured: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: null
+      },
+      {
+        id: randomUUID(),
+        name: "Sofitel Winter Palace",
+        location: "Luxor",
+        region: "Luxor",
+        type: "Palace",
+        rating: 5,
+        priceTier: "$$$$",
+        amenities: ["Nile Gardens", "Royal Heritage", "Pool Complex", "Historic Charm"],
+        image: "/attached_assets/luxor_1757531163688.jpg",
+        description: "Victorian grandeur on the banks of the Nile. This legendary hotel has hosted dignitaries and explorers since 1886.",
+        featured: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: null
+      },
+      {
+        id: randomUUID(),
+        name: "Four Seasons Hotel Cairo at Nile Plaza",
+        location: "Cairo",
+        region: "Cairo & Giza",
+        type: "Resort",
+        rating: 5,
+        priceTier: "$$$$",
+        amenities: ["Nile Views", "Luxury Spa", "Fine Dining", "Business Center"],
+        image: "/attached_assets/suite-nile_1757457083796.jpg",
+        description: "Modern luxury with panoramic Nile views in the heart of Cairo. Contemporary elegance meets Egyptian hospitality.",
+        featured: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        createdBy: null
+      }
+    ];
+
+    sampleHotels.forEach(hotel => {
+      this.hotels.set(hotel.id, hotel);
+    });
   }
 
   // User methods
@@ -474,6 +568,55 @@ export class MemoryStorage implements IStorage {
 
   async deleteMedia(id: string): Promise<boolean> {
     return this.mediaFiles.delete(id);
+  }
+
+  // Hotel methods
+  async createHotel(insertHotel: InsertHotel): Promise<Hotel> {
+    const hotel: Hotel = {
+      id: randomUUID(),
+      name: insertHotel.name,
+      location: insertHotel.location,
+      region: insertHotel.region,
+      type: insertHotel.type,
+      rating: insertHotel.rating,
+      priceTier: insertHotel.priceTier,
+      amenities: insertHotel.amenities,
+      image: insertHotel.image,
+      description: insertHotel.description,
+      featured: insertHotel.featured || false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      createdBy: insertHotel.createdBy || null
+    };
+    this.hotels.set(hotel.id, hotel);
+    return hotel;
+  }
+
+  async getHotels(): Promise<Hotel[]> {
+    return Array.from(this.hotels.values()).sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }
+
+  async getHotel(id: string): Promise<Hotel | undefined> {
+    return this.hotels.get(id);
+  }
+
+  async updateHotel(id: string, updateData: Partial<InsertHotel>): Promise<Hotel | undefined> {
+    const existingHotel = this.hotels.get(id);
+    if (!existingHotel) return undefined;
+
+    const updatedHotel: Hotel = {
+      ...existingHotel,
+      ...updateData,
+      updatedAt: new Date()
+    };
+    this.hotels.set(id, updatedHotel);
+    return updatedHotel;
+  }
+
+  async deleteHotel(id: string): Promise<boolean> {
+    return this.hotels.delete(id);
   }
 }
 

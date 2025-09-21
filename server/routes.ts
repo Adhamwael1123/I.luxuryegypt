@@ -6,6 +6,7 @@ import {
   insertUserSchema,
   insertPageSchema,
   insertPostSchema,
+  insertHotelSchema,
   loginSchema
 } from "@shared/schema";
 import { z } from "zod";
@@ -273,6 +274,107 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       console.error('Error creating post:', error);
       res.status(500).json({ message: 'Error creating post' });
+    }
+  });
+
+  // Hotels Management Routes
+  
+  // Get all hotels (public access)
+  app.get("/api/hotels", async (req, res) => {
+    try {
+      const hotels = await storage.getHotels();
+      res.json({ success: true, hotels });
+    } catch (error) {
+      console.error('Error fetching hotels:', error);
+      res.status(500).json({ message: 'Error fetching hotels' });
+    }
+  });
+
+  // Get a specific hotel (public access)
+  app.get("/api/hotels/:id", async (req, res) => {
+    try {
+      const hotel = await storage.getHotel(req.params.id);
+      if (!hotel) {
+        return res.status(404).json({ message: 'Hotel not found' });
+      }
+      res.json({ success: true, hotel });
+    } catch (error) {
+      console.error('Error fetching hotel:', error);
+      res.status(500).json({ message: 'Error fetching hotel' });
+    }
+  });
+
+  // Create hotel (admin/editor access)
+  app.post("/api/cms/hotels", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const hotelData = insertHotelSchema.parse(req.body);
+      
+      const hotel = await storage.createHotel({
+        ...hotelData,
+        createdBy: authReq.user!.id
+      });
+      
+      res.status(201).json({ success: true, hotel });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error creating hotel:', error);
+      res.status(500).json({ message: 'Error creating hotel' });
+    }
+  });
+
+  // Update hotel (admin/editor access)
+  app.put("/api/cms/hotels/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const hotelData = insertHotelSchema.partial().parse(req.body);
+      
+      const hotel = await storage.updateHotel(req.params.id, hotelData);
+      if (!hotel) {
+        return res.status(404).json({ message: 'Hotel not found' });
+      }
+      
+      res.json({ success: true, hotel });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error updating hotel:', error);
+      res.status(500).json({ message: 'Error updating hotel' });
+    }
+  });
+
+  // Delete hotel (admin/editor access)
+  app.delete("/api/cms/hotels/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const deleted = await storage.deleteHotel(req.params.id);
+      if (!deleted) {
+        return res.status(404).json({ message: 'Hotel not found' });
+      }
+      
+      res.json({ success: true, message: 'Hotel deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting hotel:', error);
+      res.status(500).json({ message: 'Error deleting hotel' });
+    }
+  });
+
+  // Get hotels for CMS management (admin/editor access)
+  app.get("/api/cms/hotels", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const hotels = await storage.getHotels();
+      res.json({ success: true, hotels });
+    } catch (error) {
+      console.error('Error fetching hotels for CMS:', error);
+      res.status(500).json({ message: 'Error fetching hotels' });
     }
   });
   

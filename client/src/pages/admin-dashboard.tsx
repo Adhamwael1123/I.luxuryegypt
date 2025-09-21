@@ -5,13 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { apiRequest } from "@/lib/queryClient";
-import { FileText, Users, MessageSquare, Image, Plus, LogOut } from "lucide-react";
+import { FileText, Users, MessageSquare, Image, Plus, LogOut, Building } from "lucide-react";
 
 interface DashboardStats {
   pages: number;
   posts: number;
   inquiries: number;
   media: number;
+  hotels: number;
 }
 
 export default function AdminDashboard() {
@@ -35,7 +36,8 @@ export default function AdminDashboard() {
         pages: 5,
         posts: 12,
         inquiries: 8,
-        media: 24
+        media: 24,
+        hotels: 16
       } as DashboardStats;
     },
     enabled: !!localStorage.getItem("adminToken"),
@@ -63,6 +65,14 @@ export default function AdminDashboard() {
       icon: FileText,
       color: "bg-green-500",
       href: "/admin/posts"
+    },
+    {
+      title: "Hotels",
+      value: stats?.hotels || 0,
+      description: "Luxury accommodations",
+      icon: Building,
+      color: "bg-indigo-500",
+      href: "/admin/hotels"
     },
     {
       title: "Inquiries",
@@ -189,6 +199,15 @@ export default function AdminDashboard() {
               >
                 <FileText className="h-4 w-4 mr-2" />
                 Write Blog Post
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full justify-start"
+                onClick={() => setLocation("/admin/hotels/new")}
+                data-testid="button-new-hotel"
+              >
+                <Building className="h-4 w-4 mr-2" />
+                Add New Hotel
               </Button>
               <Button 
                 variant="outline" 
