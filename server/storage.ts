@@ -235,7 +235,7 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
-  async createHotel(data: InsertHotel & { createdBy: string }) {
+  async createHotel(data: InsertHotel) {
     try {
       const [hotel] = await db.insert(hotels).values(data).returning();
       return hotel;
@@ -245,14 +245,14 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
-  async updateHotel(id: string, data: Partial<InsertHotel>) {
+  async updateHotel(id: string, data: Partial<InsertHotel>): Promise<Hotel | undefined> {
     try {
       const [hotel] = await db
         .update(hotels)
         .set({ ...data, updatedAt: new Date() })
         .where(eq(hotels.id, id))
         .returning();
-      return hotel || null;
+      return hotel || undefined;
     } catch (error) {
       console.error("Error updating hotel:", error);
       throw error;
@@ -722,5 +722,107 @@ export class MemoryStorage implements IStorage {
   }
 }
 
-// Use memory storage for development (has pre-seeded admin user)
-export const storage = new MemoryStorage();
+// Use database storage with PostgreSQL
+export const storage = new DatabaseStorage();
+
+// Seed database with admin user and sample data
+export async function seedDatabase() {
+  try {
+    // Check if admin user already exists
+    const existingAdmin = await storage.getUserByUsername("admin");
+    if (!existingAdmin) {
+      // Create admin user with bcrypt-hashed password
+      await storage.createUser({
+        username: "admin",
+        email: "admin@luxuryegypt.com", 
+        password: "$2b$10$jya3D5zQkarnCNp7ex9E1eQFFdHa5pQgvriM2BK5yiPM/BNO77Hf.", // bcrypt hash of "admin123"
+        role: "admin"
+      });
+      console.log("✓ Admin user seeded");
+    }
+
+    // Check if hotels are already seeded
+    const existingHotels = await storage.getHotels();
+    if (existingHotels.length === 0) {
+      // Seed sample hotels
+      const sampleHotels = [
+        {
+          name: "Mena House Hotel",
+          location: "Giza",
+          region: "Cairo & Giza",
+          type: "Palace" as const,
+          rating: 5,
+          priceTier: "$$$$" as const,
+          amenities: ["Pyramid Views", "Historic Heritage", "Luxury Spa", "Fine Dining"],
+          image: "/api/assets/the-pyramid-from-mena-house_1757459228638.jpeg",
+          description: "Historic palace hotel with direct views of the Great Pyramids. A legendary retreat where royalty and celebrities have stayed for over a century.",
+          featured: true
+        },
+        {
+          name: "Sofitel Winter Palace",
+          location: "Luxor", 
+          region: "Luxor",
+          type: "Palace" as const,
+          rating: 5,
+          priceTier: "$$$$" as const,
+          amenities: ["Nile Gardens", "Royal Heritage", "Pool Complex", "Historic Charm"],
+          image: "/api/assets/luxor_1757531163688.jpg",
+          description: "Victorian grandeur on the banks of the Nile. This legendary hotel has hosted dignitaries and explorers since 1886.",
+          featured: true
+        },
+        {
+          name: "Four Seasons Hotel Cairo at Nile Plaza",
+          location: "Cairo",
+          region: "Cairo & Giza", 
+          type: "Resort" as const,
+          rating: 5,
+          priceTier: "$$$$" as const,
+          amenities: ["Nile Views", "Luxury Spa", "Fine Dining", "Business Center"],
+          image: "/api/assets/suite-nile_1757457083796.jpg",
+          description: "Modern luxury with panoramic Nile views in the heart of Cairo. Contemporary elegance meets Egyptian hospitality.",
+          featured: true
+        }
+      ];
+
+      for (const hotel of sampleHotels) {
+        await storage.createHotel(hotel);
+      }
+      console.log("✓ Sample hotels seeded");
+    }
+
+    // Seed sample inquiries
+    const existingInquiries = await storage.getInquiries();
+    if (existingInquiries.length === 0) {
+      const sampleInquiries = [
+        {
+          fullName: "Sarah Johnson",
+          email: "sarah.johnson@email.com",
+          phone: "+1-555-0123",
+          destination: "Luxor & Aswan",
+          preferredDates: "March 15-25, 2025",
+          specialRequests: "Anniversary celebration, prefer Nile view rooms"
+        },
+        {
+          fullName: "David Chen", 
+          email: "david.chen@email.com",
+          phone: "+1-555-0456",
+          destination: "Cairo & Giza",
+          preferredDates: "April 10-20, 2025",
+          specialRequests: "Photography tour, need early pyramid access"
+        }
+      ];
+
+      for (const inquiry of sampleInquiries) {
+        await storage.createInquiry(inquiry);
+      }
+      console.log("✓ Sample inquiries seeded");
+    }
+
+    console.log("✓ Database seeding completed");
+  } catch (error) {
+    console.error("Database seeding error:", error);
+  }
+}
+
+// Initialize database seeding
+seedDatabase();
