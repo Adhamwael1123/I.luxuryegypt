@@ -42,9 +42,8 @@ export default function ToursSection() {
                   animationDelay: `${index * 150}ms`
                 }}
                 data-testid={`tour-card-${index}`}
-              ></Card>
-            </Link>
-              <div className="relative h-[550px] overflow-hidden">
+              >
+                <div className="relative h-[550px] overflow-hidden">
                 <img
                   src={tour.imageUrl}
                   alt={tour.title}
@@ -80,7 +79,9 @@ export default function ToursSection() {
                     </span>
                   </div>
                 </div>
-              </div>
+                </div>
+              </Card>
+            </Link>
           ))}
         </div>
         
