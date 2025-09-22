@@ -57,27 +57,27 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-10 transform rotate-12 scale-150"></div>
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white to-transparent opacity-5 transform -rotate-12 scale-150"></div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary/20 to-background relative overflow-hidden">
+      {/* Egyptian-inspired Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/30 to-transparent transform rotate-12 scale-150"></div>
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-primary/20 to-transparent transform -rotate-12 scale-150"></div>
       </div>
       
-      <Card className="w-full max-w-md mx-4 backdrop-blur-sm bg-white/95 border-white/20 shadow-2xl">
+      <Card className="w-full max-w-md mx-4 bg-card border-card-border shadow-xl">
         <CardHeader className="text-center space-y-4 pb-6">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
-            <Shield className="w-8 h-8 text-white" />
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg">
+            <Shield className="w-8 h-8 text-primary-foreground" />
           </div>
           <div>
-            <CardTitle className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-700 bg-clip-text text-transparent">
+            <CardTitle className="text-3xl font-serif font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               I.LuxuryEgypt
             </CardTitle>
-            <CardTitle className="text-lg font-semibold text-slate-700 mt-1">
+            <CardTitle className="text-lg font-semibold text-foreground/80 mt-1">
               Admin Dashboard
             </CardTitle>
           </div>
-          <CardDescription className="text-slate-600">
+          <CardDescription className="text-muted-foreground">
             Welcome back! Please sign in to access the content management system.
           </CardDescription>
         </CardHeader>
@@ -89,14 +89,14 @@ export default function AdminLogin() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-700 font-medium">Username</FormLabel>
+                    <FormLabel className="text-foreground/80 font-medium">Username</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                         <Input 
                           {...field} 
                           placeholder="Enter your username"
-                          className="pl-10 h-11 border-slate-300 focus:border-amber-500 focus:ring-amber-500/20"
+                          className="pl-10 h-11 border-input focus:border-accent focus:ring-accent/20 bg-background"
                           data-testid="input-username"
                         />
                       </div>
@@ -111,21 +111,21 @@ export default function AdminLogin() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-700 font-medium">Password</FormLabel>
+                    <FormLabel className="text-foreground/80 font-medium">Password</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                         <Input 
                           {...field} 
                           type={showPassword ? "text" : "password"}
                           placeholder="Enter your password"
-                          className="pl-10 pr-10 h-11 border-slate-300 focus:border-amber-500 focus:ring-amber-500/20"
+                          className="pl-10 pr-10 h-11 border-input focus:border-accent focus:ring-accent/20 bg-background"
                           data-testid="input-password"
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                           data-testid="button-toggle-password"
                         >
                           {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -139,7 +139,7 @@ export default function AdminLogin() {
               
               <Button 
                 type="submit" 
-                className="w-full h-11 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                className="w-full h-11 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
                 disabled={loginMutation.isPending}
                 data-testid="button-login"
               >
@@ -156,12 +156,12 @@ export default function AdminLogin() {
           </Form>
           
           {/* Development Credentials Info */}
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-6">
+          <div className="bg-accent/10 border border-accent/30 rounded-lg p-4 mt-6">
             <div className="flex items-center space-x-2 mb-2">
-              <Shield className="w-4 h-4 text-amber-600" />
-              <h4 className="text-sm font-medium text-amber-800">Development Access</h4>
+              <Shield className="w-4 h-4 text-accent" />
+              <h4 className="text-sm font-medium text-foreground">Development Access</h4>
             </div>
-            <div className="text-xs text-amber-700 space-y-1">
+            <div className="text-xs text-foreground/70 space-y-1">
               <p><strong>Username:</strong> admin</p>
               <p><strong>Password:</strong> admin123</p>
               <p className="italic">Default credentials for development environment</p>
