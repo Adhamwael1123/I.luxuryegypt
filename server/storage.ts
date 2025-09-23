@@ -160,7 +160,8 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getPosts(): Promise<Post[]> {
-    return await db.select().from(posts).orderBy(desc(posts.createdAt));
+    const result = await db.select().from(posts).orderBy(desc(posts.createdAt));
+    return result || [];
   }
 
   async getPost(id: string): Promise<Post | undefined> {

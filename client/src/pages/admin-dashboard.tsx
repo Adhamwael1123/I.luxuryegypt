@@ -56,21 +56,25 @@ export default function AdminDashboard() {
 
       try {
         // Fetch real data from multiple endpoints
-        const [hotelsRes, inquiriesRes] = await Promise.all([
+        const [hotelsRes, inquiriesRes, postsRes] = await Promise.all([
           fetch("/api/cms/hotels", {
             headers: { "Authorization": `Bearer ${token}` }
           }),
           fetch("/api/inquiries", {
+            headers: { "Authorization": `Bearer ${token}` }
+          }),
+          fetch("/api/cms/posts", {
             headers: { "Authorization": `Bearer ${token}` }
           })
         ]);
 
         const hotelsData = hotelsRes.ok ? await hotelsRes.json() : { hotels: [] };
         const inquiriesData = inquiriesRes.ok ? await inquiriesRes.json() : { inquiries: [] };
+        const postsData = postsRes.ok ? await postsRes.json() : { posts: [] };
 
         return {
           pages: 5, // Static for now
-          posts: 12, // Static for now
+          posts: postsData.posts?.length || 0,
           inquiries: inquiriesData.inquiries?.length || 0,
           media: 24, // Static for now
           hotels: hotelsData.hotels?.length || 0
@@ -243,7 +247,7 @@ export default function AdminDashboard() {
               <Button 
                 variant="outline" 
                 className="w-full justify-start"
-                onClick={() => setLocation("/admin/posts/new")}
+                onClick={() => setLocation("/admin/posts")}
                 data-testid="button-new-post"
               >
                 <FileText className="h-4 w-4 mr-2" />

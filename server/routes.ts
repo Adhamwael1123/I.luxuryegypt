@@ -392,6 +392,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get specific post by ID
+  app.get("/api/cms/posts/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const post = await storage.getPost(req.params.id);
+      if (!post) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+      res.json({ success: true, post });
+    } catch (error) {
+      console.error('Error fetching post:', error);
+      res.status(500).json({ message: 'Error fetching post' });
+    }
+  });
+
+  // Update post
+  app.put("/api/cms/posts/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const postData = insertPostSchema.partial().parse(req.body);
+      
+      const post = await storage.updatePost(req.params.id, postData);
+      if (!post) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+      
+      res.json({ success: true, post });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error updating post:', error);
+      res.status(500).json({ message: 'Error updating post' });
+    }
+  });
+
+  // Delete post
+  app.delete("/api/cms/posts/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const deleted = await storage.deletePost(req.params.id);
+      if (!deleted) {
+        return res.status(404).json({ message: 'Post not found' });
+      }
+      
+      res.json({ success: true, message: 'Post deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      res.status(500).json({ message: 'Error deleting post' });
+    }
+  });
+
   // Hotels Management Routes
   
   // Get all hotels (public access)
