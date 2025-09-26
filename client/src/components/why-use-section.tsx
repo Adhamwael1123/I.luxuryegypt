@@ -66,7 +66,7 @@ export default function WhyUseSection() {
         </div>
 
         {/* Luxury Cards Grid */}
-        <div className="flex gap-6 max-w-7xl mx-auto" style={{ height: '300px' }}>
+        <div className="flex gap-6 max-w-7xl mx-auto" style={{ height: '350px' }}>
           {whyUseItems.map((item) => (
             <div 
               key={item.id} 
