@@ -123,7 +123,7 @@ export default function HeroSection() {
             {/* Right Content - Feature Cards */}
             <div className="space-y-6 animate-fade-in" style={{ animationDelay: '0.8s' }}>
               {/* Featured Experience Card */}
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/15 transition-all duration-300 hover:scale-105">
+              <Card className="bg-primary/20 backdrop-blur-sm border-white/20 text-white hover:bg-primary/30 transition-all duration-300 hover:scale-105">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
                     <div className="w-16 h-16 bg-accent rounded-lg flex items-center justify-center flex-shrink-0">
@@ -143,7 +143,7 @@ export default function HeroSection() {
               </Card>
 
               {/* Luxury Accommodation Card */}
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/15 transition-all duration-300 hover:scale-105">
+              <Card className="bg-primary/20 backdrop-blur-sm border-white/20 text-white hover:bg-primary/30 transition-all duration-300 hover:scale-105">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
                     <div className="w-16 h-16 bg-accent rounded-lg flex items-center justify-center flex-shrink-0">
@@ -168,7 +168,7 @@ export default function HeroSection() {
       </div>
 
       {/* Bottom fade for smooth transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-20"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/20 to-transparent z-20"></div>
     </section>
   );
 }
