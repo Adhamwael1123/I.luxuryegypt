@@ -1,3 +1,5 @@
+
+import { useState } from "react";
 import insideColumnHallImg from "@assets/inside-the-column-hall_1757699232094.jpg";
 import islamicDistrictImg from "@assets/islamic-district-at-dawn_1757699232100.jpg";
 import poolSideDrinkImg from "@assets/pool-side-drink_1757699232100.jpg";
@@ -32,6 +34,8 @@ const whyUseItems: WhyUseItem[] = [
 ];
 
 export default function WhyUseSection() {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+
   return (
     <section className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,12 +50,20 @@ export default function WhyUseSection() {
         </div>
 
         {/* Luxury Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto group/container">
+        <div className="flex gap-4 max-w-6xl mx-auto h-80">
           {whyUseItems.map((item, index) => (
             <div 
               key={item.id} 
-              className="group relative bg-card shadow-lg overflow-hidden luxury-transition hover:shadow-2xl border border-primary/10 hover:border-accent/40 hover:lg:w-[200%] hover:lg:z-10 lg:transition-all lg:duration-700 lg:ease-out"
-              style={{ minHeight: '400px' }}
+              className={`relative bg-card shadow-lg overflow-hidden transition-all duration-700 ease-out border border-primary/10 hover:border-accent/40 ${
+                hoveredCard === null 
+                  ? 'flex-1' 
+                  : hoveredCard === item.id 
+                    ? 'flex-[2]' 
+                    : 'flex-[0.3] opacity-60'
+              }`}
+              onMouseEnter={() => setHoveredCard(item.id)}
+              onMouseLeave={() => setHoveredCard(null)}
+              style={{ height: '320px' }}
               data-testid={`why-use-item-${item.id}`}
             >
               {/* Top Accent Bar */}
@@ -59,8 +71,10 @@ export default function WhyUseSection() {
               
               {/* Main Card Content */}
               <div className="relative flex h-full">
-                {/* Image Section - Left Side */}
-                <div className="relative w-full group-hover:w-1/2 transition-all duration-700 ease-out overflow-hidden">
+                {/* Image Section */}
+                <div className={`relative overflow-hidden transition-all duration-700 ease-out ${
+                  hoveredCard === item.id ? 'w-1/2' : 'w-full'
+                }`}>
                   <img
                     src={item.image}
                     alt={item.title}
@@ -84,9 +98,11 @@ export default function WhyUseSection() {
                   </div>
                 </div>
 
-                {/* Expanding Content Section - Right Side */}
-                <div className="absolute right-0 top-0 bottom-0 w-0 group-hover:w-1/2 transition-all duration-700 ease-out overflow-hidden bg-gradient-to-br from-card via-card to-accent/5">
-                  <div className="h-full flex flex-col justify-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-300">
+                {/* Expanding Content Section */}
+                <div className={`absolute right-0 top-0 bottom-0 bg-gradient-to-br from-card via-card to-accent/5 transition-all duration-700 ease-out overflow-hidden ${
+                  hoveredCard === item.id ? 'w-1/2 opacity-100' : 'w-0 opacity-0'
+                }`}>
+                  <div className="h-full flex flex-col justify-center p-6">
                     {/* Decorative Top Line */}
                     <div className="w-full h-px bg-gradient-to-r from-accent via-accent/60 to-transparent mb-6" />
                     
@@ -129,10 +145,14 @@ export default function WhyUseSection() {
               </div>
 
               {/* Side Accent - Vertical Line */}
-              <div className="absolute left-0 top-1 bottom-1 w-1 bg-gradient-to-b from-accent/0 via-accent/80 to-accent/0 group-hover:w-2 transition-all duration-500" />
+              <div className={`absolute left-0 top-1 bottom-1 bg-gradient-to-b from-accent/0 via-accent/80 to-accent/0 transition-all duration-500 ${
+                hoveredCard === item.id ? 'w-2' : 'w-1'
+              }`} />
               
               {/* Bottom Accent - Horizontal Line */}
-              <div className="absolute bottom-0 left-1 right-1 h-0.5 bg-gradient-to-r from-accent/0 via-accent/60 to-accent/0 group-hover:h-1 transition-all duration-500" />
+              <div className={`absolute bottom-0 left-1 right-1 bg-gradient-to-r from-accent/0 via-accent/60 to-accent/0 transition-all duration-500 ${
+                hoveredCard === item.id ? 'h-1' : 'h-0.5'
+              }`} />
             </div>
           ))}
         </div>
