@@ -147,26 +147,9 @@ export default function WhyUseSection() {
         <div className="text-center mt-20">
           <button 
             onClick={() => window.location.href = '/contact'}
-            className="inline-flex items-center space-x-6 bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5 px-16 py-8 border border-accent/30 hover:border-accent/50 transition-all duration-500 hover:shadow-xl group cursor-pointer"
+            className="bg-accent text-black font-semibold px-8 py-4 rounded-lg hover:bg-accent/90 transition-all duration-300 hover:scale-105 hover:shadow-lg"
           >
-            <div className="flex items-center space-x-3">
-              <div className="w-2 h-2 bg-accent rotate-45 group-hover:animate-pulse"></div>
-              <div className="w-1 h-1 bg-accent/60 rounded-full"></div>
-            </div>
-            
-            <div className="text-center">
-              <span className="text-primary font-bold text-lg tracking-[0.2em] uppercase block">
-                Experience Unparalleled Luxury
-              </span>
-              <span className="text-muted-foreground text-sm tracking-widest uppercase mt-1 block">
-                Begin Your Egyptian Journey
-              </span>
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              <div className="w-1 h-1 bg-accent/60 rounded-full"></div>
-              <div className="w-2 h-2 bg-accent rotate-45 group-hover:animate-pulse"></div>
-            </div>
+            Experience Unparalleled Luxury
           </button>
         </div>
       </div>
