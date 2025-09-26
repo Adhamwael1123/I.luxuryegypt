@@ -56,12 +56,13 @@ export default function WhyUseSection() {
           {whyUseItems.map((item, index) => (
             <div 
               key={item.id} 
-              className={`group relative bg-card border border-card-border rounded-xl shadow-sm overflow-hidden luxury-transition hover:shadow-xl hover-elevate ${
-                index % 2 === 0 ? 'md:mt-8 xl:mt-0' : ''
-              }`}
-              style={{ minHeight: '480px' }}
+              className="group relative bg-card border-2 border-primary/10 shadow-lg overflow-hidden luxury-transition hover:shadow-2xl hover:border-accent/30 hover-elevate"
+              style={{ minHeight: '520px' }}
               data-testid={`why-use-item-${item.id}`}
             >
+              {/* Top Accent Bar */}
+              <div className="h-1 bg-gradient-to-r from-accent via-accent/80 to-primary/60" />
+              
               {/* Image Section */}
               <div className="relative h-64 overflow-hidden">
                 <img
@@ -71,53 +72,59 @@ export default function WhyUseSection() {
                 />
                 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent" />
                 
-                {/* Decorative Corner */}
-                <div className="absolute top-4 right-4 w-8 h-8 border-2 border-accent/60 border-r-0 border-b-0 rounded-tl-lg" />
+                {/* Premium Badge */}
+                <div className="absolute top-4 right-4 bg-accent text-primary px-3 py-1 text-xs font-bold tracking-wide">
+                  0{item.id}
+                </div>
+                
+                {/* Title Overlay */}
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="font-serif font-bold text-xl text-white mb-1 drop-shadow-lg">
+                    {item.title}
+                  </h3>
+                  <div className="w-full h-px bg-gradient-to-r from-accent to-transparent" />
+                </div>
               </div>
 
               {/* Content Section */}
-              <div className="p-6 flex flex-col h-56">
-                {/* Title with decorative element */}
-                <div className="mb-4">
-                  <h3 className="font-serif font-bold text-xl text-primary mb-2">
-                    {item.title}
-                  </h3>
-                  <div className="w-12 h-0.5 bg-accent rounded-full" />
-                </div>
-
-                {/* Content */}
+              <div className="p-6 flex flex-col justify-between h-60 bg-gradient-to-b from-card via-card to-card/95">
+                {/* Content Text */}
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-grow">
                   {item.content}
                 </p>
 
-                {/* Bottom decorative element */}
-                <div className="flex items-center justify-between">
-                  <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-accent rounded-full" />
-                    <div className="w-2 h-2 bg-accent/60 rounded-full" />
-                    <div className="w-2 h-2 bg-accent/30 rounded-full" />
+                {/* Bottom Section */}
+                <div className="space-y-4">
+                  {/* Feature Highlights */}
+                  <div className="flex items-center space-x-2 text-xs">
+                    <div className="w-1 h-1 bg-accent" />
+                    <span className="text-primary font-medium">Premium Experience</span>
                   </div>
-                  <div className="text-xs text-accent font-medium">
-                    0{item.id}
-                  </div>
+                  
+                  {/* Call to Action */}
+                  <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 text-sm font-semibold tracking-wide luxury-transition hover:shadow-lg group-hover:bg-accent group-hover:text-accent-foreground">
+                    LEARN MORE
+                    <span className="ml-2 group-hover:translate-x-1 luxury-transition inline-block">→</span>
+                  </button>
                 </div>
               </div>
 
-              {/* Hover Effect Border */}
-              <div className="absolute inset-0 border-2 border-accent/0 group-hover:border-accent/20 rounded-xl luxury-transition pointer-events-none" />
+              {/* Side Accent */}
+              <div className="absolute left-0 top-1 bottom-1 w-0.5 bg-gradient-to-b from-accent/0 via-accent to-accent/0 group-hover:w-1 luxury-transition" />
             </div>
           ))}
         </div>
 
         {/* Bottom Call to Action */}
         <div className="text-center mt-16">
-          <div className="inline-flex items-center space-x-2 bg-accent/10 px-6 py-3 rounded-full border border-accent/20">
-            <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-            <span className="text-primary font-medium text-sm">
-              Ready to experience luxury Egyptian travel?
+          <div className="inline-flex items-center space-x-3 bg-accent/10 px-8 py-4 border-2 border-accent/30">
+            <div className="w-2 h-2 bg-accent animate-pulse" />
+            <span className="text-primary font-semibold text-sm tracking-wide">
+              READY TO EXPERIENCE LUXURY EGYPTIAN TRAVEL?
             </span>
+            <div className="w-2 h-2 bg-accent animate-pulse" />
           </div>
         </div>
       </div>
