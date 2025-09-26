@@ -66,7 +66,7 @@ export default function WhyUseSection() {
         </div>
 
         {/* Luxury Cards Grid */}
-        <div className="flex gap-6 max-w-7xl mx-auto" style={{ height: '380px' }}>
+        <div className="flex gap-6 max-w-7xl mx-auto" style={{ height: '300px' }}>
           {whyUseItems.map((item) => (
             <div 
               key={item.id} 
@@ -99,10 +99,7 @@ export default function WhyUseSection() {
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
                   
-                  {/* Luxury Icon Badge */}
-                  <div className="absolute top-6 right-6 w-12 h-12 bg-accent/90 backdrop-blur-sm border border-accent/20 flex items-center justify-center">
-                    <span className="text-primary text-xl font-bold">{item.icon}</span>
-                  </div>
+                  
                   
                   {/* Title */}
                   <div className="absolute bottom-6 left-6 right-6">
@@ -122,55 +119,18 @@ export default function WhyUseSection() {
                   }`} />
                 </div>
 
-                {/* Expanding Luxury Content Section */}
+                {/* Expanding Content Section */}
                 <div className={`bg-gradient-to-br from-card via-card/95 to-accent/5 backdrop-blur-lg transition-all duration-700 ease-out overflow-hidden border-l border-accent/20 ${
                   hoveredCard === item.id ? 'w-1/2 opacity-100' : 'w-0 opacity-0'
                 }`}>
                   <div className="h-full flex flex-col justify-center p-8">
-                    {/* Elegant Header */}
-                    <div className="text-center mb-6">
-                      <div className="flex items-center justify-center mb-4">
-                        <div className="flex flex-col items-center space-y-2">
-                          <div className="w-px h-4 bg-gradient-to-b from-transparent via-accent to-transparent"></div>
-                          <span className="text-accent text-xl">{item.icon}</span>
-                          <div className="w-px h-4 bg-gradient-to-b from-transparent via-accent to-transparent"></div>
-                        </div>
-                      </div>
-                      
-                      <h4 className="font-serif font-bold text-lg text-primary mb-3">
-                        {item.title}
-                      </h4>
-                      
-                      <div className="w-8 h-px bg-accent mx-auto"></div>
-                    </div>
+                    <h4 className="font-serif font-bold text-lg text-primary mb-4 text-center">
+                      {item.title}
+                    </h4>
                     
-                    {/* Premium Content */}
-                    <div className="flex-1 flex flex-col justify-center">
-                      <p className="text-foreground/85 text-sm leading-relaxed font-light text-center mb-6">
-                        {item.content}
-                      </p>
-
-                      {/* Luxury Ornamental Elements */}
-                      <div className="flex items-center justify-center space-x-4 mb-4">
-                        <div className="w-1 h-1 bg-accent rounded-full opacity-60"></div>
-                        <div className="w-2 h-px bg-accent"></div>
-                        <div className="w-1.5 h-1.5 bg-accent rotate-45"></div>
-                        <div className="w-2 h-px bg-accent"></div>
-                        <div className="w-1 h-1 bg-accent rounded-full opacity-60"></div>
-                      </div>
-
-                      {/* Premium Brand Signature */}
-                      <div className="text-center">
-                        <span className="text-xs text-accent/70 font-semibold tracking-[0.3em] uppercase">
-                          Excellence
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Bottom Elegant Border */}
-                    <div className="flex items-center justify-center mt-4">
-                      <div className="w-16 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"></div>
-                    </div>
+                    <p className="text-foreground/85 text-sm leading-relaxed font-light text-center">
+                      {item.content}
+                    </p>
                   </div>
                 </div>
               </div>
