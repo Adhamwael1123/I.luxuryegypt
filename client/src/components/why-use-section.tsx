@@ -15,25 +15,19 @@ const whyUseItems: WhyUseItem[] = [
     id: 1,
     title: "Luxury Your Way",
     image: insideColumnHallImg,
-    content: "We don't believe in one-size-fits-all. Our local experts handcraft every journey to be a unique masterpiece, personalized just for you."
+    content: "We don't believe in one-size-fits-all. Our local experts handcraft every journey to be a unique masterpiece, personalized just for you. Experience Egypt through bespoke itineraries that reflect your personal style and desires."
   },
   {
     id: 2,
     title: "Travel Thoughtfully",
     image: poolSideDrinkImg,
-    content: "We are a family of passionate Egyptians with deep roots in this land. We connect you to the authentic heart of Egypt, ensuring a meaningful and thoughtful travel experience."
+    content: "We are a family of passionate Egyptians with deep roots in this land. We connect you to the authentic heart of Egypt, ensuring a meaningful and thoughtful travel experience that honors our heritage while creating lasting memories."
   },
   {
     id: 3,
-    title: "With You All The Way", 
-    image: islamicDistrictImg,
-    content: "From your first dream of Egypt until you're home with new memories, you're part of our family. Our team provides personal care and support every step of the way."
-  },
-  {
-    id: 4,
     title: "I.LUXURYEGYPT Family",
     image: siwaPalmTreesImg,
-    content: "Our tour guides are more than just guides; they're the best in Egypt. They are storytellers and friends who bring ancient wonders to life, creating a connection that lasts forever."
+    content: "Our tour guides are more than just guides; they're the best in Egypt. They are storytellers and friends who bring ancient wonders to life, creating a connection that lasts forever. From your first dream to your final farewell, you're family."
   }
 ];
 
@@ -52,85 +46,93 @@ export default function WhyUseSection() {
         </div>
 
         {/* Luxury Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {whyUseItems.map((item, index) => (
             <div 
               key={item.id} 
-              className="group relative bg-card border-2 border-primary/10 shadow-lg overflow-hidden luxury-transition hover:shadow-2xl hover:border-accent/30 hover-elevate"
-              style={{ minHeight: '520px' }}
+              className="group relative bg-card shadow-lg overflow-hidden luxury-transition hover:shadow-2xl border border-primary/10 hover:border-accent/40"
+              style={{ minHeight: '600px' }}
               data-testid={`why-use-item-${item.id}`}
             >
               {/* Top Accent Bar */}
               <div className="h-1 bg-gradient-to-r from-accent via-accent/80 to-primary/60" />
               
-              {/* Image Section */}
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 luxury-transition"
-                />
-                
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent" />
-                
-                {/* Premium Badge */}
-                <div className="absolute top-4 right-4 bg-accent text-primary px-3 py-1 text-xs font-bold tracking-wide">
-                  0{item.id}
-                </div>
-                
-                {/* Title Overlay */}
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="font-serif font-bold text-xl text-white mb-1 drop-shadow-lg">
-                    {item.title}
-                  </h3>
-                  <div className="w-full h-px bg-gradient-to-r from-accent to-transparent" />
-                </div>
-              </div>
-
-              {/* Content Section - Pure Luxury Info Display */}
-              <div className="p-8 flex flex-col justify-center h-60 bg-gradient-to-b from-card via-card to-accent/5 relative">
-                {/* Decorative Top Line */}
-                <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
-                
-                {/* Content Text - Enhanced Typography */}
-                <p className="text-foreground/80 text-base leading-relaxed font-light tracking-wide text-center mb-8">
-                  {item.content}
-                </p>
-
-                {/* Luxury Decorative Elements */}
-                <div className="flex items-center justify-center space-x-4">
-                  {/* Left Ornament */}
-                  <div className="flex items-center space-x-1">
-                    <div className="w-3 h-px bg-accent" />
-                    <div className="w-1 h-1 bg-accent" />
-                    <div className="w-px h-3 bg-accent/50" />
+              {/* Main Card Content */}
+              <div className="relative flex h-full">
+                {/* Image Section - Left Side */}
+                <div className="relative w-full group-hover:w-1/2 transition-all duration-700 ease-out overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                  />
+                  
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
+                  
+                  {/* Premium Badge */}
+                  <div className="absolute top-6 right-6 bg-accent/90 backdrop-blur-sm text-primary px-4 py-2 text-sm font-bold tracking-wider">
+                    0{item.id}
                   </div>
                   
-                  {/* Center Diamond */}
-                  <div className="w-2 h-2 bg-accent transform rotate-45" />
-                  
-                  {/* Right Ornament */}
-                  <div className="flex items-center space-x-1">
-                    <div className="w-px h-3 bg-accent/50" />
-                    <div className="w-1 h-1 bg-accent" />
-                    <div className="w-3 h-px bg-accent" />
+                  {/* Title Overlay */}
+                  <div className="absolute bottom-8 left-6 right-6">
+                    <h3 className="font-serif font-bold text-2xl text-white mb-2 drop-shadow-lg leading-tight">
+                      {item.title}
+                    </h3>
+                    <div className="w-16 h-px bg-gradient-to-r from-accent to-transparent" />
                   </div>
                 </div>
 
-                {/* Subtle Brand Mark */}
-                <div className="text-center mt-6">
-                  <span className="text-xs text-accent/60 font-light tracking-[0.2em] uppercase">
-                    I.LUXURYEGYPT
-                  </span>
-                </div>
+                {/* Expanding Content Section - Right Side */}
+                <div className="absolute right-0 top-0 bottom-0 w-0 group-hover:w-1/2 transition-all duration-700 ease-out overflow-hidden bg-gradient-to-br from-card via-card to-accent/5">
+                  <div className="h-full flex flex-col justify-center p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                    {/* Decorative Top Line */}
+                    <div className="w-full h-px bg-gradient-to-r from-accent via-accent/60 to-transparent mb-8" />
+                    
+                    {/* Expanded Content Text */}
+                    <p className="text-foreground/90 text-base leading-relaxed font-light tracking-wide mb-8">
+                      {item.content}
+                    </p>
 
-                {/* Decorative Bottom Line */}
-                <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+                    {/* Luxury Decorative Elements */}
+                    <div className="flex items-center justify-center space-x-4 mb-6">
+                      {/* Left Ornament */}
+                      <div className="flex items-center space-x-1">
+                        <div className="w-4 h-px bg-accent" />
+                        <div className="w-1.5 h-1.5 bg-accent rounded-full" />
+                        <div className="w-px h-4 bg-accent/50" />
+                      </div>
+                      
+                      {/* Center Diamond */}
+                      <div className="w-3 h-3 bg-accent transform rotate-45" />
+                      
+                      {/* Right Ornament */}
+                      <div className="flex items-center space-x-1">
+                        <div className="w-px h-4 bg-accent/50" />
+                        <div className="w-1.5 h-1.5 bg-accent rounded-full" />
+                        <div className="w-4 h-px bg-accent" />
+                      </div>
+                    </div>
+
+                    {/* Luxury Brand Mark */}
+                    <div className="text-center">
+                      <span className="text-xs text-accent/70 font-light tracking-[0.3em] uppercase">
+                        EXCEPTIONAL EXPERIENCES
+                      </span>
+                    </div>
+
+                    {/* Decorative Bottom Line */}
+                    <div className="w-full h-px bg-gradient-to-l from-accent via-accent/60 to-transparent mt-8" />
+                  </div>
+                </div>
               </div>
 
-              {/* Side Accent */}
-              <div className="absolute left-0 top-1 bottom-1 w-0.5 bg-gradient-to-b from-accent/0 via-accent to-accent/0 group-hover:w-1 luxury-transition" />
+              {/* Side Accent - Vertical Line */}
+              <div className="absolute left-0 top-1 bottom-1 w-1 bg-gradient-to-b from-accent/0 via-accent/80 to-accent/0 group-hover:w-2 transition-all duration-500" />
+              
+              {/* Bottom Accent - Horizontal Line */}
+              <div className="absolute bottom-0 left-1 right-1 h-0.5 bg-gradient-to-r from-accent/0 via-accent/60 to-accent/0 group-hover:h-1 transition-all duration-500" />
             </div>
           ))}
         </div>
