@@ -143,9 +143,12 @@ export default function WhyUseSection() {
           ))}
         </div>
 
-        {/* Refined Call to Action */}
+        {/* Call to Action Button */}
         <div className="text-center mt-20">
-          <div className="inline-flex items-center space-x-6 bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5 px-16 py-8 border border-accent/30 hover:border-accent/50 transition-all duration-500 hover:shadow-xl group">
+          <button 
+            onClick={() => window.location.href = '/contact'}
+            className="inline-flex items-center space-x-6 bg-gradient-to-r from-accent/5 via-accent/10 to-accent/5 px-16 py-8 border border-accent/30 hover:border-accent/50 transition-all duration-500 hover:shadow-xl group cursor-pointer"
+          >
             <div className="flex items-center space-x-3">
               <div className="w-2 h-2 bg-accent rotate-45 group-hover:animate-pulse"></div>
               <div className="w-1 h-1 bg-accent/60 rounded-full"></div>
@@ -164,7 +167,7 @@ export default function WhyUseSection() {
               <div className="w-1 h-1 bg-accent/60 rounded-full"></div>
               <div className="w-2 h-2 bg-accent rotate-45 group-hover:animate-pulse"></div>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </section>
