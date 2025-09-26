@@ -88,27 +88,45 @@ export default function WhyUseSection() {
                 </div>
               </div>
 
-              {/* Content Section */}
-              <div className="p-6 flex flex-col justify-between h-60 bg-gradient-to-b from-card via-card to-card/95">
-                {/* Content Text */}
-                <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-grow">
+              {/* Content Section - Pure Luxury Info Display */}
+              <div className="p-8 flex flex-col justify-center h-60 bg-gradient-to-b from-card via-card to-accent/5 relative">
+                {/* Decorative Top Line */}
+                <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
+                
+                {/* Content Text - Enhanced Typography */}
+                <p className="text-foreground/80 text-base leading-relaxed font-light tracking-wide text-center mb-8">
                   {item.content}
                 </p>
 
-                {/* Bottom Section */}
-                <div className="space-y-4">
-                  {/* Feature Highlights */}
-                  <div className="flex items-center space-x-2 text-xs">
+                {/* Luxury Decorative Elements */}
+                <div className="flex items-center justify-center space-x-4">
+                  {/* Left Ornament */}
+                  <div className="flex items-center space-x-1">
+                    <div className="w-3 h-px bg-accent" />
                     <div className="w-1 h-1 bg-accent" />
-                    <span className="text-primary font-medium">Premium Experience</span>
+                    <div className="w-px h-3 bg-accent/50" />
                   </div>
                   
-                  {/* Call to Action */}
-                  <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 text-sm font-semibold tracking-wide luxury-transition hover:shadow-lg group-hover:bg-accent group-hover:text-accent-foreground">
-                    LEARN MORE
-                    <span className="ml-2 group-hover:translate-x-1 luxury-transition inline-block">→</span>
-                  </button>
+                  {/* Center Diamond */}
+                  <div className="w-2 h-2 bg-accent transform rotate-45" />
+                  
+                  {/* Right Ornament */}
+                  <div className="flex items-center space-x-1">
+                    <div className="w-px h-3 bg-accent/50" />
+                    <div className="w-1 h-1 bg-accent" />
+                    <div className="w-3 h-px bg-accent" />
+                  </div>
                 </div>
+
+                {/* Subtle Brand Mark */}
+                <div className="text-center mt-6">
+                  <span className="text-xs text-accent/60 font-light tracking-[0.2em] uppercase">
+                    I.LUXURYEGYPT
+                  </span>
+                </div>
+
+                {/* Decorative Bottom Line */}
+                <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
               </div>
 
               {/* Side Accent */}
