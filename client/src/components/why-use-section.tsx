@@ -46,12 +46,12 @@ export default function WhyUseSection() {
         </div>
 
         {/* Luxury Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto group/container">
           {whyUseItems.map((item, index) => (
             <div 
               key={item.id} 
-              className="group relative bg-card shadow-lg overflow-hidden luxury-transition hover:shadow-2xl border border-primary/10 hover:border-accent/40"
-              style={{ minHeight: '600px' }}
+              className="group relative bg-card shadow-lg overflow-hidden luxury-transition hover:shadow-2xl border border-primary/10 hover:border-accent/40 hover:lg:w-[200%] hover:lg:z-10 lg:transition-all lg:duration-700 lg:ease-out"
+              style={{ minHeight: '400px' }}
               data-testid={`why-use-item-${item.id}`}
             >
               {/* Top Accent Bar */}
@@ -64,66 +64,66 @@ export default function WhyUseSection() {
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out"
                   />
                   
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
                   
                   {/* Premium Badge */}
-                  <div className="absolute top-6 right-6 bg-accent/90 backdrop-blur-sm text-primary px-4 py-2 text-sm font-bold tracking-wider">
+                  <div className="absolute top-4 right-4 bg-accent/90 backdrop-blur-sm text-primary px-3 py-1 text-sm font-bold tracking-wider">
                     0{item.id}
                   </div>
                   
                   {/* Title Overlay */}
-                  <div className="absolute bottom-8 left-6 right-6">
-                    <h3 className="font-serif font-bold text-2xl text-white mb-2 drop-shadow-lg leading-tight">
+                  <div className="absolute bottom-6 left-4 right-4">
+                    <h3 className="font-serif font-bold text-xl text-white mb-2 drop-shadow-lg leading-tight">
                       {item.title}
                     </h3>
-                    <div className="w-16 h-px bg-gradient-to-r from-accent to-transparent" />
+                    <div className="w-12 h-px bg-gradient-to-r from-accent to-transparent" />
                   </div>
                 </div>
 
                 {/* Expanding Content Section - Right Side */}
                 <div className="absolute right-0 top-0 bottom-0 w-0 group-hover:w-1/2 transition-all duration-700 ease-out overflow-hidden bg-gradient-to-br from-card via-card to-accent/5">
-                  <div className="h-full flex flex-col justify-center p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                  <div className="h-full flex flex-col justify-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-300">
                     {/* Decorative Top Line */}
-                    <div className="w-full h-px bg-gradient-to-r from-accent via-accent/60 to-transparent mb-8" />
+                    <div className="w-full h-px bg-gradient-to-r from-accent via-accent/60 to-transparent mb-6" />
                     
                     {/* Expanded Content Text */}
-                    <p className="text-foreground/90 text-base leading-relaxed font-light tracking-wide mb-8">
+                    <p className="text-foreground/90 text-sm leading-relaxed font-light tracking-wide mb-6">
                       {item.content}
                     </p>
 
                     {/* Luxury Decorative Elements */}
-                    <div className="flex items-center justify-center space-x-4 mb-6">
+                    <div className="flex items-center justify-center space-x-3 mb-4">
                       {/* Left Ornament */}
                       <div className="flex items-center space-x-1">
-                        <div className="w-4 h-px bg-accent" />
-                        <div className="w-1.5 h-1.5 bg-accent rounded-full" />
-                        <div className="w-px h-4 bg-accent/50" />
+                        <div className="w-3 h-px bg-accent" />
+                        <div className="w-1 h-1 bg-accent rounded-full" />
+                        <div className="w-px h-3 bg-accent/50" />
                       </div>
                       
                       {/* Center Diamond */}
-                      <div className="w-3 h-3 bg-accent transform rotate-45" />
+                      <div className="w-2 h-2 bg-accent transform rotate-45" />
                       
                       {/* Right Ornament */}
                       <div className="flex items-center space-x-1">
-                        <div className="w-px h-4 bg-accent/50" />
-                        <div className="w-1.5 h-1.5 bg-accent rounded-full" />
-                        <div className="w-4 h-px bg-accent" />
+                        <div className="w-px h-3 bg-accent/50" />
+                        <div className="w-1 h-1 bg-accent rounded-full" />
+                        <div className="w-3 h-px bg-accent" />
                       </div>
                     </div>
 
                     {/* Luxury Brand Mark */}
                     <div className="text-center">
-                      <span className="text-xs text-accent/70 font-light tracking-[0.3em] uppercase">
+                      <span className="text-xs text-accent/70 font-light tracking-[0.2em] uppercase">
                         EXCEPTIONAL EXPERIENCES
                       </span>
                     </div>
 
                     {/* Decorative Bottom Line */}
-                    <div className="w-full h-px bg-gradient-to-l from-accent via-accent/60 to-transparent mt-8" />
+                    <div className="w-full h-px bg-gradient-to-l from-accent via-accent/60 to-transparent mt-6" />
                   </div>
                 </div>
               </div>

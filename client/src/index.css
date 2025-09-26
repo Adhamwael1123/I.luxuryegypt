@@ -147,6 +147,27 @@
   --muted-foreground: 210 6% 30%; /* Darker Obsidian */
   --accent: 41 37% 60%; /* Pharaoh Gold */
   --accent-foreground: 210 6% 6%; /* Obsidian Black */
+
+
+/* Why Use Section - Accordion Cards */
+.group\/container:hover .group:not(:hover) {
+  @apply lg:opacity-40 lg:scale-95;
+}
+
+.group\/container .group:hover {
+  @apply lg:transform lg:transition-all lg:duration-700 lg:ease-out;
+}
+
+/* Ensure proper stacking and smooth transitions */
+.group\/container .group:hover {
+  position: relative;
+  z-index: 20;
+}
+
+.group\/container .group:not(:hover) {
+  transition: all 0.7s ease-out;
+}
+
   --destructive: 0 84% 60%; /* Red for errors */
   --destructive-foreground: 36 25% 96%; /* Papyrus White */
   --input: 33 22% 85%; /* Desert Sand Beige */
