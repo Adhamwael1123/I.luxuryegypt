@@ -9,8 +9,11 @@ import {
   insertPageSchema,
   insertPostSchema,
   insertHotelSchema,
+  insertMediaSchema,
   loginSchema
 } from "@shared/schema";
+import multer from "multer";
+import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import { 
   hashPassword, 
@@ -659,6 +662,117 @@ export async function registerRoutes(app: Express): Promise<Server> {
         success: false,
         message: "Error fetching inquiry"
       });
+    }
+  });
+
+  // Configure multer for file uploads
+  const storage_config = multer.diskStorage({
+    destination: (req, file, cb) => {
+      const uploadPath = path.resolve(import.meta.dirname, "..", "attached_assets", "uploads");
+      cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+      const fileExtension = path.extname(file.originalname);
+      const filename = `${uuidv4()}${fileExtension}`;
+      cb(null, filename);
+    }
+  });
+
+  const upload = multer({ 
+    storage: storage_config,
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+    fileFilter: (req, file, cb) => {
+      // Allow images and documents
+      const allowedTypes = /jpeg|jpg|png|gif|webp|pdf|doc|docx/;
+      const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+      const mimetype = allowedTypes.test(file.mimetype);
+      
+      if (mimetype && extname) {
+        return cb(null, true);
+      } else {
+        cb(new Error('Only images and documents are allowed!'));
+      }
+    }
+  });
+
+  // Media Management Routes
+  
+  // Get all media files
+  app.get("/api/cms/media", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const media = await storage.getMedia();
+      res.json({ success: true, media });
+    } catch (error) {
+      console.error('Error fetching media:', error);
+      res.status(500).json({ message: 'Error fetching media' });
+    }
+  });
+
+  // Get specific media file
+  app.get("/api/cms/media/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const media = await storage.getMediaById(req.params.id);
+      if (!media) {
+        return res.status(404).json({ message: 'Media not found' });
+      }
+      res.json({ success: true, media });
+    } catch (error) {
+      console.error('Error fetching media:', error);
+      res.status(500).json({ message: 'Error fetching media' });
+    }
+  });
+
+  // Upload media file
+  app.post("/api/cms/media", requireAuth, requireEditor, upload.single('file'), async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      
+      if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+      }
+
+      const mediaData = {
+        filename: req.file.filename,
+        originalName: req.file.originalname,
+        mimeType: req.file.mimetype,
+        size: req.file.size,
+        url: `/api/assets/uploads/${req.file.filename}`,
+        uploadedBy: authReq.user!.id
+      };
+
+      const media = await storage.createMedia(mediaData);
+      res.status(201).json({ success: true, media });
+    } catch (error) {
+      console.error('Error uploading media:', error);
+      res.status(500).json({ message: 'Error uploading media' });
+    }
+  });
+
+  // Delete media file
+  app.delete("/api/cms/media/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const media = await storage.getMediaById(req.params.id);
+      if (!media) {
+        return res.status(404).json({ message: 'Media not found' });
+      }
+
+      const success = await storage.deleteMedia(req.params.id);
+      if (success) {
+        // Also delete the actual file
+        try {
+          const filePath = path.resolve(import.meta.dirname, "..", "attached_assets", "uploads", media.filename);
+          await import('fs').then(fs => fs.promises.unlink(filePath));
+        } catch (fileError) {
+          console.warn('Could not delete file from disk:', fileError);
+        }
+        
+        res.json({ success: true, message: 'Media deleted successfully' });
+      } else {
+        res.status(500).json({ message: 'Error deleting media' });
+      }
+    } catch (error) {
+      console.error('Error deleting media:', error);
+      res.status(500).json({ message: 'Error deleting media' });
     }
   });
 

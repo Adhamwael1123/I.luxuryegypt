@@ -1,11 +1,11 @@
-import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { apiRequest } from "@/lib/queryClient";
-import { FileText, Users, MessageSquare, Image, Plus, LogOut, Building } from "lucide-react";
+import { FileText, MessageSquare, Image, Plus, Building, MapPin, Plane, Package } from "lucide-react";
+import AdminLayout from "@/components/admin-layout";
 
 interface DashboardStats {
   pages: number;
@@ -13,40 +13,13 @@ interface DashboardStats {
   inquiries: number;
   media: number;
   hotels: number;
+  destinations: number;
+  tours: number;
+  packages: number;
 }
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
-
-  // Check authentication
-  useEffect(() => {
-    const token = localStorage.getItem("adminToken");
-    const user = localStorage.getItem("adminUser");
-    
-    if (!token || !user) {
-      localStorage.removeItem("adminToken");
-      localStorage.removeItem("adminUser");
-      setLocation("/admin/login");
-      return;
-    }
-
-    // Verify token is still valid
-    fetch("/api/auth/verify", {
-      headers: { "Authorization": `Bearer ${token}` }
-    }).then(response => {
-      if (!response.ok) {
-        localStorage.removeItem("adminToken");
-        localStorage.removeItem("adminUser");
-        setLocation("/admin/login");
-      }
-    }).catch(() => {
-      localStorage.removeItem("adminToken");
-      localStorage.removeItem("adminUser");
-      setLocation("/admin/login");
-    });
-  }, [setLocation]);
-
-  const user = JSON.parse(localStorage.getItem("adminUser") || "{}");
 
   const { data: stats, isLoading } = useQuery({
     queryKey: ["/api/cms/stats"],
@@ -77,7 +50,10 @@ export default function AdminDashboard() {
           posts: postsData.posts?.length || 0,
           inquiries: inquiriesData.inquiries?.length || 0,
           media: 24, // Static for now
-          hotels: hotelsData.hotels?.length || 0
+          hotels: hotelsData.hotels?.length || 0,
+          destinations: 0, // Will be updated when destinations API is ready
+          tours: 0, // Will be updated when tours API is ready
+          packages: 0, // Will be updated when packages API is ready
         } as DashboardStats;
       } catch (error) {
         console.error("Error fetching stats:", error);
@@ -87,7 +63,10 @@ export default function AdminDashboard() {
           posts: 12,
           inquiries: 0,
           media: 24,
-          hotels: 0
+          hotels: 0,
+          destinations: 0,
+          tours: 0,
+          packages: 0
         } as DashboardStats;
       }
     },
@@ -95,12 +74,6 @@ export default function AdminDashboard() {
     retry: 1,
     staleTime: 30000, // Cache for 30 seconds
   });
-
-  const handleLogout = () => {
-    localStorage.removeItem("adminToken");
-    localStorage.removeItem("adminUser");
-    setLocation("/admin/login");
-  };
 
   const statsCards = [
     {
@@ -120,12 +93,36 @@ export default function AdminDashboard() {
       href: "/admin/posts"
     },
     {
+      title: "Destinations",
+      value: stats?.destinations || 0,
+      description: "Travel destinations",
+      icon: MapPin,
+      color: "bg-emerald-500",
+      href: "/admin/destinations"
+    },
+    {
       title: "Hotels",
       value: stats?.hotels || 0,
       description: "Luxury accommodations",
       icon: Building,
       color: "bg-indigo-500",
       href: "/admin/hotels"
+    },
+    {
+      title: "Tours",
+      value: stats?.tours || 0,
+      description: "Travel tours",
+      icon: Plane,
+      color: "bg-cyan-500",
+      href: "/admin/tours"
+    },
+    {
+      title: "Packages",
+      value: stats?.packages || 0,
+      description: "Travel packages",
+      icon: Package,
+      color: "bg-orange-500",
+      href: "/admin/packages"
     },
     {
       title: "Inquiries",
@@ -146,49 +143,19 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div>
-              <h1 className="text-xl font-semibold text-gray-900">
-                LuxorTravel CMS
-              </h1>
-              <p className="text-sm text-gray-500">Content Management System</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="text-right">
-                <p className="text-sm font-medium text-gray-900">{user.username}</p>
-                <Badge variant="secondary" className="text-xs">
-                  {user.role}
-                </Badge>
-              </div>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleLogout}
-                data-testid="button-logout"
-              >
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Welcome back, {user.username}!
-          </h2>
-          <p className="text-gray-600">
-            Manage your travel website content, blog posts, and customer inquiries.
-          </p>
-        </div>
+    <AdminLayout 
+      title="Dashboard" 
+      description="Overview of your travel website content and statistics"
+    >
+      {/* Welcome Section */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          Welcome back!
+        </h2>
+        <p className="text-gray-600">
+          Manage your travel website content, blog posts, and customer inquiries from this central dashboard.
+        </p>
+      </div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -314,47 +281,46 @@ export default function AdminDashboard() {
           </Card>
         </div>
 
-        {/* Development Tools */}
-        <div className="mt-8">
-          <h3 className="text-lg font-semibold mb-4">Development Tools</h3>
-          <div className="flex gap-4">
-            <Button
-              variant="outline"
-              onClick={async () => {
-                try {
-                  const response = await fetch("/api/hotels/seed", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" }
-                  });
-                  const result = await response.json();
-                  alert(result.message);
-                } catch (error) {
-                  alert("Error seeding hotels");
-                }
-              }}
-            >
-              Seed Hotels
-            </Button>
-            <Button
-              variant="outline"
-              onClick={async () => {
-                try {
-                  const response = await fetch("/api/auth/seed", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" }
-                  });
-                  const result = await response.json();
-                  alert(result.message);
-                } catch (error) {
-                  alert("Error seeding admin user");
-                }
-              }}
-            >
-              Seed Admin User
-            </Button>
-          </div>
+      {/* Development Tools */}
+      <div className="mt-8">
+        <h3 className="text-lg font-semibold mb-4">Development Tools</h3>
+        <div className="flex gap-4">
+          <Button
+            variant="outline"
+            onClick={async () => {
+              try {
+                const response = await fetch("/api/hotels/seed", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" }
+                });
+                const result = await response.json();
+                alert(result.message);
+              } catch (error) {
+                alert("Error seeding hotels");
+              }
+            }}
+          >
+            Seed Hotels
+          </Button>
+          <Button
+            variant="outline"
+            onClick={async () => {
+              try {
+                const response = await fetch("/api/auth/seed", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" }
+                });
+                const result = await response.json();
+                alert(result.message);
+              } catch (error) {
+                alert("Error seeding admin user");
+              }
+            }}
+          >
+            Seed Admin User
+          </Button>
         </div>
-      </main>
-    </div>
+      </div>
+    </AdminLayout>
   );
 }

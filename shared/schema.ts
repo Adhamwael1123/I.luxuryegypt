@@ -101,6 +101,76 @@ export const hotels = pgTable("hotels", {
   createdBy: varchar("created_by").references(() => users.id),
 });
 
+export const destinations = pgTable("destinations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description").notNull(),
+  shortDescription: text("short_description"),
+  heroImage: text("hero_image").notNull(),
+  gallery: text("gallery").array().notNull().default([]),
+  highlights: text("highlights").array().notNull().default([]),
+  bestTimeToVisit: text("best_time_to_visit"),
+  duration: text("duration"),
+  difficulty: text("difficulty").default("Easy"),
+  region: text("region").notNull(),
+  featured: boolean("featured").notNull().default(false),
+  published: boolean("published").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  createdBy: varchar("created_by").references(() => users.id),
+});
+
+export const tours = pgTable("tours", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description").notNull(),
+  shortDescription: text("short_description"),
+  heroImage: text("hero_image").notNull(),
+  gallery: text("gallery").array().notNull().default([]),
+  duration: text("duration").notNull(),
+  groupSize: text("group_size"),
+  difficulty: text("difficulty").default("Easy"),
+  price: integer("price").notNull(),
+  currency: text("currency").notNull().default("USD"),
+  includes: text("includes").array().notNull().default([]),
+  excludes: text("excludes").array().notNull().default([]),
+  itinerary: jsonb("itinerary").notNull(),
+  destinations: text("destinations").array().notNull().default([]),
+  category: text("category").notNull(),
+  featured: boolean("featured").notNull().default(false),
+  published: boolean("published").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  createdBy: varchar("created_by").references(() => users.id),
+});
+
+export const packages = pgTable("packages", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description").notNull(),
+  shortDescription: text("short_description"),
+  heroImage: text("hero_image").notNull(),
+  gallery: text("gallery").array().notNull().default([]),
+  duration: text("duration").notNull(),
+  groupSize: text("group_size"),
+  price: integer("price").notNull(),
+  currency: text("currency").notNull().default("USD"),
+  includes: text("includes").array().notNull().default([]),
+  excludes: text("excludes").array().notNull().default([]),
+  tours: text("tours").array().notNull().default([]), // Array of tour IDs
+  hotels: text("hotels").array().notNull().default([]), // Array of hotel IDs
+  destinations: text("destinations").array().notNull().default([]), // Array of destination IDs
+  category: text("category").notNull(),
+  featured: boolean("featured").notNull().default(false),
+  published: boolean("published").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  createdBy: varchar("created_by").references(() => users.id),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -160,6 +230,66 @@ export const insertHotelSchema = createInsertSchema(hotels).omit({
   featured: z.boolean().default(false),
 });
 
+export const insertDestinationSchema = createInsertSchema(destinations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  name: z.string().min(1, "Destination name is required"),
+  slug: z.string().min(1, "Slug is required"),
+  description: z.string().min(1, "Description is required"),
+  heroImage: z.string().url("Please provide a valid hero image URL"),
+  region: z.string().min(1, "Region is required"),
+  gallery: z.array(z.string()).default([]),
+  highlights: z.array(z.string()).default([]),
+  featured: z.boolean().default(false),
+  published: z.boolean().default(true),
+});
+
+export const insertTourSchema = createInsertSchema(tours).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  title: z.string().min(1, "Title is required"),
+  slug: z.string().min(1, "Slug is required"),
+  description: z.string().min(1, "Description is required"),
+  heroImage: z.string().url("Please provide a valid hero image URL"),
+  duration: z.string().min(1, "Duration is required"),
+  price: z.number().min(0, "Price must be 0 or greater"),
+  currency: z.string().default("USD"),
+  category: z.string().min(1, "Category is required"),
+  includes: z.array(z.string()).default([]),
+  excludes: z.array(z.string()).default([]),
+  destinations: z.array(z.string()).default([]),
+  gallery: z.array(z.string()).default([]),
+  featured: z.boolean().default(false),
+  published: z.boolean().default(true),
+});
+
+export const insertPackageSchema = createInsertSchema(packages).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  name: z.string().min(1, "Package name is required"),
+  slug: z.string().min(1, "Slug is required"),
+  description: z.string().min(1, "Description is required"),
+  heroImage: z.string().url("Please provide a valid hero image URL"),
+  duration: z.string().min(1, "Duration is required"),
+  price: z.number().min(0, "Price must be 0 or greater"),
+  currency: z.string().default("USD"),
+  category: z.string().min(1, "Category is required"),
+  includes: z.array(z.string()).default([]),
+  excludes: z.array(z.string()).default([]),
+  tours: z.array(z.string()).default([]),
+  hotels: z.array(z.string()).default([]),
+  destinations: z.array(z.string()).default([]),
+  gallery: z.array(z.string()).default([]),
+  featured: z.boolean().default(false),
+  published: z.boolean().default(true),
+});
+
 // Login Schema
 export const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -181,4 +311,10 @@ export type InsertMedia = z.infer<typeof insertMediaSchema>;
 export type Media = typeof media.$inferSelect;
 export type InsertHotel = z.infer<typeof insertHotelSchema>;
 export type Hotel = typeof hotels.$inferSelect;
+export type InsertDestination = z.infer<typeof insertDestinationSchema>;
+export type Destination = typeof destinations.$inferSelect;
+export type InsertTour = z.infer<typeof insertTourSchema>;
+export type Tour = typeof tours.$inferSelect;
+export type InsertPackage = z.infer<typeof insertPackageSchema>;
+export type Package = typeof packages.$inferSelect;
 export type LoginRequest = z.infer<typeof loginSchema>;
