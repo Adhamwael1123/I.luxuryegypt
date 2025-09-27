@@ -1,5 +1,4 @@
 import Navigation from "../components/navigation";
-import AnnouncementBar from "../components/announcement-bar";
 import Footer from "../components/footer";
 import ScrollToTopButton from "../components/scroll-to-top-button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -275,7 +274,6 @@ export default function Stay() {
 
   return (
     <div className="min-h-screen bg-background">
-      <AnnouncementBar />
       <Navigation />
       
       {/* Hero Section */}

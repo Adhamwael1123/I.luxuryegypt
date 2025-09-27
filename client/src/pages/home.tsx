@@ -1,5 +1,4 @@
 import Navigation from "../components/navigation";
-import AnnouncementBar from "../components/announcement-bar";
 import HeroSection from "../components/hero-section";
 import SiwaVideoSection from "../components/siwa-video-section";
 import BrandBanner from "../components/brand-banner";
@@ -16,7 +15,6 @@ import ScrollToTopButton from "../components/scroll-to-top-button";
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <AnnouncementBar />
       <Navigation />
       <main>
         <HeroSection />
