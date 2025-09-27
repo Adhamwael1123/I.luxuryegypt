@@ -1,5 +1,7 @@
 
 import { useState } from "react";
+import { Star } from "lucide-react";
+import { Link } from "wouter";
 import insideColumnHallImg from "@assets/inside-the-column-hall_1757699232094.jpg";
 import islamicDistrictImg from "@assets/islamic-district-at-dawn_1757699232100.jpg";
 import poolSideDrinkImg from "@assets/pool-side-drink_1757699232100.jpg";
@@ -145,12 +147,12 @@ export default function WhyUseSection() {
 
         {/* Call to Action Button */}
         <div className="text-center mt-20">
-          <button 
-            onClick={() => window.location.href = '/contact'}
-            className="bg-accent text-black font-semibold px-8 py-4 rounded-lg hover:bg-accent/90 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-          >
-            Experience Unparalleled Luxury
-          </button>
+          <Link href="/contact">
+            <div className="inline-flex items-center space-x-2 px-6 py-3 bg-muted rounded-full cursor-pointer">
+              <Star className="h-4 w-4 text-accent" />
+              <span className="text-sm text-muted-foreground">Experience Unparalleled Luxury</span>
+            </div>
+          </Link>
         </div>
       </div>
     </section>
