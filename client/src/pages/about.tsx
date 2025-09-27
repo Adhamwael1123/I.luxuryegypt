@@ -4,7 +4,7 @@ import Footer from "../components/footer";
 import ScrollToTopButton from "../components/scroll-to-top-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Play, Star, Award, Users, MapPin, Clock } from "lucide-react";
+import { Play, Star, Award, Users, MapPin, Clock, BookOpen } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 
@@ -116,11 +116,28 @@ export default function About() {
         {/* Our Story Section */}
         <section className="py-20 bg-background">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Header */}
+            <div className="text-center mb-20">
+              <div className="flex justify-center mb-6">
+                <BookOpen className="h-12 w-12 text-accent" />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-8">
+                Our Story
+              </h2>
+              <div className="flex items-center justify-center space-x-4 mb-8">
+                <div className="w-16 h-px bg-accent"></div>
+                <div className="w-2 h-2 bg-accent rotate-45"></div>
+                <div className="w-16 h-px bg-accent"></div>
+              </div>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                The journey that began with a passion for Egypt's timeless beauty and evolved into 
+                the finest luxury travel experience in the land of the Pharaohs.
+              </p>
+            </div>
+
+            {/* Story Content */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-8">
-                  Our Story
-                </h2>
+              <div className="space-y-8">
                 <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                   <p>
                     Born from a passion for Egypt's timeless beauty and a commitment to unparalleled luxury, 
@@ -137,32 +154,74 @@ export default function About() {
                     at sunset, every moment is carefully orchestrated to create memories that last a lifetime.
                   </p>
                 </div>
+
+                {/* Story Highlights */}
+                <div className="bg-muted rounded-xl p-8 border border-accent/10">
+                  <h3 className="text-xl font-serif font-bold text-primary mb-4">Our Mission</h3>
+                  <p className="text-accent font-medium text-lg italic leading-relaxed">
+                    "To transform the way luxury travelers experience Egypt, creating deeply personal connections 
+                    with ancient wonders through uncompromising excellence and authentic cultural immersion."
+                  </p>
+                </div>
               </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-4">
-                  <img 
-                    src={sunsetFeluccaImage} 
-                    alt="Sunset felucca cruise on the Nile" 
-                    className="w-full h-48 object-cover rounded-lg shadow-lg"
-                  />
-                  <img 
-                    src={poolRiverImage} 
-                    alt="Luxury poolside experience" 
-                    className="w-full h-32 object-cover rounded-lg shadow-lg"
-                  />
+                  <div className="relative group overflow-hidden rounded-lg shadow-xl">
+                    <img 
+                      src={sunsetFeluccaImage} 
+                      alt="Sunset felucca cruise on the Nile" 
+                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h4 className="text-white font-serif font-bold text-sm">Nile Experiences</h4>
+                    </div>
+                  </div>
+                  <div className="relative group overflow-hidden rounded-lg shadow-xl">
+                    <img 
+                      src={poolRiverImage} 
+                      alt="Luxury poolside experience" 
+                      className="w-full h-32 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <h4 className="text-white font-serif font-bold text-xs">Luxury Resorts</h4>
+                    </div>
+                  </div>
                 </div>
                 <div className="space-y-4 mt-8">
-                  <img 
-                    src={poolsideDrinkImage} 
-                    alt="Poolside luxury service" 
-                    className="w-full h-32 object-cover rounded-lg shadow-lg"
-                  />
-                  <img 
-                    src={siwaPalmTreesImage} 
-                    alt="Siwa Oasis palm trees" 
-                    className="w-full h-48 object-cover rounded-lg shadow-lg"
-                  />
+                  <div className="relative group overflow-hidden rounded-lg shadow-xl">
+                    <img 
+                      src={poolsideDrinkImage} 
+                      alt="Poolside luxury service" 
+                      className="w-full h-32 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <h4 className="text-white font-serif font-bold text-xs">Premium Service</h4>
+                    </div>
+                  </div>
+                  <div className="relative group overflow-hidden rounded-lg shadow-xl">
+                    <img 
+                      src={siwaPalmTreesImage} 
+                      alt="Siwa Oasis palm trees" 
+                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h4 className="text-white font-serif font-bold text-sm">Desert Escapes</h4>
+                    </div>
+                  </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Decorative Bottom Element */}
+            <div className="relative mt-16">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent to-transparent opacity-50"></div>
+              <div className="flex justify-center pt-8">
+                <div className="w-16 h-1 bg-accent rounded-full"></div>
               </div>
             </div>
           </div>
