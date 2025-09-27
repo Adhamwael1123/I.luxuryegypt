@@ -105,12 +105,11 @@ export default function WhyUseSection() {
                   
                   {/* Title */}
                   <div className="absolute bottom-6 left-6 right-6 transform transition-all duration-500 ease-out group-hover:translate-y-[-4px]">
-                    <div className="flex items-center space-x-3 mb-3">
-                      <div className="w-6 h-px bg-accent transition-all duration-500 group-hover:w-8"></div>
-                      <span className="text-accent text-xs font-bold tracking-[0.3em] uppercase font-sans">Luxury</span>
+                    <div className="flex items-center justify-center mb-4">
+                      <div className="w-12 h-px bg-accent"></div>
                     </div>
                     
-                    <h3 className="font-serif font-bold text-xl text-white leading-tight transition-colors duration-300 group-hover:text-accent/90">
+                    <h3 className="font-serif font-bold text-2xl text-white leading-tight transition-colors duration-300 group-hover:text-accent/90 text-center">
                       {item.title}
                     </h3>
                   </div>
@@ -128,14 +127,14 @@ export default function WhyUseSection() {
                   <div className={`h-full flex flex-col justify-center px-6 py-8 transform transition-all duration-500 ease-in-out ${
                     hoveredCard === item.id ? 'translate-x-0' : 'translate-x-4'
                   }`}>
-                    <div className="text-center space-y-4">
-                      <h4 className="font-serif font-bold text-xl text-primary leading-tight">
+                    <div className="text-center space-y-5">
+                      <h4 className="font-serif font-bold text-2xl text-primary leading-tight">
                         {item.title}
                       </h4>
                       
-                      <div className="w-12 h-px bg-accent mx-auto opacity-60"></div>
+                      <div className="w-16 h-px bg-accent mx-auto opacity-60"></div>
                       
-                      <p className="text-foreground/85 text-sm leading-relaxed font-light max-w-xs mx-auto">
+                      <p className="text-foreground/85 text-base leading-relaxed font-light max-w-sm mx-auto">
                         {item.content}
                       </p>
                     </div>
