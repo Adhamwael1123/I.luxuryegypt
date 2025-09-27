@@ -43,47 +43,57 @@ export default function Navigation() {
     { label: "Destinations", id: "destinations", type: "page", href: "/destinations" },
     { label: "Experiences", id: "experiences", type: "page", href: "/experiences" },
     { label: "Stays", id: "stays", type: "page", href: "/stay" },
+    { label: "Blog", id: "blog", type: "page", href: "/blog" },
     { label: "Contact", id: "contact", type: "page", href: "/contact" },
   ];
 
   return (
     <nav className={`relative w-full z-40 transition-all duration-300 ${
       isScrolled 
-        ? "bg-background/95 backdrop-blur-sm border-b border-border shadow-sm" 
+        ? "bg-background/98 backdrop-blur-md border-b border-accent/20 shadow-lg" 
         : "bg-background/95 backdrop-blur-sm"
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0">
             <Link href="/">
-              <h1 className="text-2xl font-serif font-bold text-primary hover-elevate cursor-pointer" 
-                  data-testid="logo-home">
-                I.LUXURYEGYPT
-              </h1>
+              <div className="flex items-center space-x-3 hover-elevate cursor-pointer group" 
+                   data-testid="logo-home">
+                <div className="w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">I</span>
+                </div>
+                <h1 className="text-2xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
+                  LUXURYEGYPT
+                </h1>
+              </div>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {navItems.map((item) => (
+          <div className="hidden lg:block">
+            <div className="ml-10 flex items-center space-x-1">
+              {navItems.map((item, index) => (
                 item.type === "page" ? (
                   <Link key={item.id} href={item.href!}>
                     <button
-                      className="text-foreground hover:text-accent transition-colors hover-elevate px-3 py-2 rounded-md text-sm font-medium"
+                      className={`relative text-foreground hover:text-accent transition-all duration-300 hover-elevate px-4 py-3 rounded-lg text-sm font-medium group ${
+                        location === item.href ? 'text-accent bg-accent/10' : ''
+                      }`}
                       data-testid={`nav-${item.id}`}
                     >
                       {item.label}
+                      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
                     </button>
                   </Link>
                 ) : (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className="text-foreground hover:text-accent transition-colors hover-elevate px-3 py-2 rounded-md text-sm font-medium"
+                    className="relative text-foreground hover:text-accent transition-all duration-300 hover-elevate px-4 py-3 rounded-lg text-sm font-medium group"
                     data-testid={`nav-${item.id}`}
                   >
                     {item.label}
+                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
                   </button>
                 )
               ))}
@@ -91,11 +101,12 @@ export default function Navigation() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="h-12 w-12"
               data-testid="button-mobile-menu"
             >
               {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -105,14 +116,16 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-sm">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="lg:hidden border-t border-accent/20 bg-background/98 backdrop-blur-md shadow-lg">
+            <div className="px-4 py-6 space-y-2">
               {navItems.map((item) => (
                 item.type === "page" ? (
                   <Link key={item.id} href={item.href!}>
                     <button
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="text-foreground hover:text-accent block px-3 py-2 rounded-md text-base font-medium w-full text-left hover-elevate"
+                      className={`text-foreground hover:text-accent hover:bg-accent/10 block px-4 py-3 rounded-lg text-base font-medium w-full text-left transition-all duration-300 ${
+                        location === item.href ? 'text-accent bg-accent/10' : ''
+                      }`}
                       data-testid={`nav-mobile-${item.id}`}
                     >
                       {item.label}
@@ -122,7 +135,7 @@ export default function Navigation() {
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className="text-foreground hover:text-accent block px-3 py-2 rounded-md text-base font-medium w-full text-left hover-elevate"
+                    className="text-foreground hover:text-accent hover:bg-accent/10 block px-4 py-3 rounded-lg text-base font-medium w-full text-left transition-all duration-300"
                     data-testid={`nav-mobile-${item.id}`}
                   >
                     {item.label}
