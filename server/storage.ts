@@ -1,5 +1,3 @@
-import { drizzle } from "drizzle-orm/neon-http";
-import { neon } from "@neondatabase/serverless";
 import {
   type User, type InsertUser, type Inquiry, type InsertInquiry,
   type Page, type InsertPage, type Section, type InsertSection,
@@ -9,16 +7,7 @@ import {
 } from "@shared/schema";
 import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
-
-// Database connection with pooled connection for better SSL handling
-const connectionString = process.env.DATABASE_URL!;
-// Use pooled connection URL if available
-const pooledUrl = connectionString.includes('.us-east-2')
-  ? connectionString.replace('.us-east-2', '-pooler.us-east-2')
-  : connectionString;
-
-const sql = neon(pooledUrl);
-const db = drizzle(sql);
+import { db } from "./db";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -208,7 +197,7 @@ export class DatabaseStorage implements IStorage {
   async deleteInquiry(id: string): Promise<boolean> {
     try {
       const result = await db.delete(inquiries).where(eq(inquiries.id, id));
-      return result.rowCount > 0;
+      return (result.rowCount ?? 0) > 0;
     } catch (error) {
       console.error("Error deleting inquiry:", error);
       return false;
@@ -263,7 +252,7 @@ export class DatabaseStorage implements IStorage {
   async deleteHotel(id: string): Promise<boolean> {
     try {
       const result = await db.delete(hotels).where(eq(hotels.id, id));
-      return result.rowCount > 0;
+      return (result.rowCount ?? 0) > 0;
     } catch (error) {
       console.error("Error deleting hotel:", error);
       return false;
@@ -723,8 +712,8 @@ export class MemoryStorage implements IStorage {
   }
 }
 
-// Use memory storage for development (will switch to database once set up)
-export const storage = new MemoryStorage();
+// Use database storage with PostgreSQL
+export const storage = new DatabaseStorage();
 
 // Seed database with admin user and sample data
 export async function seedDatabase() {
