@@ -344,40 +344,57 @@ export default function Experiences() {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {categories.map((category, index) => (
-                <Card
+                <div
                   key={category.key}
-                  className="group cursor-pointer overflow-hidden hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02]"
+                  className="group cursor-pointer"
                   onClick={() => handleCategoryClick(category.key)}
                   data-testid={`category-${category.key}`}
                 >
-                  <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={category.image}
-                      alt={category.label}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-2xl font-serif font-bold text-white mb-2">{category.label}</h3>
-                      <p className="text-accent font-medium text-sm">
-                        {category.tours.length} Experience{category.tours.length !== 1 ? 's' : ''}
-                      </p>
+                  <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02] group-hover:-translate-y-1">
+                    {/* Image Section */}
+                    <div className="relative h-80 overflow-hidden">
+                      <img
+                        src={category.image}
+                        alt={category.label}
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                        loading="lazy"
+                      />
+                      
+                      {/* Enhanced gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                      
+                      {/* Experience count badge */}
+                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                        <span className="text-sm font-semibold text-primary">
+                          {category.tours.length} Experience{category.tours.length !== 1 ? 's' : ''}
+                        </span>
+                      </div>
+                      
+                      {/* Title overlay - always visible */}
+                      <div className="absolute bottom-6 left-6 right-6">
+                        <h3 className="text-3xl font-serif font-bold text-white mb-3 leading-tight">
+                          {category.label}
+                        </h3>
+                        
+                        {/* Hover content */}
+                        <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                          <p className="text-white/90 leading-relaxed mb-4 line-clamp-3">
+                            {category.description}
+                          </p>
+                          <div className="inline-flex items-center justify-center bg-accent hover:bg-accent/90 text-accent-foreground font-medium rounded-lg px-4 py-2 transition-colors duration-200">
+                            <span>Explore Category</span>
+                            <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Accent border that appears on hover */}
+                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/30 rounded-xl transition-colors duration-300" />
                   </div>
-                  
-                  <CardContent className="p-6">
-                    <p className="text-muted-foreground leading-relaxed">
-                      {category.description}
-                    </p>
-                    <div className="mt-4 flex items-center text-accent font-medium">
-                      <span>Explore Category</span>
-                      <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </div>
-                  </CardContent>
-                </Card>
+                </div>
               ))}
             </div>
           </div>
