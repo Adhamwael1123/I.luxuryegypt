@@ -723,8 +723,8 @@ export class MemoryStorage implements IStorage {
   }
 }
 
-// Use database storage with PostgreSQL
-export const storage = new DatabaseStorage();
+// Use memory storage for development (will switch to database once set up)
+export const storage = new MemoryStorage();
 
 // Seed database with admin user and sample data
 export async function seedDatabase() {

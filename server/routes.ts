@@ -107,7 +107,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Check if it's a database connection error
-      if (error.message && error.message.includes('map')) {
+      if (error instanceof Error && error.message && error.message.includes('map')) {
         return res.status(503).json({ 
           message: 'Database not initialized. Please contact administrator.',
           hint: 'Try calling /api/init-db first'
@@ -210,7 +210,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ 
         success: false,
         message: 'Error initializing database',
-        error: error.message 
+        error: error instanceof Error ? error.message : 'Unknown error' 
       });
     }
   });
