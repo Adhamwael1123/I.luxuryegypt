@@ -105,6 +105,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ message: 'Invalid input data' });
       }
+      
+      // Check if it's a database connection error
+      if (error.message && error.message.includes('map')) {
+        return res.status(503).json({ 
+          message: 'Database not initialized. Please contact administrator.',
+          hint: 'Try calling /api/init-db first'
+        });
+      }
+      
       console.error('Login error:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
@@ -166,6 +175,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
   
+  // Initialize database tables and seed data (DEVELOPMENT ONLY)
+  app.post("/api/init-db", async (req, res) => {
+    // Only allow in development environment
+    if (process.env.NODE_ENV === "production") {
+      return res.status(403).json({
+        success: false,
+        message: "Database initialization is only allowed in development mode"
+      });
+    }
+    
+    try {
+      // First try to seed admin user and hotels via existing endpoint
+      const seedResponse = await fetch('http://localhost:5000/api/auth/seed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      const hotelSeedResponse = await fetch('http://localhost:5000/api/hotels/seed', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      res.json({
+        success: true,
+        message: "Database initialized successfully",
+        details: {
+          admin: await seedResponse.json(),
+          hotels: await hotelSeedResponse.json()
+        }
+      });
+    } catch (error) {
+      console.error('Database initialization error:', error);
+      res.status(500).json({ 
+        success: false,
+        message: 'Error initializing database',
+        error: error.message 
+      });
+    }
+  });
+
   // Seed default admin user (DEVELOPMENT ONLY)
   app.post("/api/auth/seed", async (req, res) => {
     // Only allow in development environment
