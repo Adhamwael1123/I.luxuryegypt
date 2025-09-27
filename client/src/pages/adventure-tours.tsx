@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
-import { Clock, Users, MapPin, Star, Calendar, ArrowLeft } from "lucide-react";
+import { Clock, Users, MapPin, Star, Calendar, ArrowLeft, Heart, Mountain } from "lucide-react";
 import { Link } from "wouter";
 
 const adventureTours = [
@@ -55,85 +55,59 @@ const adventureTours = [
   }
 ];
 
-const adventureFeatures = [
-  {
-    icon: "🏜️",
-    title: "Desert Expeditions",
-    description: "Explore Egypt's vast deserts with expert guides and 4WD vehicles"
-  },
-  {
-    icon: "⭐",
-    title: "Stargazing",
-    description: "Experience pristine night skies in remote locations perfect for astronomy"
-  },
-  {
-    icon: "🏕️",
-    title: "Wild Camping",
-    description: "Sleep under the stars in comfortable desert camps far from civilization"
-  },
-  {
-    icon: "🔍",
-    title: "Hidden Gems",
-    description: "Discover Egypt's secret places known only to experienced adventurers"
-  }
-];
-
 export default function AdventureTours() {
   const [selectedTour, setSelectedTour] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative pt-20 pb-20 bg-gradient-to-br from-background via-accent/5 to-primary/10 overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1640342105347-3e2699b5fbb3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center opacity-10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/experiences">
-            <Button variant="outline" className="mb-8 group">
-              <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
+            <Button variant="outline" className="mb-8 hover:scale-105 transition-transform">
+              <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Experiences
             </Button>
           </Link>
-          
+
           <div className="text-center">
-            <p className="tracking-[0.2em] uppercase text-accent text-sm font-medium mb-4">
-              Wild Experiences
-            </p>
-            <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary mb-6">
-              Adventure Tours
+            <div className="inline-flex items-center gap-3 bg-accent/10 rounded-full px-6 py-3 mb-8">
+              <Mountain className="h-6 w-6 text-accent" />
+              <span className="text-accent font-semibold">Wild Experiences</span>
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary mb-8 leading-tight">
+              Adventure
+              <span className="block text-accent">Tours</span>
             </h1>
+
             <div className="w-32 h-px bg-accent mx-auto mb-8"></div>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+
+            <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-12">
               Explore Egypt's hidden treasures, mystical deserts, and off-the-beaten-path destinations for the adventurous spirit. 
               Discover the wild side of Egypt beyond the tourist trails.
             </p>
-          </div>
-        </div>
-      </section>
 
-      {/* Features Grid */}
-      <section className="py-16 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              Adventure Experience Features
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Wild elements that make our adventure tours unforgettable
-            </p>
-          </div>
-          
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
-            {adventureFeatures.map((feature, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-6">
-                  <div className="text-4xl mb-4">{feature.icon}</div>
-                  <h3 className="text-xl font-serif font-bold text-primary mb-3">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              <div className="text-center p-6 bg-card/50 backdrop-blur-sm rounded-xl border border-accent/20">
+                <Mountain className="h-8 w-8 text-accent mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-primary mb-2">Wild Adventures</h3>
+                <p className="text-sm text-muted-foreground">Explore Egypt's untamed landscapes</p>
+              </div>
+              <div className="text-center p-6 bg-card/50 backdrop-blur-sm rounded-xl border border-accent/20">
+                <Users className="h-8 w-8 text-accent mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-primary mb-2">Expert Adventurers</h3>
+                <p className="text-sm text-muted-foreground">Experienced guides for safe exploration</p>
+              </div>
+              <div className="text-center p-6 bg-card/50 backdrop-blur-sm rounded-xl border border-accent/20">
+                <Heart className="h-8 w-8 text-accent mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-primary mb-2">Unique Experiences</h3>
+                <p className="text-sm text-muted-foreground">Discover Egypt's hidden gems</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -154,40 +128,47 @@ export default function AdventureTours() {
             {adventureTours.map((tour) => (
               <Card
                 key={tour.id}
-                className="group overflow-hidden hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02]"
+                className="group overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] flex flex-col h-full min-h-[600px]"
               >
-                {/* Package Image */}
                 <div className="relative h-64 overflow-hidden">
                   <img
                     src={tour.image}
                     alt={tour.name}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+
+                  {/* Tour Type Badge */}
+                  <div className="absolute top-4 left-4 bg-accent/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    {tour.tourType}
+                  </div>
+
+                  {/* Rating */}
                   <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
                     <Star className="h-4 w-4 text-accent fill-accent" />
                     <span className="text-sm font-medium">{tour.rating}</span>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
                   <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center gap-2 text-accent font-medium text-sm mb-1">
-                      <MapPin className="h-3 w-3" />
+                    <div className="flex items-center gap-2 text-accent font-medium text-sm mb-2">
+                      <MapPin className="h-4 w-4" />
                       <span>{tour.location}</span>
                     </div>
-                    <h3 className="text-2xl font-serif font-bold text-white">{tour.name}</h3>
+                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-2">{tour.name}</h3>
                   </div>
                 </div>
 
-                {/* Package Content */}
-                <CardContent className="p-6">
+                <CardContent className="p-6 flex flex-col justify-between flex-grow">
                   <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
-                      <span>{tour.duration}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Users className="h-4 w-4" />
-                      <span>{tour.groupSize}</span>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        <span>{tour.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="h-4 w-4" />
+                        <span>{tour.groupSize}</span>
+                      </div>
                     </div>
                   </div>
 
@@ -196,99 +177,136 @@ export default function AdventureTours() {
                   </p>
 
                   {/* Highlights */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {tour.highlights.map((highlight: string, index: number) => (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {tour.highlights.slice(0, 3).map((highlight: string, index: number) => (
                       <span
                         key={index}
-                        className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full"
+                        className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full font-medium"
                       >
                         {highlight}
                       </span>
                     ))}
                   </div>
 
-                  {/* Price and Action */}
-                  <div className="flex items-center justify-between">
+                  {/* Price and Actions */}
+                  <div className="flex items-center justify-between border-t border-border pt-4 mt-auto">
                     <div>
                       <p className="text-2xl font-serif font-bold text-primary">{tour.price}</p>
-                      <p className="text-sm text-muted-foreground">per person</p>
+                      <p className="text-xs text-muted-foreground">per person</p>
                     </div>
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => setSelectedTour(selectedTour === tour.id ? null : tour.id)}
+                        className="hover:scale-105 transition-transform"
                       >
-                        {selectedTour === tour.id ? 'Hide Details' : 'View Details'}
+                        {selectedTour === tour.id ? 'Hide' : 'Details'}
                       </Button>
-                      <Button size="sm" asChild>
+                      <Button size="sm" asChild className="hover:scale-105 transition-transform">
                         <Link href="/contact">
                           Book Now
                         </Link>
                       </Button>
                     </div>
                   </div>
-                </CardContent>
 
-                {/* Tour Itinerary - Expandable */}
-                {selectedTour === tour.id && (
-                  <div className="border-t border-border bg-muted/30 p-6">
-                    <h4 className="text-lg font-serif font-bold text-primary mb-4 flex items-center gap-2">
-                      <Calendar className="h-5 w-5" />
-                      Adventure Itinerary Details
-                    </h4>
-                    <div className="space-y-4">
-                      <div className="border-l-2 border-accent/30 pl-4">
-                        <div className="flex items-start gap-3">
-                          <div className="flex-shrink-0">
-                            <span className="inline-block w-8 h-8 bg-accent/10 text-accent rounded-full text-sm font-medium flex items-center justify-center">
-                              🏜️
-                            </span>
+                  {/* Expandable Details */}
+                  {selectedTour === tour.id && (
+                    <div className="mt-8 p-6 bg-muted/30 rounded-xl border border-accent/20">
+                      <h4 className="text-xl font-serif font-bold text-primary mb-4 flex items-center gap-2">
+                        <Calendar className="h-5 w-5 text-accent" />
+                        Complete Itinerary
+                      </h4>
+                      <div className="space-y-4">
+                        <div className="bg-background/50 p-4 rounded-lg">
+                          <p className="text-muted-foreground leading-relaxed">
+                            {tour.itinerary}
+                          </p>
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-4 text-sm">
+                          <div className="space-y-2">
+                            <div className="font-semibold text-primary">Duration</div>
+                            <div className="text-muted-foreground">{tour.duration}</div>
                           </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-sm font-medium text-accent">{tour.duration}</span>
-                              <span className="text-sm text-muted-foreground">•</span>
-                              <span className="text-sm text-muted-foreground flex items-center gap-1">
-                                <MapPin className="h-3 w-3" />
-                                {tour.location}
-                              </span>
-                            </div>
-                            <h5 className="font-semibold text-primary mb-1">Adventure Experience Itinerary</h5>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                              {tour.itinerary}
-                            </p>
+                          <div className="space-y-2">
+                            <div className="font-semibold text-primary">Group Size</div>
+                            <div className="text-muted-foreground">{tour.groupSize}</div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
+      {/* Why Choose Adventure Tours Section */}
       <section className="py-20 bg-muted">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
+              Why Choose Our Adventures?
+            </h2>
+            <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="text-center p-8 bg-background rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Mountain className="h-8 w-8 text-accent" />
+              </div>
+              <h3 className="text-xl font-semibold text-primary mb-4">Untamed Egypt</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Discover Egypt's wild side with expeditions to remote deserts, hidden oases, and untouched landscapes.
+              </p>
+            </div>
+
+            <div className="text-center p-8 bg-background rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Users className="h-8 w-8 text-accent" />
+              </div>
+              <h3 className="text-xl font-semibold text-primary mb-4">Adventure Experts</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Experienced adventure guides who know the safest routes and most spectacular hidden gems.
+              </p>
+            </div>
+
+            <div className="text-center p-8 bg-background rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Heart className="h-8 w-8 text-accent" />
+              </div>
+              <h3 className="text-xl font-semibold text-primary mb-4">Unique Discoveries</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Uncover Egypt's secrets beyond the typical tourist trails with authentic adventure experiences.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-20 bg-primary text-primary-foreground">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-6">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
             Embark on Your Wild Adventure
           </h2>
           <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
-          <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
+          <p className="text-xl mb-10 leading-relaxed opacity-90">
             Discover Egypt's hidden treasures and untamed landscapes. Our expert adventure guides will take you 
             beyond the tourist trails to experience the wild beauty of ancient Egypt.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/contact">
-              <Button size="lg" className="px-8 py-4 text-lg min-w-[200px]">
+              <Button size="lg" variant="secondary" className="px-8 py-4 text-lg min-w-[200px] hover:scale-105 transition-transform">
                 Start Your Adventure
               </Button>
             </Link>
             <Link href="/experiences">
-              <Button size="lg" variant="outline" className="px-8 py-4 text-lg min-w-[200px]">
+              <Button size="lg" variant="outline" className="px-8 py-4 text-lg min-w-[200px] border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary hover:scale-105 transition-all">
                 Explore Other Experiences
               </Button>
             </Link>

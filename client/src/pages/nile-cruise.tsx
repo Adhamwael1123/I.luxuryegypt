@@ -61,7 +61,7 @@ export default function NileCruise() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative pt-20 pb-20 bg-gradient-to-br from-background via-accent/5 to-primary/10 overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.thetimes.com/imageserver/image/%2Fb4c01f06-251f-4b18-b537-a8909772b48b.jpg?crop=1600%2C900%2C0%2C0&resize=1200')] bg-cover bg-center opacity-10"></div>
@@ -72,25 +72,25 @@ export default function NileCruise() {
               Back to Experiences
             </Button>
           </Link>
-          
+
           <div className="text-center">
             <div className="inline-flex items-center gap-3 bg-accent/10 rounded-full px-6 py-3 mb-8">
               <Ship className="h-6 w-6 text-accent" />
               <span className="text-accent font-semibold">Nile Cruise Adventures</span>
             </div>
-            
+
             <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary mb-8 leading-tight">
               Nile
               <span className="block text-accent">Cruise</span>
             </h1>
-            
+
             <div className="w-32 h-px bg-accent mx-auto mb-8"></div>
-            
+
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-12">
               Sail through ancient Egypt aboard luxury vessels, experiencing timeless beauty along the legendary Nile River. 
               Discover temples, tombs, and treasures from the comfort of your floating palace.
             </p>
-            
+
             <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="text-center p-6 bg-card/50 backdrop-blur-sm rounded-xl border border-accent/20">
                 <Ship className="h-8 w-8 text-accent mx-auto mb-4" />
@@ -128,27 +128,27 @@ export default function NileCruise() {
             {nileCruiseTours.map((tour) => (
               <Card
                 key={tour.id}
-                className="group overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02]"
+                className="group overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] flex flex-col h-full min-h-[600px]"
               >
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-64 overflow-hidden">
                   <img
                     src={tour.image}
                     alt={tour.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  
+
                   {/* Vessel Type Badge */}
                   <div className="absolute top-4 left-4 bg-accent/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-semibold">
                     {tour.vesselType}
                   </div>
-                  
+
                   {/* Rating */}
                   <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
                     <Star className="h-4 w-4 text-accent fill-accent" />
                     <span className="text-sm font-medium">{tour.rating}</span>
                   </div>
-                  
+
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="flex items-center gap-2 text-accent font-medium text-sm mb-2">
                       <MapPin className="h-4 w-4" />
@@ -158,7 +158,7 @@ export default function NileCruise() {
                   </div>
                 </div>
 
-                <CardContent className="p-6">
+                <CardContent className="p-6 flex flex-col justify-between flex-grow">
                   <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-1">
@@ -189,7 +189,7 @@ export default function NileCruise() {
                   </div>
 
                   {/* Price and Actions */}
-                  <div className="flex items-center justify-between border-t border-border pt-4">
+                  <div className="flex items-center justify-between border-t border-border pt-4 mt-auto">
                     <div>
                       <p className="text-2xl font-serif font-bold text-primary">{tour.price}</p>
                       <p className="text-xs text-muted-foreground">per person</p>
@@ -213,34 +213,25 @@ export default function NileCruise() {
 
                   {/* Expandable Details */}
                   {selectedTour === tour.id && (
-                    <div className="mt-6 p-4 bg-muted/30 rounded-xl border border-accent/20">
-                      <h4 className="text-lg font-serif font-bold text-primary mb-3 flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-accent" />
+                    <div className="mt-8 p-6 bg-muted/30 rounded-xl border border-accent/20">
+                      <h4 className="text-xl font-serif font-bold text-primary mb-4 flex items-center gap-2">
+                        <Calendar className="h-5 w-5 text-accent" />
                         Complete Itinerary
                       </h4>
-                      <div className="space-y-3">
-                        <div className="bg-background/50 p-3 rounded-lg">
-                          <p className="text-muted-foreground text-sm leading-relaxed">
+                      <div className="space-y-4">
+                        <div className="bg-background/50 p-4 rounded-lg">
+                          <p className="text-muted-foreground leading-relaxed">
                             {tour.itinerary}
                           </p>
                         </div>
-                        <div className="grid md:grid-cols-2 gap-3 text-sm">
-                          <div className="space-y-1">
-                            <div className="font-semibold text-primary text-xs">Cruise Features</div>
-                            <div className="space-y-1">
-                              {tour.cruiseFeatures.map((feature, index) => (
-                                <div key={index} className="flex items-center gap-2 text-xs text-muted-foreground">
-                                  <div className="w-1 h-1 bg-accent rounded-full flex-shrink-0"></div>
-                                  <span>{feature}</span>
-                                </div>
-                              ))}
-                            </div>
+                        <div className="grid md:grid-cols-2 gap-4 text-sm">
+                          <div className="space-y-2">
+                            <div className="font-semibold text-primary">Duration</div>
+                            <div className="text-muted-foreground">{tour.duration}</div>
                           </div>
-                          <div className="space-y-1">
-                            <div className="font-semibold text-primary text-xs">Duration</div>
-                            <div className="text-muted-foreground text-xs">{tour.duration}</div>
-                            <div className="font-semibold text-primary text-xs">Group Size</div>
-                            <div className="text-muted-foreground text-xs">{tour.groupSize}</div>
+                          <div className="space-y-2">
+                            <div className="font-semibold text-primary">Group Size</div>
+                            <div className="text-muted-foreground">{tour.groupSize}</div>
                           </div>
                         </div>
                       </div>
@@ -253,20 +244,64 @@ export default function NileCruise() {
         </div>
       </section>
 
+      {/* Why Choose Nile Cruise Section */}
+      <section className="py-20 bg-muted">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
+              Why Choose Our Nile Cruises?
+            </h2>
+            <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="text-center p-8 bg-background rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Ship className="h-8 w-8 text-accent" />
+              </div>
+              <h3 className="text-xl font-semibold text-primary mb-4">Luxury Vessels</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Sail aboard Egypt's finest cruise ships and dahabiyas with world-class amenities and service.
+              </p>
+            </div>
+
+            <div className="text-center p-8 bg-background rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Users className="h-8 w-8 text-accent" />
+              </div>
+              <h3 className="text-xl font-semibold text-primary mb-4">Expert Egyptologists</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Professional guides with deep knowledge of ancient Egyptian history and culture.
+              </p>
+            </div>
+
+            <div className="text-center p-8 bg-background rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Heart className="h-8 w-8 text-accent" />
+              </div>
+              <h3 className="text-xl font-semibold text-primary mb-4">Unforgettable Memories</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Create lasting memories sailing through the heart of ancient Egypt on the legendary Nile.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Call to Action */}
-      <section className="py-20 bg-primary text-white">
+      <section className="py-20 bg-primary text-primary-foreground">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
             Ready to Sail the Nile?
           </h2>
           <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
-          <p className="text-xl leading-relaxed mb-10 text-white/90">
+          <p className="text-xl mb-10 leading-relaxed opacity-90">
             Let our cruise specialists help you choose the perfect Nile journey. From luxury floating palaces to 
             intimate dahabiya sailing, we'll create your ideal river adventure.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/contact">
-              <Button size="lg" variant="secondary" className="px-8 py-4 text-lg min-w-[200px] text-white hover:scale-105 transition-transform">
+              <Button size="lg" variant="secondary" className="px-8 py-4 text-lg min-w-[200px] hover:scale-105 transition-transform">
                 Plan Your Cruise
               </Button>
             </Link>
