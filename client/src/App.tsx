@@ -44,6 +44,7 @@ import AdminPages from "@/pages/admin-pages";
 import AdminPosts from "@/pages/admin-posts";
 import AdminInquiries from "@/pages/admin-inquiries";
 import AdminMedia from "@/pages/admin-media";
+import AdminDestinations from "@/pages/admin-destinations";
 
 function Router() {
   const [location] = useLocation();
@@ -90,6 +91,7 @@ function Router() {
         <Route path="/admin/posts" component={AdminPosts} />
         <Route path="/admin/inquiries" component={AdminInquiries} />
         <Route path="/admin/media" component={AdminMedia} />
+        <Route path="/admin/destinations" component={AdminDestinations} />
         <Route component={() => <PageTransition><NotFound /></PageTransition>} />
       </Switch>
     </AnimatePresence>
