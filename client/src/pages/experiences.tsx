@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { Clock, Users, MapPin, Star, Calendar, ArrowLeft } from "lucide-react";
@@ -370,18 +369,18 @@ export default function Experiences() {
                         </span>
                       </div>
                       
-                      {/* Title overlay - always visible */}
+                      {/* Content overlay - always visible */}
                       <div className="absolute bottom-6 left-6 right-6">
                         <h3 className="text-3xl font-serif font-bold text-white mb-3 leading-tight">
                           {category.label}
                         </h3>
                         
-                        {/* Hover content */}
-                        <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                          <p className="text-white/90 leading-relaxed mb-4 line-clamp-3">
+                        {/* Description and button - always visible */}
+                        <div className="transition-all duration-300">
+                          <p className="text-white/90 leading-relaxed mb-4 text-sm md:text-base">
                             {category.description}
                           </p>
-                          <div className="inline-flex items-center justify-center bg-accent hover:bg-accent/90 text-accent-foreground font-medium rounded-lg px-4 py-2 transition-colors duration-200">
+                          <div className="inline-flex items-center justify-center bg-accent hover:bg-accent/90 text-accent-foreground font-medium rounded-lg px-4 py-2.5 transition-colors duration-200 text-sm">
                             <span>Explore Category</span>
                             <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
