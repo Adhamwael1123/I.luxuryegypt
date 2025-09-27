@@ -72,12 +72,12 @@ export default function WhyUseSection() {
           {whyUseItems.map((item) => (
             <div 
               key={item.id} 
-              className={`relative bg-card shadow-2xl overflow-hidden transition-all duration-300 ease-out border border-primary/10 hover:border-accent/50 group transform hover:shadow-3xl ${
+              className={`relative bg-card shadow-2xl overflow-hidden transition-all duration-700 ease-in-out border border-primary/10 hover:border-accent/50 group transform hover:shadow-3xl ${
                 hoveredCard === null 
                   ? 'flex-1' 
                   : hoveredCard === item.id 
-                    ? 'flex-[2.2]' 
-                    : 'flex-[0.6] opacity-40'
+                    ? 'flex-[2.5]' 
+                    : 'flex-[0.5] opacity-30'
               }`}
               onMouseEnter={() => setHoveredCard(item.id)}
               onMouseLeave={() => setHoveredCard(null)}
@@ -89,7 +89,7 @@ export default function WhyUseSection() {
               {/* Main Card Content */}
               <div className="relative flex h-full">
                 {/* Image Section */}
-                <div className={`relative overflow-hidden transition-all duration-300 ease-out ${
+                <div className={`relative overflow-hidden transition-all duration-700 ease-in-out ${
                   hoveredCard === item.id ? 'w-1/2' : 'w-full'
                 }`}>
                   <img
@@ -104,13 +104,13 @@ export default function WhyUseSection() {
                   
                   
                   {/* Title */}
-                  <div className="absolute bottom-6 left-6 right-6 transform transition-transform duration-200 ease-out group-hover:translate-y-[-4px]">
+                  <div className="absolute bottom-6 left-6 right-6 transform transition-all duration-500 ease-out group-hover:translate-y-[-4px]">
                     <div className="flex items-center space-x-3 mb-3">
-                      <div className="w-6 h-px bg-accent transition-all duration-300 group-hover:w-8"></div>
+                      <div className="w-6 h-px bg-accent transition-all duration-500 group-hover:w-8"></div>
                       <span className="text-accent text-xs font-bold tracking-[0.3em] uppercase font-sans">Luxury</span>
                     </div>
                     
-                    <h3 className="font-serif font-bold text-xl text-white leading-tight transition-colors duration-200 group-hover:text-accent/90">
+                    <h3 className="font-serif font-bold text-xl text-white leading-tight transition-colors duration-300 group-hover:text-accent/90">
                       {item.title}
                     </h3>
                   </div>
@@ -122,17 +122,23 @@ export default function WhyUseSection() {
                 </div>
 
                 {/* Expanding Content Section */}
-                <div className={`bg-gradient-to-br from-card via-card/95 to-accent/5 backdrop-blur-lg transition-all duration-300 ease-out overflow-hidden border-l border-accent/20 ${
+                <div className={`bg-gradient-to-br from-card via-card/95 to-accent/5 backdrop-blur-lg transition-all duration-700 ease-in-out overflow-hidden border-l border-accent/20 ${
                   hoveredCard === item.id ? 'w-1/2 opacity-100' : 'w-0 opacity-0'
                 }`}>
-                  <div className="h-full flex flex-col justify-center p-8 transform transition-all duration-200 ease-out">
-                    <h4 className="font-serif font-bold text-2xl text-primary mb-6 text-center leading-tight">
-                      {item.title}
-                    </h4>
-                    
-                    <p className="text-foreground/90 text-base leading-relaxed font-light text-center max-w-sm mx-auto tracking-wide">
-                      {item.content}
-                    </p>
+                  <div className={`h-full flex flex-col justify-center px-6 py-8 transform transition-all duration-500 ease-in-out ${
+                    hoveredCard === item.id ? 'translate-x-0' : 'translate-x-4'
+                  }`}>
+                    <div className="text-center space-y-4">
+                      <h4 className="font-serif font-bold text-xl text-primary leading-tight">
+                        {item.title}
+                      </h4>
+                      
+                      <div className="w-12 h-px bg-accent mx-auto opacity-60"></div>
+                      
+                      <p className="text-foreground/85 text-sm leading-relaxed font-light max-w-xs mx-auto">
+                        {item.content}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
