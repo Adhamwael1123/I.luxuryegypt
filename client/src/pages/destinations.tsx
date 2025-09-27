@@ -18,14 +18,7 @@ import dahahImage from '@assets/photo-1629229370300-207a44ac54cd_1758110419478.a
 import newGizaImage from '@assets/photo-1553993500-d70955b75b5c_1758111284493.avif';
 import newDahabImage from '@assets/photo-1660151177491-2e27a9cf6deb_1758111400928.avif';
 
-// Tailormade Journey card data
-const tailormadeCard = {
-  id: 'tailormade-journey',
-  name: 'Tailormade Journey',
-  description: 'Crafted around your specific interests, Tailormade Journeys are private just for you, your companions, and your A&K local guide, who helps you get the most out of every day of your journey.',
-  size: 'info-card',
-  type: 'info'
-};
+
 
 // Egyptian destinations with varied sizes for masonry layout
 const destinations = [
@@ -169,33 +162,13 @@ export default function Destinations() {
       <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...filteredDestinations, tailormadeCard].map((destination) => (
+            {filteredDestinations.map((destination) => (
               <div
                 key={destination.id}
                 className="group cursor-pointer"
                 data-testid={`destination-${destination.id}`}
               >
-                {destination.type === 'info' ? (
-                  // Tailormade Journey Card
-                  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 h-full flex flex-col">
-                    <h3 className="text-2xl font-serif font-bold text-primary mb-4">
-                      {destination.name}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed mb-6 flex-1">
-                      {'description' in destination ? destination.description : ''}
-                    </p>
-                    <Button 
-                      className="w-full" 
-                      asChild
-                      data-testid="button-tailormade-view-details"
-                    >
-                      <Link href="/contact">
-                        VIEW DETAILS
-                      </Link>
-                    </Button>
-                  </div>
-                ) : (
-                  // All Destination Cards - Click-only interaction
+                {/* All Destination Cards - Click-only interaction */}
                   <Link href={`/destinations/${destination.id}`} className="block h-full">
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden h-full flex flex-col cursor-pointer">
                       <div className="aspect-[4/3] relative overflow-hidden">
@@ -248,7 +221,6 @@ export default function Destinations() {
                       </div>
                     </div>
                   </Link>
-                )}
               </div>
             ))}
           </div>
