@@ -341,57 +341,47 @@ export default function Experiences() {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="space-y-6">
               {categories.map((category, index) => (
                 <div
                   key={category.key}
-                  className="group cursor-pointer"
+                  className="cursor-pointer bg-white rounded-2xl p-8 shadow-sm border border-accent/10 hover:shadow-md hover:border-accent/20 transition-all duration-300"
                   onClick={() => handleCategoryClick(category.key)}
                   data-testid={`category-${category.key}`}
                 >
-                  <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02] group-hover:-translate-y-1">
-                    {/* Image Section */}
-                    <div className="relative h-80 overflow-hidden">
-                      <img
-                        src={category.image}
-                        alt={category.label}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                        loading="lazy"
-                      />
-                      
-                      {/* Enhanced gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                      
-                      {/* Experience count badge */}
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-                        <span className="text-sm font-semibold text-primary">
-                          {category.tours.length} Experience{category.tours.length !== 1 ? 's' : ''}
+                  <div className="flex flex-col lg:flex-row lg:items-center gap-6">
+                    {/* Content Section */}
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-4">
+                        <h3 className="text-3xl font-serif font-bold text-primary">
+                          {category.label}
+                        </h3>
+                        <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-sm font-medium">
+                          {category.tours.length} experience{category.tours.length !== 1 ? 's' : ''}
                         </span>
                       </div>
                       
-                      {/* Content overlay - always visible */}
-                      <div className="absolute bottom-6 left-6 right-6">
-                        <h3 className="text-3xl font-serif font-bold text-white mb-3 leading-tight">
-                          {category.label}
-                        </h3>
-                        
-                        {/* Description and button - always visible */}
-                        <div className="transition-all duration-300">
-                          <p className="text-white/90 leading-relaxed mb-4 text-sm md:text-base">
-                            {category.description}
-                          </p>
-                          <div className="inline-flex items-center justify-center bg-accent hover:bg-accent/90 text-accent-foreground font-medium rounded-lg px-4 py-2.5 transition-colors duration-200 text-sm">
-                            <span>Explore Category</span>
-                            <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                          </div>
-                        </div>
+                      <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                        {category.description}
+                      </p>
+                      
+                      <div className="inline-flex items-center gap-2 text-accent font-semibold">
+                        <span>Explore this category</span>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
                       </div>
                     </div>
-
-                    {/* Accent border that appears on hover */}
-                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/30 rounded-xl transition-colors duration-300" />
+                    
+                    {/* Image Section */}
+                    <div className="lg:w-80 h-48 lg:h-56 rounded-xl overflow-hidden flex-shrink-0">
+                      <img
+                        src={category.image}
+                        alt={category.label}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
