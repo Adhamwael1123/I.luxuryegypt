@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { FileText, Plus, Edit, Search, ArrowLeft, Trash2, Calendar } from "lucide-react";
+import AdminLayout from "@/components/admin-layout";
 
 // Form validation schema
 const postFormSchema = z.object({
@@ -45,43 +46,18 @@ export default function AdminPosts() {
   const [deletingPost, setDeletingPost] = useState<any>(null);
   const { toast } = useToast();
 
-  // Check authentication
-  useEffect(() => {
-    const token = localStorage.getItem("adminToken");
-    if (!token) {
-      setLocation("/admin/login");
-    }
-  }, [setLocation]);
 
-  const { data: postsResponse, isLoading, refetch } = useQuery({
+  const { data: postsResponse, isLoading } = useQuery({
     queryKey: ["/api/cms/posts"],
-    queryFn: async () => {
-      const token = localStorage.getItem("adminToken");
-      const response = await fetch("/api/cms/posts", {
-        headers: { "Authorization": `Bearer ${token}` }
-      });
-      if (!response.ok) throw new Error("Failed to fetch posts");
-      return await response.json();
-    },
-    enabled: !!localStorage.getItem("adminToken"),
+    enabled: true
   });
 
-  const posts = postsResponse?.posts || [];
+  const posts = (postsResponse as any)?.posts || [];
 
   // Create post mutation
   const createPostMutation = useMutation({
     mutationFn: async (data: PostFormData) => {
-      const token = localStorage.getItem("adminToken");
-      const response = await fetch("/api/cms/posts", {
-        method: "POST",
-        headers: { 
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error("Failed to create post");
-      return await response.json();
+      return apiRequest('POST', '/api/cms/posts', data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cms/posts"] });
@@ -101,17 +77,7 @@ export default function AdminPosts() {
   // Update post mutation
   const updatePostMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<PostFormData> }) => {
-      const token = localStorage.getItem("adminToken");
-      const response = await fetch(`/api/cms/posts/${id}`, {
-        method: "PUT",
-        headers: { 
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error("Failed to update post");
-      return await response.json();
+      return apiRequest('PUT', `/api/cms/posts/${id}`, data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cms/posts"] });
@@ -132,15 +98,7 @@ export default function AdminPosts() {
   // Delete post mutation
   const deletePostMutation = useMutation({
     mutationFn: async (id: string) => {
-      const token = localStorage.getItem("adminToken");
-      const response = await fetch(`/api/cms/posts/${id}`, {
-        method: "DELETE",
-        headers: { 
-          "Authorization": `Bearer ${token}`
-        },
-      });
-      if (!response.ok) throw new Error("Failed to delete post");
-      return await response.json();
+      return apiRequest('DELETE', `/api/cms/posts/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/cms/posts"] });
@@ -235,28 +193,10 @@ export default function AdminPosts() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setLocation("/admin")}
-                className="mr-4"
-                data-testid="button-back"
-              >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Dashboard
-              </Button>
-              <div>
-                <h1 className="text-xl font-semibold text-gray-900">Blog Posts</h1>
-                <p className="text-sm text-gray-500">Manage blog content</p>
-              </div>
-            </div>
-            <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+    <AdminLayout title="Blog Posts" description="Manage blog content">
+      {/* Create Post Dialog */}
+      <div className="mb-6 flex justify-end">
+        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
               <DialogTrigger asChild>
                 <Button data-testid="button-new-post">
                   <Plus className="h-4 w-4 mr-2" />
@@ -391,12 +331,9 @@ export default function AdminPosts() {
                 </Form>
               </DialogContent>
             </Dialog>
-          </div>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Posts List */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
@@ -506,8 +443,7 @@ export default function AdminPosts() {
               </div>
             )}
           </CardContent>
-        </Card>
-      </main>
+      </Card>
 
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
@@ -674,6 +610,6 @@ export default function AdminPosts() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </AdminLayout>
   );
 }
