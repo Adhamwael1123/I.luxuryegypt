@@ -2,8 +2,9 @@ import {
   type User, type InsertUser, type Inquiry, type InsertInquiry,
   type Page, type InsertPage, type Section, type InsertSection,
   type Post, type InsertPost, type Media, type InsertMedia,
-  type Hotel, type InsertHotel,
-  users, inquiries, pages, sections, posts, media as mediaTable, hotels
+  type Hotel, type InsertHotel, type Tour, type InsertTour,
+  type Package, type InsertPackage, type Destination, type InsertDestination,
+  users, inquiries, pages, sections, posts, media as mediaTable, hotels, tours, packages, destinations
 } from "@shared/schema";
 import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
@@ -58,6 +59,30 @@ export interface IStorage {
   getHotel(id: string): Promise<Hotel | undefined>;
   updateHotel(id: string, hotel: Partial<InsertHotel>): Promise<Hotel | undefined>;
   deleteHotel(id: string): Promise<boolean>;
+
+  // Destination methods  
+  createDestination(destination: InsertDestination): Promise<Destination>;
+  getDestinations(): Promise<Destination[]>;
+  getDestination(id: string): Promise<Destination | undefined>;
+  getDestinationBySlug(slug: string): Promise<Destination | undefined>;
+  updateDestination(id: string, destination: Partial<InsertDestination>): Promise<Destination | undefined>;
+  deleteDestination(id: string): Promise<boolean>;
+
+  // Tour methods
+  createTour(tour: InsertTour): Promise<Tour>;
+  getTours(): Promise<Tour[]>;
+  getTour(id: string): Promise<Tour | undefined>;
+  getTourBySlug(slug: string): Promise<Tour | undefined>;
+  updateTour(id: string, tour: Partial<InsertTour>): Promise<Tour | undefined>;
+  deleteTour(id: string): Promise<boolean>;
+
+  // Package methods
+  createPackage(pkg: InsertPackage): Promise<Package>;
+  getPackages(): Promise<Package[]>;
+  getPackage(id: string): Promise<Package | undefined>;
+  getPackageBySlug(slug: string): Promise<Package | undefined>;
+  updatePackage(id: string, pkg: Partial<InsertPackage>): Promise<Package | undefined>;
+  deletePackage(id: string): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -255,6 +280,198 @@ export class DatabaseStorage implements IStorage {
       return (result.rowCount ?? 0) > 0;
     } catch (error) {
       console.error("Error deleting hotel:", error);
+      return false;
+    }
+  }
+
+  // Destination methods
+  async createDestination(data: InsertDestination): Promise<Destination> {
+    try {
+      const [destination] = await db.insert(destinations).values(data).returning();
+      return destination;
+    } catch (error) {
+      console.error("Error creating destination:", error);
+      throw error;
+    }
+  }
+
+  async getDestinations(): Promise<Destination[]> {
+    try {
+      return await db.select().from(destinations).orderBy(desc(destinations.createdAt));
+    } catch (error) {
+      console.error("Error fetching destinations:", error);
+      return [];
+    }
+  }
+
+  async getDestination(id: string): Promise<Destination | undefined> {
+    try {
+      const [destination] = await db.select().from(destinations).where(eq(destinations.id, id));
+      return destination || undefined;
+    } catch (error) {
+      console.error("Error fetching destination:", error);
+      return undefined;
+    }
+  }
+
+  async getDestinationBySlug(slug: string): Promise<Destination | undefined> {
+    try {
+      const [destination] = await db.select().from(destinations).where(eq(destinations.slug, slug));
+      return destination || undefined;
+    } catch (error) {
+      console.error("Error fetching destination by slug:", error);
+      return undefined;
+    }
+  }
+
+  async updateDestination(id: string, data: Partial<InsertDestination>): Promise<Destination | undefined> {
+    try {
+      const [destination] = await db
+        .update(destinations)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(destinations.id, id))
+        .returning();
+      return destination || undefined;
+    } catch (error) {
+      console.error("Error updating destination:", error);
+      throw error;
+    }
+  }
+
+  async deleteDestination(id: string): Promise<boolean> {
+    try {
+      const result = await db.delete(destinations).where(eq(destinations.id, id));
+      return (result.rowCount ?? 0) > 0;
+    } catch (error) {
+      console.error("Error deleting destination:", error);
+      return false;
+    }
+  }
+
+  // Tour methods
+  async createTour(data: InsertTour): Promise<Tour> {
+    try {
+      const [tour] = await db.insert(tours).values(data).returning();
+      return tour;
+    } catch (error) {
+      console.error("Error creating tour:", error);
+      throw error;
+    }
+  }
+
+  async getTours(): Promise<Tour[]> {
+    try {
+      return await db.select().from(tours).orderBy(desc(tours.createdAt));
+    } catch (error) {
+      console.error("Error fetching tours:", error);
+      return [];
+    }
+  }
+
+  async getTour(id: string): Promise<Tour | undefined> {
+    try {
+      const [tour] = await db.select().from(tours).where(eq(tours.id, id));
+      return tour || undefined;
+    } catch (error) {
+      console.error("Error fetching tour:", error);
+      return undefined;
+    }
+  }
+
+  async getTourBySlug(slug: string): Promise<Tour | undefined> {
+    try {
+      const [tour] = await db.select().from(tours).where(eq(tours.slug, slug));
+      return tour || undefined;
+    } catch (error) {
+      console.error("Error fetching tour by slug:", error);
+      return undefined;
+    }
+  }
+
+  async updateTour(id: string, data: Partial<InsertTour>): Promise<Tour | undefined> {
+    try {
+      const [tour] = await db
+        .update(tours)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(tours.id, id))
+        .returning();
+      return tour || undefined;
+    } catch (error) {
+      console.error("Error updating tour:", error);
+      throw error;
+    }
+  }
+
+  async deleteTour(id: string): Promise<boolean> {
+    try {
+      const result = await db.delete(tours).where(eq(tours.id, id));
+      return (result.rowCount ?? 0) > 0;
+    } catch (error) {
+      console.error("Error deleting tour:", error);
+      return false;
+    }
+  }
+
+  // Package methods
+  async createPackage(data: InsertPackage): Promise<Package> {
+    try {
+      const [pkg] = await db.insert(packages).values(data).returning();
+      return pkg;
+    } catch (error) {
+      console.error("Error creating package:", error);
+      throw error;
+    }
+  }
+
+  async getPackages(): Promise<Package[]> {
+    try {
+      return await db.select().from(packages).orderBy(desc(packages.createdAt));
+    } catch (error) {
+      console.error("Error fetching packages:", error);
+      return [];
+    }
+  }
+
+  async getPackage(id: string): Promise<Package | undefined> {
+    try {
+      const [pkg] = await db.select().from(packages).where(eq(packages.id, id));
+      return pkg || undefined;
+    } catch (error) {
+      console.error("Error fetching package:", error);
+      return undefined;
+    }
+  }
+
+  async getPackageBySlug(slug: string): Promise<Package | undefined> {
+    try {
+      const [pkg] = await db.select().from(packages).where(eq(packages.slug, slug));
+      return pkg || undefined;
+    } catch (error) {
+      console.error("Error fetching package by slug:", error);
+      return undefined;
+    }
+  }
+
+  async updatePackage(id: string, data: Partial<InsertPackage>): Promise<Package | undefined> {
+    try {
+      const [pkg] = await db
+        .update(packages)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(packages.id, id))
+        .returning();
+      return pkg || undefined;
+    } catch (error) {
+      console.error("Error updating package:", error);
+      throw error;
+    }
+  }
+
+  async deletePackage(id: string): Promise<boolean> {
+    try {
+      const result = await db.delete(packages).where(eq(packages.id, id));
+      return (result.rowCount ?? 0) > 0;
+    } catch (error) {
+      console.error("Error deleting package:", error);
       return false;
     }
   }
