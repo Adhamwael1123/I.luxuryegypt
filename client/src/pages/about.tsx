@@ -111,115 +111,179 @@ export default function About() {
       </section>
 
       <main>
-        {/* Our Story Section */}
-        <section className="py-20 bg-background">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Section Header */}
+        {/* Our Story Section - Redesigned */}
+        <section className="py-24 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
+          {/* Background decorative elements */}
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23D4A574" fill-opacity="0.02"%3E%3Ccircle cx="7" cy="7" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            {/* Enhanced Section Header */}
             <div className="text-center mb-20">
-              <div className="flex justify-center mb-6">
-                <BookOpen className="h-12 w-12 text-accent" />
+              <div className="relative inline-block mb-8">
+                <div className="absolute -inset-4 bg-accent/10 rounded-full blur-xl"></div>
+                <div className="relative bg-background/80 backdrop-blur-sm rounded-full p-6 border border-accent/20">
+                  <BookOpen className="h-8 w-8 text-accent" />
+                </div>
               </div>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-8">
+              
+              <p className="tracking-[0.3em] uppercase text-accent text-sm font-medium mb-4 animate-fade-in">
+                Heritage & Excellence
+              </p>
+              
+              <h2 className="text-5xl md:text-6xl font-serif font-bold text-primary mb-8 leading-tight">
                 Our Story
               </h2>
-              <div className="flex items-center justify-center space-x-4 mb-8">
-                <div className="w-16 h-px bg-accent"></div>
-                <div className="w-2 h-2 bg-accent rotate-45"></div>
-                <div className="w-16 h-px bg-accent"></div>
+              
+              <div className="flex items-center justify-center space-x-6 mb-10">
+                <div className="w-20 h-px bg-gradient-to-r from-transparent to-accent"></div>
+                <div className="w-3 h-3 bg-accent rotate-45 rounded-sm"></div>
+                <div className="w-20 h-px bg-gradient-to-l from-transparent to-accent"></div>
               </div>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                The journey that began with a passion for Egypt's timeless beauty and evolved into 
-                the finest luxury travel experience in the land of the Pharaohs.
+              
+              <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-light">
+                A journey that began with passion for Egypt's timeless beauty and evolved into the finest luxury travel experience in the land of the Pharaohs.
               </p>
             </div>
 
-            {/* Story Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8">
-                <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
-                  <p>
-                    Born from a passion for Egypt's timeless beauty and a commitment to unparalleled luxury, 
-                    I.LuxuryEgypt was founded to offer discerning travelers an extraordinary way to experience 
-                    the land of the Pharaohs.
-                  </p>
-                  <p>
-                    We believe that luxury travel is not just about opulent accommodations and exclusive access—it's 
-                    about creating transformative experiences that connect you deeply with Egypt's rich heritage, 
-                    breathtaking landscapes, and warm hospitality.
-                  </p>
-                  <p>
-                    From private sunrise ceremonies at the Pyramids of Giza to intimate felucca cruises on the Nile 
-                    at sunset, every moment is carefully orchestrated to create memories that last a lifetime.
-                  </p>
+            {/* Main Story Content - New Layout */}
+            <div className="space-y-20">
+              {/* First Story Block */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div className="relative">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                    <img 
+                      src={menahousePyramidImage} 
+                      alt="The Pyramids from Mena House" 
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20">
+                        <h4 className="text-white font-serif font-bold text-lg mb-1">Where It All Began</h4>
+                        <p className="text-white/90 text-sm">The view that inspired our vision</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Floating accent element */}
+                  <div className="absolute -top-6 -right-6 w-20 h-20 bg-accent/20 rounded-full blur-2xl animate-pulse"></div>
                 </div>
-
-                {/* Story Highlights */}
-                <div className="bg-muted rounded-xl p-8 border border-accent/10">
-                  <h3 className="text-xl font-serif font-bold text-primary mb-4">Our Mission</h3>
-                  <p className="text-accent font-medium text-lg italic leading-relaxed">
-                    "To transform the way luxury travelers experience Egypt, creating deeply personal connections 
-                    with ancient wonders through uncompromising excellence and authentic cultural immersion."
-                  </p>
+                
+                <div className="space-y-8 lg:pl-8">
+                  <div className="space-y-6">
+                    <div className="inline-flex items-center gap-2 bg-accent/10 rounded-full px-4 py-2">
+                      <div className="w-2 h-2 bg-accent rounded-full"></div>
+                      <span className="text-accent font-medium text-sm">Our Beginning</span>
+                    </div>
+                    
+                    <h3 className="text-3xl md:text-4xl font-serif font-bold text-primary leading-tight">
+                      Born from Passion
+                    </h3>
+                    
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                      Born from a passion for Egypt's timeless beauty and a commitment to unparalleled luxury, 
+                      I.LuxuryEgypt was founded to offer discerning travelers an extraordinary way to experience 
+                      the land of the Pharaohs.
+                    </p>
+                  </div>
+                  
+                  <div className="flex items-start gap-4 p-6 bg-background/60 backdrop-blur-sm rounded-xl border border-accent/10">
+                    <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <Star className="h-5 w-5 text-accent" />
+                    </div>
+                    <div>
+                      <h4 className="font-serif font-bold text-primary mb-2">Our Philosophy</h4>
+                      <p className="text-muted-foreground">
+                        Luxury travel isn't just about opulent accommodations—it's about creating transformative experiences.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div className="relative group overflow-hidden rounded-lg shadow-xl">
-                    <img 
-                      src={sunsetFeluccaImage} 
-                      alt="Sunset felucca cruise on the Nile" 
-                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h4 className="text-white font-serif font-bold text-sm">Nile Experiences</h4>
+              {/* Second Story Block - Reversed */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div className="space-y-8 lg:pr-8 lg:order-1 order-2">
+                  <div className="space-y-6">
+                    <div className="inline-flex items-center gap-2 bg-accent/10 rounded-full px-4 py-2">
+                      <div className="w-2 h-2 bg-accent rounded-full"></div>
+                      <span className="text-accent font-medium text-sm">Our Mission</span>
                     </div>
+                    
+                    <h3 className="text-3xl md:text-4xl font-serif font-bold text-primary leading-tight">
+                      Transformative Experiences
+                    </h3>
+                    
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                      We believe in creating deeply personal connections with Egypt's rich heritage, breathtaking landscapes, 
+                      and warm hospitality. From private sunrise ceremonies at the Pyramids to intimate felucca cruises on the Nile.
+                    </p>
                   </div>
-                  <div className="relative group overflow-hidden rounded-lg shadow-xl">
-                    <img 
-                      src={poolRiverImage} 
-                      alt="Luxury poolside experience" 
-                      className="w-full h-32 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
-                    <div className="absolute bottom-2 left-2 right-2">
-                      <h4 className="text-white font-serif font-bold text-xs">Luxury Resorts</h4>
+                  
+                  {/* Mission Statement Card */}
+                  <div className="relative p-8 bg-primary rounded-2xl text-white overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 rounded-full -translate-y-16 translate-x-16"></div>
+                    <div className="relative">
+                      <div className="flex items-center gap-3 mb-4">
+                        <Award className="h-6 w-6 text-accent" />
+                        <span className="font-semibold text-accent">Our Promise</span>
+                      </div>
+                      <blockquote className="text-lg font-serif italic leading-relaxed">
+                        "To transform the way luxury travelers experience Egypt, creating deeply personal connections 
+                        with ancient wonders through uncompromising excellence."
+                      </blockquote>
                     </div>
                   </div>
                 </div>
-                <div className="space-y-4 mt-8">
-                  <div className="relative group overflow-hidden rounded-lg shadow-xl">
-                    <img 
-                      src={poolsideDrinkImage} 
-                      alt="Poolside luxury service" 
-                      className="w-full h-32 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
-                    <div className="absolute bottom-2 left-2 right-2">
-                      <h4 className="text-white font-serif font-bold text-xs">Premium Service</h4>
+                
+                <div className="relative lg:order-2 order-1">
+                  <div className="grid grid-cols-2 gap-4 h-96">
+                    <div className="space-y-4">
+                      <div className="aspect-square rounded-xl overflow-hidden shadow-lg group">
+                        <img 
+                          src={sunsetFeluccaImage} 
+                          alt="Sunset felucca cruise" 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      </div>
+                      <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-lg group">
+                        <img 
+                          src={poolsideDrinkImage} 
+                          alt="Luxury service" 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-4 mt-8">
+                      <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-lg group">
+                        <img 
+                          src={khanKhaliliImage} 
+                          alt="Khan Khalili experience" 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      </div>
+                      <div className="aspect-square rounded-xl overflow-hidden shadow-lg group">
+                        <img 
+                          src={siwaPalmTreesImage} 
+                          alt="Siwa Oasis" 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className="relative group overflow-hidden rounded-lg shadow-xl">
-                    <img 
-                      src={siwaPalmTreesImage} 
-                      alt="Siwa Oasis palm trees" 
-                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h4 className="text-white font-serif font-bold text-sm">Desert Escapes</h4>
-                    </div>
-                  </div>
+                  
+                  {/* Floating accent element */}
+                  <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-primary/20 rounded-full blur-2xl animate-pulse"></div>
                 </div>
               </div>
             </div>
 
-            {/* Decorative Bottom Element */}
-            <div className="relative mt-16">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent to-transparent opacity-50"></div>
-              <div className="flex justify-center pt-8">
-                <div className="w-16 h-1 bg-accent rounded-full"></div>
+            {/* Bottom decorative element */}
+            <div className="mt-24 text-center">
+              <div className="inline-flex items-center gap-4">
+                <div className="w-16 h-px bg-gradient-to-r from-transparent to-accent"></div>
+                <div className="w-4 h-4 bg-accent rounded-full"></div>
+                <div className="w-16 h-px bg-gradient-to-l from-transparent to-accent"></div>
               </div>
             </div>
           </div>
