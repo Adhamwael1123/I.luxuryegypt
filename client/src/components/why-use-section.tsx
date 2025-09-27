@@ -72,7 +72,7 @@ export default function WhyUseSection() {
           {whyUseItems.map((item) => (
             <div 
               key={item.id} 
-              className={`relative bg-card shadow-2xl overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] border border-primary/10 hover:border-accent/50 group transform hover:shadow-3xl ${
+              className={`relative bg-card shadow-2xl overflow-hidden transition-all duration-300 ease-out border border-primary/10 hover:border-accent/50 group transform hover:shadow-3xl ${
                 hoveredCard === null 
                   ? 'flex-1' 
                   : hoveredCard === item.id 
@@ -84,53 +84,53 @@ export default function WhyUseSection() {
               data-testid={`why-use-item-${item.id}`}
             >
               {/* Luxury Top Accent */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-200" />
               
               {/* Main Card Content */}
               <div className="relative flex h-full">
                 {/* Image Section */}
-                <div className={`relative overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+                <div className={`relative overflow-hidden transition-all duration-300 ease-out ${
                   hoveredCard === item.id ? 'w-1/2' : 'w-full'
                 }`}>
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                   />
                   
                   {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10 transition-opacity duration-1000 group-hover:from-black/70 group-hover:via-black/30 group-hover:to-black/5" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10 transition-all duration-300 group-hover:from-black/70 group-hover:via-black/30 group-hover:to-black/5" />
                   
                   
                   
                   {/* Title */}
-                  <div className="absolute bottom-6 left-6 right-6 transform transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:translate-y-[-4px]">
+                  <div className="absolute bottom-6 left-6 right-6 transform transition-transform duration-200 ease-out group-hover:translate-y-[-4px]">
                     <div className="flex items-center space-x-3 mb-3">
-                      <div className="w-6 h-px bg-accent transition-all duration-700 group-hover:w-8"></div>
+                      <div className="w-6 h-px bg-accent transition-all duration-300 group-hover:w-8"></div>
                       <span className="text-accent text-xs font-bold tracking-[0.3em] uppercase font-sans">Luxury</span>
                     </div>
                     
-                    <h3 className="font-serif font-bold text-xl text-white leading-tight transition-all duration-500 group-hover:text-accent/90">
+                    <h3 className="font-serif font-bold text-xl text-white leading-tight transition-colors duration-200 group-hover:text-accent/90">
                       {item.title}
                     </h3>
                   </div>
 
                   {/* Side Accent Line */}
-                  <div className={`absolute left-0 top-6 bottom-6 bg-gradient-to-b from-accent/0 via-accent/80 to-accent/0 transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+                  <div className={`absolute left-0 top-6 bottom-6 bg-gradient-to-b from-accent/0 via-accent/80 to-accent/0 transition-all duration-300 ease-out ${
                     hoveredCard === item.id ? 'w-1 via-accent/100' : 'w-0.5'
                   }`} />
                 </div>
 
                 {/* Expanding Content Section */}
-                <div className={`bg-gradient-to-br from-card via-card/95 to-accent/5 backdrop-blur-lg transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] overflow-hidden border-l border-accent/20 ${
+                <div className={`bg-gradient-to-br from-card via-card/95 to-accent/5 backdrop-blur-lg transition-all duration-300 ease-out overflow-hidden border-l border-accent/20 ${
                   hoveredCard === item.id ? 'w-1/2 opacity-100' : 'w-0 opacity-0'
                 }`}>
-                  <div className="h-full flex flex-col justify-center p-8 transform transition-all duration-700 ease-out">
-                    <h4 className="font-serif font-bold text-xl text-primary mb-6 text-center leading-tight">
+                  <div className="h-full flex flex-col justify-center p-8 transform transition-all duration-200 ease-out">
+                    <h4 className="font-serif font-bold text-2xl text-primary mb-6 text-center leading-tight">
                       {item.title}
                     </h4>
                     
-                    <p className="text-foreground/90 text-base leading-relaxed font-normal text-center max-w-sm mx-auto tracking-wide">
+                    <p className="text-foreground/90 text-base leading-relaxed font-light text-center max-w-sm mx-auto tracking-wide">
                       {item.content}
                     </p>
                   </div>
@@ -138,7 +138,7 @@ export default function WhyUseSection() {
               </div>
 
               {/* Bottom Accent Line */}
-              <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+              <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent transition-all duration-300 ease-out ${
                 hoveredCard === item.id ? 'opacity-100 via-accent/70' : 'opacity-60'
               }`} />
             </div>
