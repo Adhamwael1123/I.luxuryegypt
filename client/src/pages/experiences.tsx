@@ -364,7 +364,7 @@ export default function Experiences() {
                   </div>
                   
                   {/* Content Section */}
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col h-full">
                     <h3 className="text-xl font-serif font-bold text-primary mb-2 group-hover:text-accent transition-colors">
                       {category.label}
                     </h3>
@@ -373,7 +373,7 @@ export default function Experiences() {
                       {category.description}
                     </p>
                     
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mt-auto">
                       <span className="text-accent font-medium text-sm">
                         Explore now
                       </span>
