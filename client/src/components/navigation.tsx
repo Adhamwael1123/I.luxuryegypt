@@ -57,15 +57,10 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0">
             <Link href="/">
-              <div className="flex items-center space-x-3 hover-elevate cursor-pointer group" 
-                   data-testid="logo-home">
-                <div className="w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">I</span>
-                </div>
-                <h1 className="text-2xl font-serif font-bold text-primary group-hover:text-accent transition-colors duration-300">
-                  LUXURYEGYPT
-                </h1>
-              </div>
+              <h1 className="text-2xl font-serif font-bold text-primary hover:text-accent transition-colors cursor-pointer" 
+                  data-testid="logo-home">
+                I.LUXURYEGYPT
+              </h1>
             </Link>
           </div>
 
