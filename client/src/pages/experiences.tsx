@@ -341,46 +341,45 @@ export default function Experiences() {
               </p>
             </div>
             
-            <div className="space-y-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {categories.map((category, index) => (
                 <div
                   key={category.key}
-                  className="cursor-pointer bg-white rounded-2xl p-8 shadow-sm border border-accent/10 hover:shadow-md hover:border-accent/20 transition-all duration-300"
+                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg hover:border-accent/30 transition-all duration-300"
                   onClick={() => handleCategoryClick(category.key)}
                   data-testid={`category-${category.key}`}
                 >
-                  <div className="flex flex-col lg:flex-row lg:items-center gap-6">
-                    {/* Content Section */}
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-4">
-                        <h3 className="text-3xl font-serif font-bold text-primary">
-                          {category.label}
-                        </h3>
-                        <span className="bg-accent/10 text-accent px-3 py-1 rounded-full text-sm font-medium">
-                          {category.tours.length} experience{category.tours.length !== 1 ? 's' : ''}
-                        </span>
-                      </div>
-                      
-                      <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                        {category.description}
-                      </p>
-                      
-                      <div className="inline-flex items-center gap-2 text-accent font-semibold">
-                        <span>Explore this category</span>
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </div>
+                  {/* Image Section */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={category.image}
+                      alt={category.label}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300" />
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 text-xs font-medium text-gray-700">
+                      {category.tours.length} tour{category.tours.length !== 1 ? 's' : ''}
                     </div>
+                  </div>
+                  
+                  {/* Content Section */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-serif font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+                      {category.label}
+                    </h3>
                     
-                    {/* Image Section */}
-                    <div className="lg:w-80 h-48 lg:h-56 rounded-xl overflow-hidden flex-shrink-0">
-                      <img
-                        src={category.image}
-                        alt={category.label}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
+                      {category.description}
+                    </p>
+                    
+                    <div className="flex items-center justify-between">
+                      <span className="text-accent font-medium text-sm">
+                        Explore now
+                      </span>
+                      <svg className="w-4 h-4 text-accent group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
                     </div>
                   </div>
                 </div>
