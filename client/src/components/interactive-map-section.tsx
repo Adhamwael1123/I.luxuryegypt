@@ -9,49 +9,55 @@ export default function InteractiveMapSection() {
     {
       id: 'alexandria',
       name: 'Alexandria',
-      tagline: 'Mediterranean Pearl of Egypt',
+      tagline: 'Timeless Mediterranean elegance where ancient wisdom meets coastal luxury',
       region: 'North',
-      highlights: ['Bibliotheca Alexandrina', 'Citadel of Qaitbay', 'Montaza Palace'],
+      highlights: ['Bibliotheca Alexandrina - Modern Wonder', 'Citadel of Qaitbay - Mamluk Fortress', 'Montaza Palace Gardens', 'Roman Amphitheatre', 'Catacombs of Kom el Shoqafa'],
+      coordinates: '31.2001°N, 29.9187°E',
       position: { top: '25%', left: '15%' }
     },
     {
       id: 'cairo',
       name: 'Cairo',
-      tagline: 'The City of a Thousand Minarets',
+      tagline: 'Pulsating heart of the Arab world with unmatched Islamic architecture',
       region: 'Central',
-      highlights: ['Islamic Cairo', 'Khan el-Khalili Bazaar', 'Saladin Citadel'],
+      highlights: ['Islamic Cairo UNESCO Site', 'Khan el-Khalili Historic Bazaar', 'Saladin Citadel & Mohammed Ali Mosque', 'Al-Azhar Mosque', 'Coptic Quarter'],
+      coordinates: '30.0444°N, 31.2357°E',
       position: { top: '35%', left: '25%' }
     },
     {
       id: 'giza',
       name: 'Giza',
-      tagline: 'Home of the Great Pyramids',
+      tagline: 'Eternal guardians of ancient mysteries and architectural perfection',
       region: 'Central',
-      highlights: ['Great Pyramids', 'Great Sphinx', 'Solar Boat Museum'],
+      highlights: ['Great Pyramid of Khufu', 'Great Sphinx of Giza', 'Solar Boat Museum', 'Pyramid of Khafre', 'Grand Egyptian Museum'],
+      coordinates: '29.9792°N, 31.1342°E',
       position: { top: '40%', left: '20%' }
     },
     {
       id: 'luxor',
       name: 'Luxor',
-      tagline: 'The World\'s Greatest Open-Air Museum',
+      tagline: 'Ancient Thebes - where pharaohs built monuments for eternity',
       region: 'South',
-      highlights: ['Valley of the Kings', 'Karnak Temple', 'Luxor Temple'],
+      highlights: ['Valley of the Kings Tombs', 'Karnak Temple Complex', 'Luxor Temple at Night', 'Queen Hatshepsut Temple', 'Colossi of Memnon'],
+      coordinates: '25.6872°N, 32.6396°E',
       position: { top: '65%', left: '30%' }
     },
     {
       id: 'aswan',
       name: 'Aswan',
-      tagline: 'Gateway to Nubian Heritage',
+      tagline: 'Nubian jewel on the Nile with golden desert dunes and granite islands',
       region: 'South',
-      highlights: ['Philae Temple', 'High Dam', 'Nubian Villages'],
+      highlights: ['Philae Temple Complex', 'High Dam Engineering Marvel', 'Authentic Nubian Villages', 'Elephantine Island', 'Unfinished Obelisk'],
+      coordinates: '24.0889°N, 32.8998°E',
       position: { top: '75%', left: '35%' }
     },
     {
       id: 'siwa-oasis',
       name: 'Siwa Oasis',
-      tagline: 'Desert Sanctuary & Ancient Oracle',
+      tagline: 'Remote desert paradise where Alexander sought the Oracle\'s prophecy',
       region: 'West',
-      highlights: ['Temple of the Oracle', 'Cleopatra Springs', 'Shali Fortress'],
+      highlights: ['Temple of the Oracle of Amun', 'Cleopatra\'s Natural Springs', 'Shali Fortress Ruins', 'Salt Lakes & Hot Springs', 'Berber Culture Experience'],
+      coordinates: '29.2032°N, 25.5197°E',
       position: { top: '45%', left: '5%' }
     }
   ];
@@ -128,10 +134,9 @@ export default function InteractiveMapSection() {
                       {destination.tagline}
                     </p>
 
-                    {/* Coordinates Display (Prepared for Google Maps) */}
+                    {/* Coordinates Display */}
                     <div className="text-xs text-muted-foreground/70 mb-3 font-mono">
-                      {/* Placeholder for coordinates, as they are not in the new structure */}
-                      Lat, Lng
+                      {destination.coordinates}
                     </div>
 
                     {/* Attractions Preview */}
