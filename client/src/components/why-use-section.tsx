@@ -104,14 +104,24 @@ export default function WhyUseSection() {
                   
                   
                   {/* Title */}
-                  <div className="absolute bottom-6 left-6 right-6 transform transition-all duration-500 ease-out group-hover:translate-y-[-4px]">
-                    <div className="flex items-center justify-center mb-4">
-                      <div className="w-12 h-px bg-accent"></div>
+                  <div className={`absolute left-0 right-0 transform transition-all duration-500 ease-out ${
+                    hoveredCard === item.id 
+                      ? 'bottom-6 translate-y-0' 
+                      : 'bottom-1/2 translate-y-1/2'
+                  }`}>
+                    <div className="px-6">
+                      <div className="flex items-center justify-center mb-4">
+                        <div className="w-12 h-px bg-accent"></div>
+                      </div>
+                      
+                      <h3 className={`font-serif font-bold text-white leading-tight transition-all duration-300 text-center ${
+                        hoveredCard === item.id 
+                          ? 'text-2xl group-hover:text-accent/90' 
+                          : 'text-xl'
+                      }`}>
+                        {item.title}
+                      </h3>
                     </div>
-                    
-                    <h3 className="font-serif font-bold text-2xl text-white leading-tight transition-colors duration-300 group-hover:text-accent/90 text-center">
-                      {item.title}
-                    </h3>
                   </div>
 
                   {/* Side Accent Line */}
