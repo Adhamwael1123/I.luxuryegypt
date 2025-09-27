@@ -17,8 +17,8 @@ export default function HeroSection() {
           }}
           data-testid="hero-image"
         />
-        {/* Light gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30"></div>
+        {/* Subtle dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
       {/* Content */}
