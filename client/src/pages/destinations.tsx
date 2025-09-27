@@ -165,23 +165,23 @@ export default function Destinations() {
         </div>
       </section>
 
-      {/* Destinations Masonry Grid */}
+      {/* Destinations Grid */}
       <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="masonry-grid">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...filteredDestinations, tailormadeCard].map((destination) => (
               <div
                 key={destination.id}
-                className={`masonry-item ${destination.size} group cursor-pointer`}
+                className="group cursor-pointer"
                 data-testid={`destination-${destination.id}`}
               >
                 {destination.type === 'info' ? (
                   // Tailormade Journey Card
-                  <div className="card-content rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl">
-                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-4">
+                  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 h-full flex flex-col">
+                    <h3 className="text-2xl font-serif font-bold text-primary mb-4">
                       {destination.name}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed mb-6">
+                    <p className="text-muted-foreground leading-relaxed mb-6 flex-1">
                       {'description' in destination ? destination.description : ''}
                     </p>
                     <Button 
@@ -195,51 +195,57 @@ export default function Destinations() {
                     </Button>
                   </div>
                 ) : (
-                  // All Destination Cards - Fully Clickable with proper routing
-                  <Link href={`/destinations/${destination.id}`} className="block">
-                    <div className="card-content relative overflow-hidden rounded-xl shadow-lg transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:scale-[1.02] cursor-pointer">
-                      <img
-                        src={'image' in destination ? destination.image : ''}
-                        alt={destination.name}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                        loading="lazy"
-                      />
+                  // All Destination Cards - Click-only interaction
+                  <Link href={`/destinations/${destination.id}`} className="block h-full">
+                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden h-full flex flex-col cursor-pointer">
+                      <div className="aspect-[4/3] relative overflow-hidden">
+                        <img
+                          src={'image' in destination ? destination.image : ''}
+                          alt={destination.name}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                        {/* Gradient overlay for better text readability */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        
+                        {/* Destination name overlay */}
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <h3 className="text-xl font-serif font-bold text-white mb-1" data-testid={`destination-name-${destination.id}`}>
+                            {destination.name}
+                          </h3>
+                        </div>
+                      </div>
                       
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                      
-                      {/* Content overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                        <h3 className="text-2xl md:text-3xl font-serif font-bold mb-2" data-testid={`destination-name-${destination.id}`}>
-                          {destination.name}
-                        </h3>
-                        <p className="text-accent/90 font-medium mb-4 tracking-wide">
+                      {/* Card content */}
+                      <div className="p-6 flex-1 flex flex-col">
+                        <p className="text-accent font-medium mb-3 text-sm tracking-wide">
                           {'tagline' in destination ? destination.tagline : ''}
                         </p>
                         
-                        {/* Highlights and button - visible on hover for all destinations */}
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {('highlights' in destination ? destination.highlights : []).slice(0, 2).map((highlight: string, index: number) => (
-                              <span
-                                key={index}
-                                className="text-xs bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full"
-                              >
-                                {highlight}
-                              </span>
-                            ))}
+                        {/* Highlights */}
+                        <div className="space-y-2 mb-4 flex-1">
+                          {('highlights' in destination ? destination.highlights : []).slice(0, 3).map((highlight: string, index: number) => (
+                            <div key={index} className="flex items-center text-sm text-muted-foreground">
+                              <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2"></div>
+                              {highlight}
+                            </div>
+                          ))}
+                        </div>
+                        
+                        {/* Action button area */}
+                        <div className="pt-2 border-t border-gray-100">
+                          <div className="flex items-center justify-between">
+                            <span className="text-primary font-medium text-sm">
+                              Explore destination
+                            </span>
+                            <div className="w-5 h-5 text-primary">
+                              <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </div>
                           </div>
-                          <span
-                            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 opacity-90 hover:opacity-100 pointer-events-none"
-                            data-testid={`button-plan-visit-${destination.id}`}
-                          >
-                            Explore {destination.name}
-                          </span>
                         </div>
                       </div>
-
-                      {/* Accent border */}
-                      <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/30 rounded-xl transition-colors duration-300" />
                     </div>
                   </Link>
                 )}
