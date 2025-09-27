@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -61,7 +60,7 @@ export default function FamilyLuxury() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative pt-20 pb-20 bg-gradient-to-br from-background via-accent/5 to-primary/10 overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.egypttoursportal.com/images/2022/09/Discover-Ancient-Egypt-in-8-Days-Luxury-Holiday-Egypt-Tours-Portal.jpg')] bg-cover bg-center opacity-10"></div>
@@ -72,25 +71,25 @@ export default function FamilyLuxury() {
               Back to Experiences
             </Button>
           </Link>
-          
+
           <div className="text-center">
             <div className="inline-flex items-center gap-3 bg-accent/10 rounded-full px-6 py-3 mb-8">
               <Heart className="h-6 w-6 text-accent" />
               <span className="text-accent font-semibold">Family Luxury Adventures</span>
             </div>
-            
+
             <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary mb-8 leading-tight">
               Family
               <span className="block text-accent">Luxury</span>
             </h1>
-            
+
             <div className="w-32 h-px bg-accent mx-auto mb-8"></div>
-            
+
             <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-12">
-              Perfect adventures designed for families to explore Egypt together with engaging activities for all ages. 
+              Perfect adventures designed for families to explore Egypt together with engaging activities for all ages.
               Create lasting memories while discovering ancient wonders through interactive experiences that captivate both children and adults.
             </p>
-            
+
             <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="text-center p-6 bg-card/50 backdrop-blur-sm rounded-xl border border-accent/20">
                 <Baby className="h-8 w-8 text-accent mx-auto mb-4" />
@@ -128,27 +127,27 @@ export default function FamilyLuxury() {
             {familyTours.map((tour) => (
               <Card
                 key={tour.id}
-                className="group overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02]"
+                className="group overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] flex flex-col h-full min-h-[600px]"
               >
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-64 overflow-hidden">
                   <img
                     src={tour.image}
                     alt={tour.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  
+
                   {/* Age Range Badge */}
                   <div className="absolute top-4 left-4 bg-accent/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-semibold">
                     Ages {tour.ageRange}
                   </div>
-                  
+
                   {/* Rating */}
                   <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
                     <Star className="h-4 w-4 text-accent fill-accent" />
                     <span className="text-sm font-medium">{tour.rating}</span>
                   </div>
-                  
+
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="flex items-center gap-2 text-accent font-medium text-sm mb-2">
                       <MapPin className="h-4 w-4" />
@@ -158,7 +157,7 @@ export default function FamilyLuxury() {
                   </div>
                 </div>
 
-                <CardContent className="p-6">
+                <CardContent className="p-6 flex flex-col justify-between flex-grow">
                   <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-1">
@@ -189,7 +188,7 @@ export default function FamilyLuxury() {
                   </div>
 
                   {/* Price and Actions */}
-                  <div className="flex items-center justify-between border-t border-border pt-4">
+                  <div className="flex items-center justify-between border-t border-border pt-4 mt-auto">
                     <div>
                       <p className="text-2xl font-serif font-bold text-primary">{tour.price}</p>
                       <p className="text-xs text-muted-foreground">per person</p>
@@ -253,7 +252,7 @@ export default function FamilyLuxury() {
             </h2>
             <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="text-center p-8 bg-background rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -264,7 +263,7 @@ export default function FamilyLuxury() {
                 Every tour is carefully crafted with children's attention spans, interests, and safety in mind.
               </p>
             </div>
-            
+
             <div className="text-center p-8 bg-background rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="h-8 w-8 text-accent" />
@@ -274,7 +273,7 @@ export default function FamilyLuxury() {
                 Specialized guides trained in working with families and making history come alive for young minds.
               </p>
             </div>
-            
+
             <div className="text-center p-8 bg-background rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Heart className="h-8 w-8 text-accent" />
@@ -296,7 +295,7 @@ export default function FamilyLuxury() {
           </h2>
           <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
           <p className="text-xl mb-10 leading-relaxed opacity-90">
-            Let our family travel specialists help you create the perfect Egyptian adventure for your loved ones. 
+            Let our family travel specialists help you create the perfect Egyptian adventure for your loved ones.
             Every detail is carefully planned to ensure smiles, learning, and unforgettable moments.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
