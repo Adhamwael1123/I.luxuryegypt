@@ -345,7 +345,7 @@ export default function Experiences() {
               {categories.map((category, index) => (
                 <div
                   key={category.key}
-                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg hover:border-accent/30 transition-all duration-300"
+                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg hover:border-accent/30 transition-all duration-300 flex flex-col h-full"
                   onClick={() => handleCategoryClick(category.key)}
                   data-testid={`category-${category.key}`}
                 >
@@ -364,7 +364,7 @@ export default function Experiences() {
                   </div>
                   
                   {/* Content Section */}
-                  <div className="p-6 flex flex-col h-full">
+                  <div className="p-6 flex flex-col flex-1">
                     <h3 className="text-xl font-serif font-bold text-primary mb-2 group-hover:text-accent transition-colors">
                       {category.label}
                     </h3>
