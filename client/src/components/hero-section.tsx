@@ -38,7 +38,7 @@ export default function HeroSection() {
 
             {/* Single CTA Button */}
             <div className="pt-4">
-              <Link href="/contact">
+              <Link href="/experiences">
                 <Button 
                   size="lg" 
                   className="text-lg px-8 py-4 h-auto font-semibold transform transition-all duration-300 hover:scale-105 bg-accent hover:bg-accent/90 text-primary border-accent group"
