@@ -131,11 +131,11 @@ export default function WhyUseSection() {
                 </div>
 
                 {/* Expanding Content Section */}
-                <div className={`bg-gradient-to-br from-card via-card/95 to-accent/5 backdrop-blur-lg transition-all duration-700 ease-in-out overflow-hidden border-l border-accent/20 ${
+                <div className={`bg-gradient-to-br from-card via-card/95 to-accent/5 backdrop-blur-lg transition-all duration-500 ease-in-out overflow-hidden border-l border-accent/20 ${
                   hoveredCard === item.id ? 'w-1/2 opacity-100' : 'w-0 opacity-0'
                 }`}>
-                  <div className={`h-full flex flex-col justify-center px-6 py-8 transform transition-all duration-500 ease-in-out ${
-                    hoveredCard === item.id ? 'translate-x-0' : 'translate-x-4'
+                  <div className={`h-full flex flex-col justify-center px-6 py-8 transform transition-all duration-300 ease-in-out ${
+                    hoveredCard === item.id ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
                   }`}>
                     <div className="text-center space-y-5">
                       <h4 className="font-serif font-bold text-2xl text-primary leading-tight">
