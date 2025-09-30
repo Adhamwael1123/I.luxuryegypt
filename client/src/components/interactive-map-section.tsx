@@ -79,9 +79,7 @@ export default function InteractiveMapSection() {
         </div>
 
         {/* Side-to-Side Interactive Map */}
-        <div className="relative">
-          {/* Geographic Flow Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-accent/30 via-primary/50 to-accent/30 transform -translate-y-1/2 rounded-full"></div>
+        <div className="relative">full"></div>
 
           {/* Destinations Grid - Side to Side Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 relative">
