@@ -195,23 +195,31 @@ export default function HotelDetail() {
         {/* Hotel Overview */}
         <section className="py-20 bg-background">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Header */}
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-serif font-bold text-primary mb-6">About {hotel.name}</h2>
+              <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
+            </div>
+            
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              <div className="lg:col-span-2">
-                <h2 className="text-4xl font-serif font-bold text-primary mb-8">About {hotel.name}</h2>
-                <div className="prose max-w-none">
-                  <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+              <div className="lg:col-span-2 space-y-12">
+                {/* Description */}
+                <div>
+                  <p className="text-lg text-muted-foreground leading-relaxed text-center lg:text-left max-w-4xl">
                     {hotel.fullDescription}
                   </p>
                 </div>
                 
                 {/* Highlights */}
-                <div className="mt-12">
-                  <h3 className="text-2xl font-serif font-bold text-primary mb-6">Hotel Highlights</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-2xl font-serif font-bold text-primary mb-8 text-center lg:text-left">Hotel Highlights</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {sampleHighlights.map((highlight, index) => (
-                      <div key={index} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-muted-foreground">{highlight}</span>
+                      <div key={index} className="flex items-start space-x-4 group">
+                        <div className="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-accent/20 transition-colors">
+                          <Sparkles className="w-5 h-5 text-accent" />
+                        </div>
+                        <span className="text-muted-foreground leading-relaxed pt-2">{highlight}</span>
                       </div>
                     ))}
                   </div>
@@ -221,15 +229,15 @@ export default function HotelDetail() {
               {/* Sidebar */}
               <div className="space-y-6">
                 {/* Amenities */}
-                <Card className="shadow-lg">
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold text-primary mb-4">Hotel Amenities</h3>
+                <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <CardContent className="p-8">
+                    <h3 className="text-2xl font-serif font-bold text-primary mb-6">Amenities</h3>
                     <div className="flex flex-wrap gap-2">
                       {hotel.amenities.map((amenity: string, index: number) => (
                         <Badge
                           key={index}
                           variant="secondary"
-                          className="bg-accent/10 text-accent hover:bg-accent/20 border-0"
+                          className="bg-accent/10 text-accent hover:bg-accent/20 border-0 px-4 py-2 text-sm"
                         >
                           {amenity}
                         </Badge>
