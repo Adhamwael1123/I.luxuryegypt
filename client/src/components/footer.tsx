@@ -111,6 +111,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center">
+          <p className="text-center">&copy; 2025 I.LuxuryEgypt. All rights reserved.</p>
         </div>
       </div>
     </footer>
