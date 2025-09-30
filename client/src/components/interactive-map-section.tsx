@@ -79,8 +79,7 @@ export default function InteractiveMapSection() {
         </div>
 
         {/* Side-to-Side Interactive Map */}
-        <div className="relative">full"></div>
-
+        <div className="relative">
           {/* Destinations Grid - Side to Side Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 relative">
             {destinations.map((destination, index) => (
