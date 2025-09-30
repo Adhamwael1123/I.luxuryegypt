@@ -7,9 +7,8 @@ import ScrollToTopButton from "../components/scroll-to-top-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, MapPin, Wifi, Car, Utensils, Waves, Sparkles, Shield, Users, Bed, Bath, Coffee, Phone, Mail, Calendar } from "lucide-react";
+import { Star, MapPin, Wifi, Car, Utensils, Waves, Sparkles, Shield, Users, Bed, Bath, Coffee } from "lucide-react";
 import { Link } from "wouter";
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Hotel } from "@shared/schema";
 
@@ -37,12 +36,10 @@ interface RoomType {
   occupancy: number;
   amenities: string[];
   images: string[];
-  priceRange: string;
 }
 
 export default function HotelDetail() {
   const [match, params] = useRoute("/hotel/:id");
-  const [selectedRoomType, setSelectedRoomType] = useState<string | null>(null);
   
   if (!match || !params?.id) {
     return <div>Hotel not found</div>;
@@ -106,8 +103,7 @@ export default function HotelDetail() {
       size: "42 sqm",
       occupancy: 2,
       amenities: ["City View", "Egyptian Cotton Linens", "Marble Bathroom", "24/7 Room Service"],
-      images: [suiteNileImage, pyramidLobbyImage],
-      priceRange: "$400 - $600"
+      images: [suiteNileImage, pyramidLobbyImage]
     },
     {
       id: "suite",
@@ -116,8 +112,7 @@ export default function HotelDetail() {
       size: "85 sqm",
       occupancy: 4,
       amenities: ["Panoramic View", "Separate Living Area", "Premium Bath Products", "Butler Service"],
-      images: [luxuryHallImage, poolRiverImage],
-      priceRange: "$800 - $1,200"
+      images: [luxuryHallImage, poolRiverImage]
     },
     {
       id: "presidential-suite",
@@ -126,12 +121,11 @@ export default function HotelDetail() {
       size: "150 sqm",
       occupancy: 6,
       amenities: ["Private Terrace", "Dedicated Butler", "Premium Furnishings", "Private Dining"],
-      images: [columnHallImage, poolsideDrinkImage],
-      priceRange: "$2,000 - $3,500"
+      images: [columnHallImage, poolsideDrinkImage]
     }
   ];
 
-  // Sample highlights and contact info for display
+  // Sample highlights for display
   const sampleHighlights = [
     "Luxury accommodations in Egypt",
     "World-class amenities and service",
@@ -142,12 +136,6 @@ export default function HotelDetail() {
     "Business center",
     "Premium guest experience"
   ];
-
-  const sampleContactInfo = {
-    phone: "+20 2 1234 5678",
-    email: "reservations@hotel.com",
-    address: `${hotel.location}, ${hotel.region}, Egypt`
-  };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -189,22 +177,15 @@ export default function HotelDetail() {
           <p className="text-xl md:text-2xl mb-8 leading-relaxed max-w-3xl mx-auto">
             {hotel.description}
           </p>
-          <div className="flex justify-center space-x-4">
-            <Link href="/contact">
-              <Button
-                size="lg"
-                className="px-8 py-4 text-lg"
-              >
-                Book Your Stay
-              </Button>
-            </Link>
+          <div className="flex justify-center">
             <Button
               size="lg"
               variant="outline"
               className="px-8 py-4 text-lg bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
               onClick={() => document.getElementById('rooms')?.scrollIntoView({ behavior: 'smooth' })}
+              data-testid="button-view-rooms"
             >
-              View Rooms
+              View Rooms & Suites
             </Button>
           </div>
         </div>
@@ -239,21 +220,12 @@ export default function HotelDetail() {
               
               {/* Sidebar */}
               <div className="space-y-6">
-                {/* Price Tier */}
-                <Card className="shadow-lg">
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold text-primary mb-4">Price Range</h3>
-                    <div className="text-3xl font-bold text-accent mb-2">{hotel.priceTier}</div>
-                    <p className="text-sm text-muted-foreground">Per night, starting from</p>
-                  </CardContent>
-                </Card>
-
                 {/* Amenities */}
                 <Card className="shadow-lg">
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold text-primary mb-4">Hotel Amenities</h3>
                     <div className="flex flex-wrap gap-2">
-                      {hotel.amenities.map((amenity, index) => (
+                      {hotel.amenities.map((amenity: string, index: number) => (
                         <Badge
                           key={index}
                           variant="secondary"
@@ -262,27 +234,6 @@ export default function HotelDetail() {
                           {amenity}
                         </Badge>
                       ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Contact Information */}
-                <Card className="shadow-lg">
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold text-primary mb-4">Contact Information</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <Phone className="w-4 h-4 text-accent" />
-                        <span className="text-sm text-muted-foreground">{sampleContactInfo.phone}</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <Mail className="w-4 h-4 text-accent" />
-                        <span className="text-sm text-muted-foreground">{sampleContactInfo.email}</span>
-                      </div>
-                      <div className="flex items-start space-x-3">
-                        <MapPin className="w-4 h-4 text-accent mt-1" />
-                        <span className="text-sm text-muted-foreground">{sampleContactInfo.address}</span>
-                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -388,20 +339,6 @@ export default function HotelDetail() {
                             ))}
                           </div>
                         </div>
-
-                        {/* Price and Booking */}
-                        <div className="flex items-center justify-between pt-4">
-                          <div>
-                            <div className="text-2xl font-bold text-accent">{roomType.priceRange}</div>
-                            <div className="text-sm text-muted-foreground">per night</div>
-                          </div>
-                          <Link href="/contact">
-                            <Button className="px-6">
-                              <Calendar className="w-4 h-4 mr-2" />
-                              Book Now
-                            </Button>
-                          </Link>
-                        </div>
                       </div>
                     </CardContent>
                   </div>
@@ -415,30 +352,32 @@ export default function HotelDetail() {
         <section className="py-20 bg-primary">
           <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary-foreground mb-6">
-              Ready to Experience {hotel.name}?
+              Discover More Luxury Accommodations
             </h2>
             <div className="w-24 h-px bg-accent mx-auto mb-8"></div>
             <p className="text-xl text-primary-foreground/90 mb-10 leading-relaxed max-w-2xl mx-auto">
-              Let our luxury travel specialists create the perfect stay for your Egyptian journey. 
-              From room selection to exclusive experiences, we handle every detail.
+              Explore our curated selection of Egypt's finest hotels and resorts. 
+              Each property offers unique experiences designed for discerning travelers.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="px-8 py-4 text-lg bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
-                >
-                  Contact Our Specialists
-                </Button>
-              </Link>
               <Link href="/stay">
                 <Button
                   size="lg"
                   variant="outline"
                   className="px-8 py-4 text-lg bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+                  data-testid="button-view-all-hotels"
                 >
                   View All Hotels
+                </Button>
+              </Link>
+              <Link href="/destinations">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="px-8 py-4 text-lg bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+                  data-testid="button-explore-destinations"
+                >
+                  Explore Destinations
                 </Button>
               </Link>
             </div>
