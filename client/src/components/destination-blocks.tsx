@@ -57,7 +57,7 @@ export default function LuxuryPackagesSection() {
           {packages.map((packageItem) => (
             <Link key={packageItem.id} href={`/tour/${packageItem.id}`}>
               <div 
-                className="group cursor-pointer relative h-96 overflow-hidden rounded-lg"
+                className="group cursor-pointer relative h-[500px] overflow-hidden rounded-lg"
                 data-testid={`card-package-${packageItem.id}`}
               >
                 {/* Full Card Background Image */}
@@ -68,25 +68,21 @@ export default function LuxuryPackagesSection() {
                   }}
                 />
                 
-                {/* Default Overlay - Dark gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 transition-opacity duration-500" />
+                {/* Overlay - Gets darker on hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 group-hover:bg-black/70 transition-all duration-500" />
                 
-                {/* Hover Overlay - Darker with description */}
-                <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-8">
-                  <p className="text-white text-center text-lg leading-relaxed" data-testid={`text-description-${packageItem.id}`}>
-                    {packageItem.description}
-                  </p>
-                </div>
-                
-                {/* Package Title - Always Visible */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 transition-opacity duration-500 group-hover:opacity-0">
+                {/* Package Title - Slides up on hover */}
+                <div className="absolute bottom-6 left-6 right-6 transform transition-all duration-500 group-hover:-translate-y-32">
                   <h3 className="text-white text-2xl md:text-3xl font-serif font-light" data-testid={`text-title-${packageItem.id}`}>
                     {packageItem.title}
                   </h3>
                 </div>
                 
-                {/* Read More Text on Hover */}
-                <div className="absolute bottom-6 left-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                {/* Description - Slides up from bottom on hover */}
+                <div className="absolute bottom-0 left-6 right-6 transform translate-y-full group-hover:translate-y-0 transition-all duration-500 pb-6">
+                  <p className="text-white text-center text-base leading-relaxed mb-4" data-testid={`text-description-${packageItem.id}`}>
+                    {packageItem.description}
+                  </p>
                   <div className="text-white text-sm tracking-wider uppercase border-t border-white/50 pt-4">
                     Read More →
                   </div>
