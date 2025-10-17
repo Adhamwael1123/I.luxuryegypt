@@ -71,6 +71,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Public tours route (no authentication required)
+  app.get("/api/public/tours", async (req, res) => {
+    try {
+      const { category } = req.query;
+      const allTours = await storage.getTours();
+      
+      // Filter by category if provided
+      const tours = category 
+        ? allTours.filter(tour => tour.category === category)
+        : allTours;
+      
+      res.json({ success: true, tours });
+    } catch (error) {
+      console.error('Error fetching tours:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Error fetching tours' 
+      });
+    }
+  });
+
   // Authentication Routes
   
   // Login

@@ -1,61 +1,27 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { Clock, Users, MapPin, Star, Calendar, ArrowLeft, Heart, Baby } from "lucide-react";
 import { Link } from "wouter";
-
-const familyTours = [
-  {
-    id: 'pyramid-adventure',
-    name: 'Pyramid Adventure & Museum Discovery',
-    location: 'Cairo & Giza',
-    duration: '2 Days',
-    groupSize: '4-16 People',
-    price: 'From $450',
-    rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Great Pyramids', 'Sphinx Exploration', 'Interactive Museum', 'Family Workshops'],
-    description: 'Interactive pyramid exploration and hands-on museum experiences designed specifically for families.',
-    itinerary: 'Private tours of the Great Pyramids, Sphinx, and world-renowned Egyptian Museum with child-friendly activities and educational games.',
-    ageRange: '6+ years',
-    familyFeatures: ['Kid-friendly guides', 'Interactive activities', 'Educational games', 'Family photo sessions']
-  },
-  {
-    id: 'pharaoh-valley-quest',
-    name: 'Pharaoh\'s Valley Family Quest',
-    location: 'Luxor',
-    duration: '3 Days',
-    groupSize: '4-12 People',
-    price: 'From $680',
-    rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Valley of Kings', 'Family Workshops', 'Educational Tours', 'Kid-Friendly Activities'],
-    description: 'Educational tomb visits and family-friendly archaeological workshops in the legendary Valley of Kings.',
-    itinerary: 'Interactive tomb exploration with educational activities, family workshops on ancient Egyptian life, and visits to colorful temples.',
-    ageRange: '8+ years',
-    familyFeatures: ['Archaeological workshops', 'Treasure hunt games', 'Ancient crafts', 'Storytelling sessions']
-  },
-  {
-    id: 'nile-family-cruise',
-    name: 'Nile Family Cruise',
-    location: 'Aswan to Luxor',
-    duration: '4 Days',
-    groupSize: '6-20 People',
-    price: 'From $850',
-    rating: 4.9,
-    image: 'https://www.thetimes.com/imageserver/image/%2Fb4c01f06-251f-4b18-b537-a8909772b48b.jpg?crop=1600%2C900%2C0%2C0&resize=1200',
-    highlights: ['Nile Cruise', 'Nubian Village', 'Cultural Activities', 'Family Entertainment'],
-    description: 'Family-friendly cruise with cultural activities and Nubian village visits along the magical Nile River.',
-    itinerary: 'Comfortable family cruise with onboard activities, visits to Nubian villages, temple explorations, and traditional entertainment.',
-    ageRange: '4+ years',
-    familyFeatures: ['Kids club', 'Swimming pool', 'Family suites', 'Cultural performances']
-  }
-];
+import type { Tour } from "@shared/schema";
 
 export default function FamilyLuxury() {
   const [selectedTour, setSelectedTour] = useState<string | null>(null);
+  
+  const { data: toursData, isLoading, isError, error } = useQuery<{ success: boolean; tours: Tour[] }>({
+    queryKey: ['/api/public/tours', 'family'],
+    queryFn: async () => {
+      const res = await fetch('/api/public/tours?category=family');
+      if (!res.ok) throw new Error('Failed to fetch tours');
+      return res.json();
+    }
+  });
+  
+  const familyTours = toursData?.tours || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -123,37 +89,66 @@ export default function FamilyLuxury() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            {familyTours.map((tour) => (
+          {isLoading ? (
+            <div className="grid lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((i) => (
+                <Card key={i} className="overflow-hidden">
+                  <Skeleton className="h-64 w-full" />
+                  <CardContent className="p-6 space-y-4">
+                    <Skeleton className="h-6 w-3/4" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : isError ? (
+            <div className="text-center py-12 bg-destructive/10 rounded-xl border border-destructive/20">
+              <p className="text-lg font-semibold text-destructive mb-2">Unable to Load Tours</p>
+              <p className="text-muted-foreground mb-4">
+                {error instanceof Error ? error.message : 'An error occurred while fetching tours.'}
+              </p>
+              <Button 
+                variant="outline" 
+                onClick={() => window.location.reload()}
+                data-testid="button-reload"
+              >
+                Try Again
+              </Button>
+            </div>
+          ) : familyTours.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-lg text-muted-foreground">No family tours available at the moment. Please check back soon!</p>
+            </div>
+          ) : (
+            <div className="grid lg:grid-cols-3 gap-8">
+              {familyTours.map((tour) => (
               <Card
                 key={tour.id}
                 className="group overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] flex flex-col h-full min-h-[600px]"
               >
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={tour.image}
-                    alt={tour.name}
+                    src={tour.heroImage}
+                    alt={tour.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
-                  {/* Age Range Badge */}
+                  {/* Category Badge */}
                   <div className="absolute top-4 left-4 bg-accent/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    Ages {tour.ageRange}
+                    {tour.category}
                   </div>
 
-                  {/* Rating */}
+                  {/* Duration Badge */}
                   <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
-                    <Star className="h-4 w-4 text-accent fill-accent" />
-                    <span className="text-sm font-medium">{tour.rating}</span>
+                    <Clock className="h-4 w-4 text-accent" />
+                    <span className="text-sm font-medium">{tour.duration}</span>
                   </div>
 
                   <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center gap-2 text-accent font-medium text-sm mb-2">
-                      <MapPin className="h-4 w-4" />
-                      <span>{tour.location}</span>
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-2">{tour.name}</h3>
+                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-2">{tour.title}</h3>
                   </div>
                 </div>
 
@@ -175,14 +170,14 @@ export default function FamilyLuxury() {
                     {tour.description}
                   </p>
 
-                  {/* Highlights */}
+                  {/* Includes/Features */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {tour.highlights.slice(0, 3).map((highlight: string, index: number) => (
+                    {(tour.includes || []).slice(0, 3).map((item, index) => (
                       <span
                         key={index}
                         className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full font-medium"
                       >
-                        {highlight}
+                        {item}
                       </span>
                     ))}
                   </div>
@@ -190,7 +185,7 @@ export default function FamilyLuxury() {
                   {/* Price and Actions */}
                   <div className="flex items-center justify-between border-t border-border pt-4 mt-auto">
                     <div>
-                      <p className="text-2xl font-serif font-bold text-primary">{tour.price}</p>
+                      <p className="text-2xl font-serif font-bold text-primary">${tour.price} {tour.currency}</p>
                       <p className="text-xs text-muted-foreground">per person</p>
                     </div>
                     <div className="flex gap-2">
@@ -218,19 +213,37 @@ export default function FamilyLuxury() {
                         Complete Itinerary
                       </h4>
                       <div className="space-y-4">
-                        <div className="bg-background/50 p-4 rounded-lg">
-                          <p className="text-muted-foreground leading-relaxed">
-                            {tour.itinerary}
-                          </p>
-                        </div>
-                        <div className="grid md:grid-cols-2 gap-4 text-sm">
+                        {Array.isArray(tour.itinerary) ? (
+                          <div className="space-y-4">
+                            {(tour.itinerary as Array<{ day: number; title: string; activities: string[] }>).map((day) => (
+                              <div key={day.day} className="bg-background/50 p-4 rounded-lg">
+                                <div className="font-semibold text-primary mb-2">Day {day.day}: {day.title}</div>
+                                <ul className="space-y-1 text-sm text-muted-foreground">
+                                  {day.activities.map((activity, idx) => (
+                                    <li key={idx} className="flex items-start gap-2">
+                                      <span className="text-accent mt-1">•</span>
+                                      <span>{activity}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="bg-background/50 p-4 rounded-lg">
+                            <p className="text-muted-foreground leading-relaxed">
+                              {String(tour.itinerary)}
+                            </p>
+                          </div>
+                        )}
+                        <div className="grid md:grid-cols-2 gap-4 text-sm pt-4 border-t border-border">
                           <div className="space-y-2">
                             <div className="font-semibold text-primary">Duration</div>
                             <div className="text-muted-foreground">{tour.duration}</div>
                           </div>
                           <div className="space-y-2">
                             <div className="font-semibold text-primary">Group Size</div>
-                            <div className="text-muted-foreground">{tour.groupSize}</div>
+                            <div className="text-muted-foreground">{tour.groupSize || 'Flexible'}</div>
                           </div>
                         </div>
                       </div>
@@ -240,6 +253,7 @@ export default function FamilyLuxury() {
               </Card>
             ))}
           </div>
+          )}
         </div>
       </section>
 
