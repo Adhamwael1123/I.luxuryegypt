@@ -24,7 +24,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-background" data-testid="hero-section">
-      {/* Dynamic Background Images with Subtle Blur */}
+      {/* Dynamic Background Images - Crystal Clear */}
       <div className="absolute inset-0">
         {backgroundImages.map((image, index) => (
           <div
@@ -36,13 +36,12 @@ export default function HeroSection() {
               backgroundImage: `url(${image})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              filter: "blur(1.5px)",
             }}
             data-testid={index === currentImageIndex ? "hero-image" : undefined}
           />
         ))}
-        {/* Light overlay for elegance */}
-        <div className="absolute inset-0 bg-black/25"></div>
+        {/* Light overlay for text contrast */}
+        <div className="absolute inset-0 bg-black/30"></div>
       </div>
 
       {/* Content */}
