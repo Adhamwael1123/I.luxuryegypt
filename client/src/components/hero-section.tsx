@@ -71,8 +71,7 @@ export default function HeroSection() {
                 <Link href="/experiences">
                   <Button 
                     size="lg" 
-                    variant="outline"
-                    className="text-sm px-8 py-3 h-auto font-normal tracking-[0.15em] uppercase border-2 border-white text-white bg-transparent hover:bg-white hover:text-black transition-all duration-300"
+                    className="text-sm px-8 py-3 h-auto font-normal tracking-[0.15em] uppercase border-2 border-white text-white bg-white/10 hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
                     data-testid="button-explore-vacations"
                   >
                     Explore Luxury Vacations
