@@ -92,6 +92,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get single tour by slug (public route)
+  app.get("/api/public/tours/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const tour = await storage.getTourBySlug(slug);
+      
+      if (!tour) {
+        return res.status(404).json({ 
+          success: false, 
+          message: 'Tour not found' 
+        });
+      }
+      
+      res.json({ success: true, tour });
+    } catch (error) {
+      console.error('Error fetching tour:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Error fetching tour' 
+      });
+    }
+  });
+
   // Authentication Routes
   
   // Login
@@ -392,6 +415,89 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error seeding hotels:', error);
       res.status(500).json({ message: 'Error seeding hotels' });
+    }
+  });
+
+  // Seed tours (DEVELOPMENT ONLY)
+  app.post("/api/tours/seed", async (req, res) => {
+    if (process.env.NODE_ENV === "production") {
+      return res.status(403).json({
+        success: false,
+        message: "Tour seeding is only allowed in development mode"
+      });
+    }
+    
+    try {
+      const existingTours = await storage.getTours();
+      if (existingTours.length > 0) {
+        return res.json({
+          success: true,
+          message: "Tours already exist in database",
+          count: existingTours.length
+        });
+      }
+      
+      let adminUser = await storage.getUserByUsername("admin");
+      if (!adminUser) {
+        const hashedPassword = await hashPassword("admin123");
+        adminUser = await storage.createUser({
+          username: "admin",
+          email: "admin@luxortravel.com",
+          password: hashedPassword,
+          role: "admin"
+        });
+      }
+      
+      const toursToSeed = [
+        {
+          title: "The Ultimate Egypt Tour",
+          slug: "ultimate-egypt-tour",
+          description: "Experience the ultimate family adventure across Egypt's most iconic destinations. This comprehensive 10-day luxury journey takes your family from the Great Pyramids of Giza to the magnificent temples of Luxor and Aswan, with a luxurious Nile cruise, hot air balloon rides, and countless unforgettable experiences.",
+          shortDescription: "The ultimate 10-day family adventure covering Egypt's greatest wonders from Cairo to Aswan.",
+          heroImage: "/api/assets/pyramid-from-lobby_1757459228637.jpeg",
+          gallery: ["/api/assets/pyramid-from-lobby_1757459228637.jpeg", "/api/assets/the-pyramid-from-mena-house_1757459228638.jpeg", "/api/assets/luxor_1757531163688.jpg", "/api/assets/suite-nile_1757457083796.jpg"],
+          duration: "10 Days / 9 Nights",
+          groupSize: "4-16 people",
+          difficulty: "Easy",
+          price: 3850,
+          currency: "USD",
+          includes: ["9 nights luxury accommodation", "All meals", "Private Egyptologist guide", "Domestic flights", "Hot air balloon ride", "3-night Nile cruise", "All entrance fees", "Private transportation", "Camel ride", "Traditional felucca sailing", "Sound and Light show", "Airport transfers"],
+          excludes: ["International flights", "Travel insurance", "Pyramid interior entry", "Personal expenses", "Tips and gratuities", "Visa fees"],
+          itinerary: [
+            { day: 1, title: "Arrival in Cairo", activities: ["Airport meet and greet", "Hotel check-in", "Welcome dinner"] },
+            { day: 2, title: "Pyramids & Sphinx", activities: ["Visit Great Pyramid", "See the Sphinx", "Camel ride", "Solar Boat Museum"] },
+            { day: 3, title: "Egyptian Museum & Islamic Cairo", activities: ["Egyptian Museum tour", "Tutankhamun treasures", "Khan el-Khalili bazaar", "Mohamed Ali Mosque"] },
+            { day: 4, title: "Flight to Aswan & Nile Cruise", activities: ["Flight to Aswan", "Board Nile cruise", "Visit Philae Temple", "Aswan High Dam"] },
+            { day: 5, title: "Abu Simbel & Sailing", activities: ["Optional Abu Simbel excursion", "Sailing the Nile", "Cooking demonstration", "Captain's dinner"] },
+            { day: 6, title: "Kom Ombo & Edfu", activities: ["Kom Ombo Temple", "Temple of Horus at Edfu", "Horse carriage ride", "Galabeya party"] },
+            { day: 7, title: "Valley of the Kings", activities: ["Optional hot air balloon", "Valley of the Kings", "Hatshepsut Temple", "Colossi of Memnon"] },
+            { day: 8, title: "Karnak & Luxor Temples", activities: ["Karnak Temple complex", "Luxor Temple", "Sound and Light Show"] },
+            { day: 9, title: "Free Day & Activities", activities: ["Optional temple visits", "Hieroglyphics workshop", "Pool relaxation", "Farewell dinner"] },
+            { day: 10, title: "Departure", activities: ["Final breakfast", "Airport transfer", "Departure"] }
+          ],
+          destinations: ["Cairo", "Giza", "Aswan", "Kom Ombo", "Edfu", "Luxor"],
+          category: "Family Luxury",
+          featured: true,
+          published: true,
+          createdBy: adminUser.id
+        }
+      ];
+      
+      const createdTours = [];
+      for (const tourData of toursToSeed) {
+        const tour = await storage.createTour(tourData);
+        createdTours.push(tour);
+      }
+      
+      res.json({
+        success: true,
+        message: "Tours seeded successfully",
+        count: createdTours.length,
+        tours: createdTours
+      });
+    } catch (error) {
+      console.error('Error seeding tours:', error);
+      res.status(500).json({ message: 'Error seeding tours' });
     }
   });
   

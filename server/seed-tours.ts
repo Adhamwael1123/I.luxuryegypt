@@ -3,6 +3,204 @@ import { tours } from "@shared/schema";
 
 const realExperiences = [
   {
+    title: "The Ultimate Egypt Tour",
+    slug: "ultimate-egypt-tour",
+    description: "Experience the ultimate family adventure across Egypt's most iconic destinations. This comprehensive 10-day luxury journey takes your family from the Great Pyramids of Giza to the magnificent temples of Luxor and Aswan, with a luxurious Nile cruise, hot air balloon rides, and countless unforgettable experiences. Expertly designed for families, this tour combines world-class Egyptology with engaging activities that captivate travelers of all ages. Create memories that will last a lifetime as you explore ancient wonders, sail the legendary Nile, and immerse yourselves in Egypt's rich cultural heritage.",
+    shortDescription: "The ultimate 10-day family adventure covering Egypt's greatest wonders from Cairo to Aswan.",
+    heroImage: "/api/assets/pyramid-from-lobby_1757459228637.jpeg",
+    gallery: [
+      "/api/assets/pyramid-from-lobby_1757459228637.jpeg",
+      "/api/assets/the-pyramid-from-mena-house_1757459228638.jpeg",
+      "/api/assets/luxor_1757531163688.jpg",
+      "/api/assets/suite-nile_1757457083796.jpg"
+    ],
+    duration: "10 Days / 9 Nights",
+    groupSize: "4-16 people",
+    difficulty: "Easy",
+    price: 3850,
+    currency: "USD",
+    includes: [
+      "9 nights luxury accommodation (5-star hotels & Nile cruise)",
+      "All meals (breakfast, lunch, dinner)",
+      "Private Egyptologist guide throughout",
+      "Domestic flights Cairo-Aswan and Luxor-Cairo",
+      "Hot air balloon ride over Luxor",
+      "3-night luxury Nile cruise from Aswan to Luxor",
+      "All entrance fees and permits",
+      "Private air-conditioned transportation",
+      "Camel ride at the Pyramids",
+      "Traditional felucca sailing",
+      "Sound and Light show",
+      "Airport transfers"
+    ],
+    excludes: [
+      "International flights",
+      "Travel insurance",
+      "Pyramid interior entry (optional add-on)",
+      "Personal expenses",
+      "Tips and gratuities",
+      "Visa fees"
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Cairo - Welcome to Egypt",
+        activities: [
+          "VIP meet and greet at Cairo International Airport",
+          "Private transfer to luxury 5-star hotel with pyramid views",
+          "Check-in and welcome refreshments",
+          "Evening welcome dinner with tour briefing",
+          "Meet your expert Egyptologist guide",
+          "Overnight in Cairo"
+        ]
+      },
+      {
+        day: 2,
+        title: "Pyramids of Giza & Sphinx Adventure",
+        activities: [
+          "Breakfast at hotel with pyramid views",
+          "Visit the Great Pyramid of Khufu (exterior)",
+          "Explore Pyramids of Khafre and Menkaure",
+          "Stand before the enigmatic Great Sphinx",
+          "Family camel ride around Giza Plateau",
+          "Visit Solar Boat Museum",
+          "Lunch at panoramic pyramid-view restaurant",
+          "Photo opportunities with camels and pyramids",
+          "Return to hotel for relaxation",
+          "Optional: Sound & Light show at pyramids"
+        ]
+      },
+      {
+        day: 3,
+        title: "Egyptian Museum & Islamic Cairo Discovery",
+        activities: [
+          "Guided family tour of Egyptian Museum",
+          "See Tutankhamun's treasures and golden mask",
+          "Visit the Royal Mummy Room",
+          "Interactive storytelling for children",
+          "Lunch at traditional Egyptian restaurant",
+          "Explore vibrant Khan el-Khalili bazaar",
+          "Visit Mohamed Ali Mosque at the Citadel",
+          "Shopping for souvenirs and Egyptian crafts",
+          "Dinner at hotel"
+        ]
+      },
+      {
+        day: 4,
+        title: "Flight to Aswan & Nile Cruise Embarkation",
+        activities: [
+          "Morning flight to Aswan",
+          "Transfer to luxury Nile cruise ship",
+          "Welcome aboard and cabin orientation",
+          "Lunch on board with Nile views",
+          "Visit magnificent Philae Temple on Agilkia Island",
+          "See the modern engineering marvel of Aswan High Dam",
+          "Afternoon tea on sun deck",
+          "Sunset cocktails as we begin sailing",
+          "Dinner on board",
+          "Egyptian folkloric show"
+        ]
+      },
+      {
+        day: 5,
+        title: "Abu Simbel Excursion & Sailing",
+        activities: [
+          "Early morning optional excursion to Abu Simbel temples",
+          "Marvel at Ramesses II's colossal statues",
+          "Visit Nefertari's beautiful temple",
+          "Return to ship for breakfast",
+          "Relax on sun deck as we sail",
+          "Lunch on board",
+          "Afternoon sailing through stunning Nile scenery",
+          "Egyptian cooking demonstration",
+          "Captain's welcome dinner",
+          "Overnight sailing to Kom Ombo"
+        ]
+      },
+      {
+        day: 6,
+        title: "Kom Ombo & Edfu Temples",
+        activities: [
+          "Morning visit to unique double temple of Kom Ombo",
+          "Dedicated to crocodile god Sobek and falcon god Horus",
+          "See ancient crocodile mummies",
+          "Sail to Edfu while enjoying lunch",
+          "Afternoon visit to Temple of Horus at Edfu",
+          "Best preserved temple in all of Egypt",
+          "Horse-drawn carriage ride to temple (family fun!)",
+          "Sail towards Luxor through Esna Lock",
+          "Galabeya party on board (traditional dress)",
+          "Dinner and entertainment"
+        ]
+      },
+      {
+        day: 7,
+        title: "Luxor West Bank & Valley of the Kings",
+        activities: [
+          "Optional sunrise hot air balloon over Luxor",
+          "Breakfast on board",
+          "Cross to Luxor West Bank",
+          "Explore Valley of the Kings (visit 3 royal tombs)",
+          "Visit Temple of Queen Hatshepsut",
+          "Photo stop at Colossi of Memnon",
+          "Lunch at local restaurant",
+          "Return to ship for relaxation",
+          "Afternoon tea and swimming",
+          "Farewell dinner on board"
+        ]
+      },
+      {
+        day: 8,
+        title: "Karnak & Luxor Temples - Disembarkation",
+        activities: [
+          "Final breakfast on cruise ship",
+          "Disembark from Nile cruise",
+          "Visit colossal Karnak Temple complex",
+          "Walk the Avenue of Sphinxes",
+          "Explore the Great Hypostyle Hall with 134 massive columns",
+          "Lunch at Nile-view restaurant",
+          "Check in to luxury Luxor hotel",
+          "Afternoon visit to beautiful Luxor Temple",
+          "Evening Sound and Light Show at Karnak",
+          "Dinner at hotel"
+        ]
+      },
+      {
+        day: 9,
+        title: "Traditional Experiences & Optional Activities",
+        activities: [
+          "Leisurely breakfast",
+          "Optional: Visit Dendera and Abydos temples",
+          "Optional: Traditional felucca sailing on the Nile",
+          "Optional: Visit Luxor Museum",
+          "Optional: Explore local markets with guide",
+          "Family workshop on hieroglyphics",
+          "Lunch at leisure",
+          "Afternoon by hotel pool or spa treatments",
+          "Farewell dinner with traditional entertainment",
+          "Prepare for departure"
+        ]
+      },
+      {
+        day: 10,
+        title: "Departure - Farewell Egypt",
+        activities: [
+          "Final breakfast at hotel",
+          "Last-minute shopping or relaxation",
+          "Check out from hotel",
+          "Transfer to Luxor Airport",
+          "Flight to Cairo for international connection",
+          "Airport assistance for departure",
+          "End of unforgettable Ultimate Egypt Tour"
+        ]
+      }
+    ],
+    destinations: ["Cairo", "Giza", "Aswan", "Kom Ombo", "Edfu", "Luxor"],
+    category: "Family Luxury",
+    featured: true,
+    published: true
+  },
+  {
     title: "Family Pyramid Adventure & Camel Ride",
     slug: "family-pyramid-adventure",
     description: "An unforgettable family experience at the Giza Pyramids including private tours, camel rides, and interactive activities designed specifically for children. Expert Egyptologists guide families through ancient mysteries while keeping young explorers engaged with age-appropriate storytelling and hands-on learning experiences.",

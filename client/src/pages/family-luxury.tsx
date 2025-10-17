@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,12 +9,11 @@ import { Link } from "wouter";
 import type { Tour } from "@shared/schema";
 
 export default function FamilyLuxury() {
-  const [selectedTour, setSelectedTour] = useState<string | null>(null);
   
   const { data: toursData, isLoading, isError, error } = useQuery<{ success: boolean; tours: Tour[] }>({
-    queryKey: ['/api/public/tours', 'family'],
+    queryKey: ['/api/public/tours', 'Family Luxury'],
     queryFn: async () => {
-      const res = await fetch('/api/public/tours?category=family');
+      const res = await fetch('/api/public/tours?category=Family%20Luxury');
       if (!res.ok) throw new Error('Failed to fetch tours');
       return res.json();
     }
@@ -192,63 +190,21 @@ export default function FamilyLuxury() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => setSelectedTour(selectedTour === tour.id ? null : tour.id)}
+                        asChild
                         className="hover:scale-105 transition-transform"
+                        data-testid={`button-details-${tour.slug}`}
                       >
-                        {selectedTour === tour.id ? 'Hide' : 'Details'}
+                        <Link href={`/tour/${tour.slug}`}>
+                          Details
+                        </Link>
                       </Button>
-                      <Button size="sm" asChild className="hover:scale-105 transition-transform">
+                      <Button size="sm" asChild className="hover:scale-105 transition-transform" data-testid={`button-book-${tour.slug}`}>
                         <Link href="/contact">
                           Book Now
                         </Link>
                       </Button>
                     </div>
                   </div>
-
-                  {/* Expandable Details */}
-                  {selectedTour === tour.id && (
-                    <div className="mt-8 p-6 bg-muted/30 rounded-xl border border-accent/20">
-                      <h4 className="text-xl font-serif font-bold text-primary mb-4 flex items-center gap-2">
-                        <Calendar className="h-5 w-5 text-accent" />
-                        Complete Itinerary
-                      </h4>
-                      <div className="space-y-4">
-                        {Array.isArray(tour.itinerary) ? (
-                          <div className="space-y-4">
-                            {(tour.itinerary as Array<{ day: number; title: string; activities: string[] }>).map((day) => (
-                              <div key={day.day} className="bg-background/50 p-4 rounded-lg">
-                                <div className="font-semibold text-primary mb-2">Day {day.day}: {day.title}</div>
-                                <ul className="space-y-1 text-sm text-muted-foreground">
-                                  {day.activities.map((activity, idx) => (
-                                    <li key={idx} className="flex items-start gap-2">
-                                      <span className="text-accent mt-1">•</span>
-                                      <span>{activity}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="bg-background/50 p-4 rounded-lg">
-                            <p className="text-muted-foreground leading-relaxed">
-                              {String(tour.itinerary)}
-                            </p>
-                          </div>
-                        )}
-                        <div className="grid md:grid-cols-2 gap-4 text-sm pt-4 border-t border-border">
-                          <div className="space-y-2">
-                            <div className="font-semibold text-primary">Duration</div>
-                            <div className="text-muted-foreground">{tour.duration}</div>
-                          </div>
-                          <div className="space-y-2">
-                            <div className="font-semibold text-primary">Group Size</div>
-                            <div className="text-muted-foreground">{tour.groupSize || 'Flexible'}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </CardContent>
               </Card>
             ))}

@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { useParams, Link } from 'wouter';
+import { useQuery } from '@tanstack/react-query';
 import Navigation from '@/components/navigation';
 import Footer from '@/components/footer';
 import ScrollToTopButton from '@/components/scroll-to-top-button';
@@ -8,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 import { 
   MapPin, 
   Clock, 
@@ -23,9 +25,10 @@ import {
   Mail,
   ArrowLeft
 } from 'lucide-react';
+import type { Tour } from '@shared/schema';
 
-// Sample tour data - in a real app, this would come from an API
-const tourData = {
+// Legacy sample tour data - kept for backward compatibility
+const legacyTourData = {
   'pharaohs-legacy': {
     id: 'pharaohs-legacy',
     name: "Pharaohs' Legacy Tour",
@@ -167,25 +170,85 @@ const tourData = {
 
 export default function TourDetail() {
   const params = useParams();
-  const tourId = params.id || 'pharaohs-legacy';
-  const tour = tourData[tourId as keyof typeof tourData];
+  const slug = params.slug || params.id || 'pharaohs-legacy';
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedImage, setSelectedImage] = useState(0);
 
-  if (!tour) {
+  const { data, isLoading, isError } = useQuery<{ success: boolean; tour: Tour }>({
+    queryKey: ['/api/public/tours', slug],
+    queryFn: async () => {
+      const res = await fetch(`/api/public/tours/${slug}`);
+      if (!res.ok) throw new Error('Failed to fetch tour');
+      return res.json();
+    }
+  });
+
+  const apiTour = data?.tour;
+  const legacyTour = legacyTourData[slug as keyof typeof legacyTourData];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="pt-20 pb-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              <Skeleton className="aspect-[4/3] w-full" />
+              <div className="space-y-6">
+                <Skeleton className="h-12 w-3/4" />
+                <Skeleton className="h-6 w-1/2" />
+                <Skeleton className="h-32 w-full" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Determine if we have either API tour or legacy tour
+  if ((isError && !legacyTour) || (!apiTour && !legacyTour)) {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />
         <div className="pt-20 pb-16 text-center">
           <h1 className="text-4xl font-serif font-bold text-primary mb-6">Tour Not Found</h1>
-          <Link href="/destinations">
-            <Button>Back to Destinations</Button>
+          <Link href="/experiences/family-luxury">
+            <Button data-testid="button-back">Back to Family Luxury</Button>
           </Link>
         </div>
         <Footer />
       </div>
     );
   }
+
+  // Format tour data for display - prefer API tour, fall back to legacy
+  const displayTour = apiTour ? {
+    name: apiTour.title,
+    tagline: apiTour.shortDescription || apiTour.description.substring(0, 100) + '...',
+    location: apiTour.destinations?.join(', ') || 'Egypt',
+    duration: apiTour.duration,
+    groupSize: apiTour.groupSize || 'Flexible',
+    price: `From $${apiTour.price}`,
+    rating: 4.9,
+    reviewCount: 127,
+    image: apiTour.heroImage,
+    gallery: apiTour.gallery || [apiTour.heroImage],
+    description: apiTour.description,
+    highlights: (apiTour.includes || []).slice(0, 6),
+    included: apiTour.includes || [],
+    notIncluded: apiTour.excludes || [],
+    itinerary: Array.isArray(apiTour.itinerary) ? apiTour.itinerary.map((day: any) => ({
+      day: day.day,
+      title: day.title,
+      location: apiTour.destinations?.[0] || 'Egypt',
+      description: day.activities?.join('. ') || '',
+      activities: day.activities || [],
+      accommodation: day.accommodation || 'Luxury hotel',
+      meals: ['Breakfast', 'Lunch', 'Dinner']
+    })) : []
+  } : legacyTour!
 
   return (
     <div className="min-h-screen bg-background">
@@ -195,10 +258,10 @@ export default function TourDetail() {
       <section className="pt-20 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-6">
-            <Link href="/destinations">
-              <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <Link href="/experiences/family-luxury">
+              <Button variant="outline" size="sm" className="flex items-center gap-2" data-testid="button-back-to-family">
                 <ArrowLeft className="h-4 w-4" />
-                Back to Destinations
+                Back to Family Luxury
               </Button>
             </Link>
           </div>
@@ -208,19 +271,20 @@ export default function TourDetail() {
             <div className="space-y-4">
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-lg">
                 <img
-                  src={tour.gallery[selectedImage]}
-                  alt={tour.name}
+                  src={displayTour.gallery[selectedImage]}
+                  alt={displayTour.name}
                   className="w-full h-full object-cover"
+                  data-testid="img-tour-hero"
                 />
                 <div className="absolute top-4 right-4">
                   <Badge className="bg-white/90 text-primary">
                     <Camera className="h-3 w-3 mr-1" />
-                    {selectedImage + 1} / {tour.gallery.length}
+                    {selectedImage + 1} / {displayTour.gallery.length}
                   </Badge>
                 </div>
               </div>
               <div className="grid grid-cols-4 gap-2">
-                {tour.gallery.map((image, index) => (
+                {displayTour.gallery.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedImage(index)}
@@ -229,10 +293,11 @@ export default function TourDetail() {
                         ? 'ring-2 ring-accent opacity-100' 
                         : 'opacity-70 hover:opacity-100'
                     }`}
+                    data-testid={`button-gallery-${index}`}
                   >
                     <img
                       src={image}
-                      alt={`${tour.name} ${index + 1}`}
+                      alt={`${displayTour.name} ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
                   </button>
@@ -245,47 +310,47 @@ export default function TourDetail() {
               <div>
                 <div className="flex items-center gap-2 text-accent font-medium mb-2">
                   <MapPin className="h-4 w-4" />
-                  {tour.location}
+                  <span data-testid="text-location">{displayTour.location}</span>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-3">
-                  {tour.name}
+                <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-3" data-testid="text-tour-name">
+                  {displayTour.name}
                 </h1>
-                <p className="text-xl text-muted-foreground font-light">
-                  {tour.tagline}
+                <p className="text-xl text-muted-foreground font-light" data-testid="text-tagline">
+                  {displayTour.tagline}
                 </p>
               </div>
 
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Clock className="h-4 w-4" />
-                  {tour.duration}
+                  <span data-testid="text-duration">{displayTour.duration}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Users className="h-4 w-4" />
-                  {tour.groupSize}
+                  <span data-testid="text-group-size">{displayTour.groupSize}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  {tour.rating} ({tour.reviewCount} reviews)
+                  <span data-testid="text-rating">{displayTour.rating} ({displayTour.reviewCount} reviews)</span>
                 </div>
               </div>
 
               <div className="bg-muted/50 p-6 rounded-xl">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <p className="text-3xl font-serif font-bold text-primary">
-                      {tour.price}
+                    <p className="text-3xl font-serif font-bold text-primary" data-testid="text-price">
+                      {displayTour.price}
                     </p>
                     <p className="text-sm text-muted-foreground">per person</p>
                   </div>
                   <div className="flex gap-3">
-                    <Button size="lg" asChild>
+                    <Button size="lg" asChild data-testid="button-book-now">
                       <Link href="/contact">
                         <Phone className="h-4 w-4 mr-2" />
                         Book Now
                       </Link>
                     </Button>
-                    <Button variant="outline" size="lg" asChild>
+                    <Button variant="outline" size="lg" asChild data-testid="button-inquire">
                       <Link href="/contact">
                         <Mail className="h-4 w-4 mr-2" />
                         Inquire
@@ -338,8 +403,8 @@ export default function TourDetail() {
                   <h2 className="text-3xl font-serif font-bold text-primary mb-6">
                     Tour Overview
                   </h2>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    {tour.description}
+                  <p className="text-lg text-muted-foreground leading-relaxed" data-testid="text-description">
+                    {displayTour.description}
                   </p>
                 </div>
 
@@ -348,8 +413,8 @@ export default function TourDetail() {
                     Tour Highlights
                   </h3>
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {tour.highlights.map((highlight, index) => (
-                      <div key={index} className="flex items-start gap-3">
+                    {displayTour.highlights.map((highlight: string, index: number) => (
+                      <div key={index} className="flex items-start gap-3" data-testid={`highlight-${index}`}>
                         <CheckCircle className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
                         <span className="text-muted-foreground">{highlight}</span>
                       </div>
@@ -367,21 +432,21 @@ export default function TourDetail() {
                     <div className="space-y-3">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Duration:</span>
-                        <span className="font-medium">{tour.duration}</span>
+                        <span className="font-medium">{displayTour.duration}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Group Size:</span>
-                        <span className="font-medium">{tour.groupSize}</span>
+                        <span className="font-medium">{displayTour.groupSize}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Location:</span>
-                        <span className="font-medium">{tour.location}</span>
+                        <span className="font-medium">{displayTour.location}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Rating:</span>
                         <div className="flex items-center gap-1">
                           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                          <span className="font-medium">{tour.rating}</span>
+                          <span className="font-medium">{displayTour.rating}</span>
                         </div>
                       </div>
                     </div>
@@ -397,7 +462,7 @@ export default function TourDetail() {
                 Daily Itinerary
               </h2>
               <div className="space-y-6">
-                {tour.itinerary.map((day, index) => (
+                {displayTour.itinerary.map((day, index) => (
                   <Card key={day.day} className="overflow-hidden">
                     <CardContent className="p-0">
                       <div className="flex">
@@ -443,7 +508,7 @@ export default function TourDetail() {
                                 Activities
                               </h4>
                               <ul className="space-y-1">
-                                {day.activities.map((activity, idx) => (
+                                {day.activities.map((activity: string, idx: number) => (
                                   <li key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
                                     <CheckCircle className="h-3 w-3 text-accent flex-shrink-0" />
                                     {activity}
@@ -479,7 +544,7 @@ export default function TourDetail() {
                   What's Included
                 </h2>
                 <div className="space-y-4">
-                  {tour.included.map((item, index) => (
+                  {displayTour.included.map((item: string, index: number) => (
                     <div key={index} className="flex items-start gap-3">
                       <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
                       <span className="text-muted-foreground">{item}</span>
@@ -493,7 +558,7 @@ export default function TourDetail() {
                   Not Included
                 </h2>
                 <div className="space-y-4">
-                  {tour.notIncluded.map((item, index) => (
+                  {displayTour.notIncluded.map((item: string, index: number) => (
                     <div key={index} className="flex items-start gap-3">
                       <div className="h-5 w-5 border-2 border-red-300 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center">
                         <div className="h-2 w-2 bg-red-300 rounded-full" />
