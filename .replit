@@ -38,7 +38,7 @@ outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "JWT_SECRET=\"luxury-egypt-travel-app-secret-key-2025\" npm run dev"
+args = "npm run dev"
 waitForPort = 5000
 
 [agent]
