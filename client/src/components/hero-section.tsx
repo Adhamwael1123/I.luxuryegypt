@@ -46,39 +46,41 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 flex items-end min-h-screen">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-0 w-full">
+        <div className="w-full pb-0">
           {/* Blurry Card Container */}
-          <div className="bg-black/20 backdrop-blur-md rounded-t-2xl border-t border-x border-white/20 p-8 lg:p-12">
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 text-white">
-              
-              {/* Left Side */}
-              <div className="flex-1 text-left space-y-3 max-w-xl">
-                <p className="text-xs tracking-[0.3em] uppercase font-light text-white/90" data-testid="text-subtitle">
-                  Luxury Travel Agency
-                </p>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif leading-tight" data-testid="text-main-heading">
-                  Travel Enlightened
-                </h1>
-              </div>
+          <div className="bg-black/20 backdrop-blur-md border-t border-white/20 p-8 lg:p-12">
+            <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+              <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 text-white">
+                
+                {/* Left Side */}
+                <div className="flex-1 text-left space-y-3 max-w-xl">
+                  <p className="text-xs tracking-[0.3em] uppercase font-light text-white/90" data-testid="text-subtitle">
+                    Luxury Travel Agency
+                  </p>
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif leading-tight" data-testid="text-main-heading">
+                    Travel Enlightened
+                  </h1>
+                </div>
 
-              {/* Vertical Divider */}
-              <div className="hidden lg:block w-[1px] h-32 bg-white/50" data-testid="divider-vertical"></div>
+                {/* Vertical Divider */}
+                <div className="hidden lg:block w-[1px] h-32 bg-white/50" data-testid="divider-vertical"></div>
 
-              {/* Right Side */}
-              <div className="flex-1 text-left space-y-4 max-w-xl">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-light leading-snug" data-testid="text-tagline">
-                  Luxury Travel Designed Just For You
-                </h2>
-                <div className="pt-2">
-                  <Link href="/experiences">
-                    <Button 
-                      size="lg" 
-                      className="text-sm px-8 py-3 h-auto font-normal tracking-[0.15em] uppercase border-2 border-white text-white bg-white/10 hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
-                      data-testid="button-explore-vacations"
-                    >
-                      Explore Luxury Vacations
-                    </Button>
-                  </Link>
+                {/* Right Side */}
+                <div className="flex-1 text-left space-y-4 max-w-xl">
+                  <h2 className="text-xl md:text-2xl lg:text-3xl font-light leading-snug" data-testid="text-tagline">
+                    Luxury Travel Designed Just For You
+                  </h2>
+                  <div className="pt-2">
+                    <Link href="/experiences">
+                      <Button 
+                        size="lg" 
+                        className="text-sm px-8 py-3 h-auto font-normal tracking-[0.15em] uppercase border-2 border-white text-white bg-white/10 hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
+                        data-testid="button-explore-vacations"
+                      >
+                        Explore Luxury Vacations
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
