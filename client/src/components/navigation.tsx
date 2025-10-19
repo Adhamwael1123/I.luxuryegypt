@@ -50,8 +50,8 @@ export default function Navigation() {
   return (
     <nav className={`fixed top-0 left-0 right-0 w-full z-40 transition-all duration-300 ${
       isScrolled 
-        ? "bg-white/5 backdrop-blur-xl backdrop-saturate-150 border-b border-white/20 shadow-lg" 
-        : "bg-white/0 backdrop-blur-xl backdrop-saturate-150 border-b border-white/10"
+        ? "bg-white/5 backdrop-blur-sm border-b border-white/20 shadow-lg" 
+        : "bg-white/0 backdrop-blur-sm border-b border-white/10"
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
@@ -111,7 +111,7 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-white/20 bg-white/10 backdrop-blur-xl backdrop-saturate-150 shadow-lg">
+          <div className="lg:hidden border-t border-white/20 bg-white/10 backdrop-blur-sm shadow-lg">
             <div className="px-4 py-6 space-y-2">
               {navItems.map((item) => (
                 item.type === "page" ? (
