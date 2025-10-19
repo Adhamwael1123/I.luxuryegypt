@@ -50,14 +50,14 @@ export default function Navigation() {
   return (
     <nav className={`fixed top-0 left-0 right-0 w-full z-40 transition-all duration-300 ${
       isScrolled 
-        ? "bg-white/5 backdrop-blur-sm border-b border-white/20 shadow-lg" 
-        : "bg-white/0 backdrop-blur-sm border-b border-white/10"
+        ? "bg-white/90 border-b border-primary/20 shadow-lg" 
+        : "bg-white/80 border-b border-primary/10"
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0">
             <Link href="/">
-              <h1 className="text-2xl font-serif font-bold text-white hover:text-white/80 transition-colors cursor-pointer" 
+              <h1 className="text-2xl font-serif font-bold text-primary hover:text-primary/80 transition-colors cursor-pointer" 
                   data-testid="logo-home">
                 I.LUXURYEGYPT
               </h1>
@@ -71,24 +71,24 @@ export default function Navigation() {
                 item.type === "page" ? (
                   <Link key={item.id} href={item.href!}>
                     <button
-                      className={`relative text-white hover:text-white/70 transition-all duration-300 hover-elevate px-4 py-3 rounded-lg text-sm font-medium group ${
-                        location === item.href ? 'text-white/70 bg-white/10' : ''
+                      className={`relative text-primary hover:text-primary/70 transition-all duration-300 hover-elevate px-4 py-3 rounded-lg text-sm font-medium group ${
+                        location === item.href ? 'text-primary/70 bg-primary/10' : ''
                       }`}
                       data-testid={`nav-${item.id}`}
                     >
                       {item.label}
-                      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+                      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                     </button>
                   </Link>
                 ) : (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className="relative text-white hover:text-white/70 transition-all duration-300 hover-elevate px-4 py-3 rounded-lg text-sm font-medium group"
+                    className="relative text-primary hover:text-primary/70 transition-all duration-300 hover-elevate px-4 py-3 rounded-lg text-sm font-medium group"
                     data-testid={`nav-${item.id}`}
                   >
                     {item.label}
-                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                   </button>
                 )
               ))}
@@ -101,7 +101,7 @@ export default function Navigation() {
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="h-12 w-12 text-white hover:text-white/70"
+              className="h-12 w-12 text-primary hover:text-primary/70"
               data-testid="button-mobile-menu"
             >
               {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -111,15 +111,15 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-white/20 bg-white/10 backdrop-blur-sm shadow-lg">
+          <div className="lg:hidden border-t border-primary/20 bg-white/90 shadow-lg">
             <div className="px-4 py-6 space-y-2">
               {navItems.map((item) => (
                 item.type === "page" ? (
                   <Link key={item.id} href={item.href!}>
                     <button
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`text-white hover:text-white/70 hover:bg-white/10 block px-4 py-3 rounded-lg text-base font-medium w-full text-left transition-all duration-300 ${
-                        location === item.href ? 'text-white/70 bg-white/10' : ''
+                      className={`text-primary hover:text-primary/70 hover:bg-primary/10 block px-4 py-3 rounded-lg text-base font-medium w-full text-left transition-all duration-300 ${
+                        location === item.href ? 'text-primary/70 bg-primary/10' : ''
                       }`}
                       data-testid={`nav-mobile-${item.id}`}
                     >
@@ -130,7 +130,7 @@ export default function Navigation() {
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className="text-white hover:text-white/70 hover:bg-white/10 block px-4 py-3 rounded-lg text-base font-medium w-full text-left transition-all duration-300"
+                    className="text-primary hover:text-primary/70 hover:bg-primary/10 block px-4 py-3 rounded-lg text-base font-medium w-full text-left transition-all duration-300"
                     data-testid={`nav-mobile-${item.id}`}
                   >
                     {item.label}
