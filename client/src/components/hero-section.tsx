@@ -46,9 +46,9 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 flex items-end min-h-screen">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 w-full">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-0 w-full">
           {/* Blurry Card Container */}
-          <div className="bg-black/20 backdrop-blur-md rounded-2xl border border-white/20 p-8 lg:p-12">
+          <div className="bg-black/20 backdrop-blur-md rounded-t-2xl border-t border-x border-white/20 p-8 lg:p-12">
             <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 text-white">
               
               {/* Left Side */}
