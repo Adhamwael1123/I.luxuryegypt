@@ -246,6 +246,88 @@ const realExperiences = [
     published: true
   },
   {
+    title: "Alexandria Family Beach & History Escape",
+    slug: "alexandria-family-beach-history",
+    description: "Perfect blend of history and relaxation designed for families seeking both culture and leisure. This 3-day coastal getaway takes your family to Alexandria, Egypt's Mediterranean jewel, where ancient wonders meet pristine beaches. Explore the legendary Bibliotheca Alexandrina, walk through Roman catacombs, and enjoy quality beach time at family-friendly resorts. Your children will love the interactive science museum, traditional fish market visits, and beach activities while learning about Cleopatra's legendary city.",
+    shortDescription: "Mediterranean family adventure combining Alexandria's historic sites with beach relaxation.",
+    heroImage: "/api/assets/pyramid-from-lobby_1757459228637.jpeg",
+    gallery: ["/api/assets/pyramid-from-lobby_1757459228637.jpeg", "/api/assets/the-pyramid-from-mena-house_1757459228638.jpeg"],
+    duration: "3 Days / 2 Nights",
+    groupSize: "4-12 people",
+    difficulty: "Easy",
+    price: 680,
+    currency: "USD",
+    includes: [
+      "2 nights at family-friendly beach resort",
+      "All meals (breakfast, lunch, dinner)",
+      "Private family guide throughout",
+      "Round-trip transportation from Cairo",
+      "All entrance fees and permits",
+      "Beach resort access and activities",
+      "Science museum planetarium show",
+      "Traditional seafood lunch at harbor",
+      "Ice cream stop for children",
+      "Beach toys and equipment"
+    ],
+    excludes: [
+      "Water sports activities (optional add-ons)",
+      "Personal expenses",
+      "Tips and gratuities",
+      "Room service at hotel"
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Cairo to Alexandria - Coastal Arrival",
+        activities: [
+          "Morning pickup from Cairo hotel (3-hour scenic drive)",
+          "Stop at rest area with refreshments",
+          "Arrive Alexandria and check-in at beach resort",
+          "Welcome lunch with Mediterranean sea views",
+          "Afternoon beach time with kids' activities",
+          "Visit to Bibliotheca Alexandrina (modern library)",
+          "Interactive children's discovery center",
+          "Sunset walk along the Corniche",
+          "Dinner at resort with family entertainment"
+        ]
+      },
+      {
+        day: 2,
+        title: "Ancient Alexandria & Marine Adventures",
+        activities: [
+          "Breakfast at resort",
+          "Visit Catacombs of Kom el Shoqafa",
+          "Explore Pompey's Pillar with storytelling for kids",
+          "Stop at traditional fish market",
+          "Fresh seafood lunch at harbor restaurant",
+          "Visit Citadel of Qaitbay (built on ancient lighthouse site)",
+          "Ice cream break at famous Alexandria parlor",
+          "Return to resort for swimming and beach games",
+          "Evening BBQ dinner on the beach"
+        ]
+      },
+      {
+        day: 3,
+        title: "Science & Culture - Return to Cairo",
+        activities: [
+          "Leisurely breakfast",
+          "Morning beach time and resort activities",
+          "Visit Alexandria Planetarium Science Museum",
+          "Interactive exhibits perfect for children",
+          "Lunch at resort",
+          "Check out and depart for Cairo",
+          "Stop for photos at Montazah Palace gardens",
+          "Return to Cairo hotel (arrive evening)",
+          "End of Alexandria family adventure"
+        ]
+      }
+    ],
+    destinations: ["Alexandria", "Cairo"],
+    category: "Family Luxury",
+    featured: true,
+    published: true
+  },
+  {
     title: "Luxury Dahabiya Nile Cruise - Aswan to Luxor",
     slug: "luxury-dahabiya-nile-cruise",
     description: "Experience the timeless beauty of the Nile aboard a traditional luxury Dahabiya sailing yacht. This intimate 5-day journey takes you from Aswan to Luxor, stopping at lesser-known temples and authentic Nubian villages inaccessible to larger cruise ships. With a maximum of 12 guests, enjoy personalized service, gourmet Egyptian cuisine, and sunset sails on the legendary river.",
