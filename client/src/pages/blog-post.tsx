@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { Clock, Calendar, User, ArrowLeft, Tag, Share2, Facebook, Twitter, Linkedin, Copy } from "lucide-react";
@@ -8,8 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 
-// Sample blog posts data (this would normally come from a database)
-const blogPosts = [
+// Sample blog posts data (fallback)
+const sampleBlogPosts = [
   {
     id: 'ancient-egypt-mysteries',
     title: 'Unveiling the Mysteries of Ancient Egypt: A Journey Through Time',
@@ -417,12 +418,13 @@ const blogPosts = [
 export default function BlogPost() {
   const { id } = useParams();
   const { toast } = useToast();
-  const [post, setPost] = useState<any>(null);
+  
+  const { data: postResponse, isLoading } = useQuery({
+    queryKey: ["/api/blog/posts", id],
+    enabled: !!id,
+  });
 
-  useEffect(() => {
-    const foundPost = blogPosts.find(p => p.id === id);
-    setPost(foundPost);
-  }, [id]);
+  const post = (postResponse as any)?.post;
 
   const handleShare = async (platform: string) => {
     const url = window.location.href;
@@ -463,6 +465,17 @@ export default function BlogPost() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading article...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!post) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -487,8 +500,8 @@ export default function BlogPost() {
       {/* Hero Section */}
       <section className="relative h-96 overflow-hidden">
         <img
-          src={post.image}
-          alt={post.title}
+          src={post.featuredImage || 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop'}
+          alt={post.titleEn}
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
@@ -502,29 +515,21 @@ export default function BlogPost() {
               </Button>
             </Link>
             
-            <div className="mb-4">
-              <span className="bg-accent/90 text-white px-3 py-1 rounded-full text-sm font-medium">
-                {post.category}
-              </span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">
-              {post.title}
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight" data-testid="text-post-title">
+              {post.titleEn}
             </h1>
             
             <div className="flex flex-wrap items-center gap-6 text-white/80">
               <div className="flex items-center gap-2">
-                <User className="h-4 w-4" />
-                <span>{post.author}</span>
-              </div>
-              <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+                <span>{new Date(post.createdAt).toLocaleDateString()}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>{post.readTime}</span>
-              </div>
+              {post.focusKeyword && (
+                <div className="flex items-center gap-2">
+                  <Tag className="h-4 w-4" />
+                  <span>{post.focusKeyword}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -544,30 +549,31 @@ export default function BlogPost() {
               </div>
               
               <div 
-                className="prose prose-xl max-w-none prose-primary"
+                className="prose prose-xl max-w-none prose-primary whitespace-pre-wrap"
                 style={{
                   fontSize: '1.125rem',
                   lineHeight: '1.8',
                   letterSpacing: '0.01em'
                 }}
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
+                data-testid="text-post-content"
+              >
+                {post.bodyEn || post.excerpt}
+              </div>
               
-              {/* Tags */}
-              <div className="mt-16 pt-12 border-t border-border">
-                <h4 className="text-2xl font-serif font-bold text-primary mb-6">Related Topics</h4>
-                <div className="flex flex-wrap gap-3">
-                  {post.tags.map((tag: string) => (
+              {/* Focus Keyword */}
+              {post.focusKeyword && (
+                <div className="mt-16 pt-12 border-t border-border">
+                  <h4 className="text-2xl font-serif font-bold text-primary mb-6">Focus Keyword</h4>
+                  <div className="flex flex-wrap gap-3">
                     <span
-                      key={tag}
                       className="text-base bg-accent/10 text-accent px-4 py-2 rounded-full flex items-center gap-2 hover:bg-accent/20 transition-colors"
                     >
                       <Tag className="h-4 w-4" />
-                      {tag}
+                      {post.focusKeyword}
                     </span>
-                  ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </article>
 
             {/* Sidebar */}

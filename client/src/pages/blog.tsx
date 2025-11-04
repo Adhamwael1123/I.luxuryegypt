@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/navigation";
@@ -8,8 +9,8 @@ import { Clock, Calendar, User, ArrowRight, Search, Tag } from "lucide-react";
 import { Link } from "wouter";
 import { Input } from "@/components/ui/input";
 
-// Sample blog posts data
-const blogPosts = [
+// Sample blog posts data (fallback for display purposes)
+const sampleBlogPosts = [
   {
     id: 'ancient-egypt-mysteries',
     title: 'Unveiling the Mysteries of Ancient Egypt: A Journey Through Time',
@@ -99,11 +100,16 @@ export default function Blog() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPost, setSelectedPost] = useState<string | null>(null);
 
-  const filteredPosts = blogPosts.filter(post => {
+  const { data: postsResponse, isLoading } = useQuery({
+    queryKey: ["/api/blog/posts"],
+  });
+
+  const blogPosts = (postsResponse as any)?.posts || [];
+
+  const filteredPosts = blogPosts.filter((post: any) => {
     const matchesCategory = selectedCategory === 'All Posts' || post.category === selectedCategory;
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesSearch = post.titleEn?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         post.excerpt?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -172,75 +178,64 @@ export default function Blog() {
       <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <div className="grid lg:grid-cols-2 gap-8 mb-16">
-            {filteredPosts.map((post) => (
-              <Card key={post.id} className="group overflow-hidden hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02]">
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-accent/90 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {post.category}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-2xl font-serif font-bold text-white mb-2 line-clamp-2">
-                      {post.title}
-                    </h3>
-                  </div>
-                </div>
-
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                    <div className="flex items-center gap-1">
-                      <User className="h-4 w-4" />
-                      <span>{post.author}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
-                      <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
-                      <span>{post.readTime}</span>
+          {isLoading ? (
+            <div className="text-center py-16">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Loading blog posts...</p>
+            </div>
+          ) : (
+            <div className="grid lg:grid-cols-2 gap-8 mb-16">
+              {filteredPosts.map((post: any) => (
+                <Card key={post.id} className="group overflow-hidden hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02]" data-testid={`blog-post-${post.slug}`}>
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={post.featuredImage || 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop'}
+                      alt={post.titleEn}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="text-2xl font-serif font-bold text-white mb-2 line-clamp-2" data-testid={`text-title-${post.slug}`}>
+                        {post.titleEn}
+                      </h3>
                     </div>
                   </div>
 
-                  <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3">
-                    {post.excerpt}
-                  </p>
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+                      </div>
+                    </div>
 
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {post.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full flex items-center gap-1"
-                      >
-                        <Tag className="h-3 w-3" />
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                    <p className="text-muted-foreground mb-4 leading-relaxed line-clamp-3" data-testid={`text-excerpt-${post.slug}`}>
+                      {post.excerpt || 'Read this article to learn more...'}
+                    </p>
 
-                  {/* Read More Button */}
-                  <div className="flex items-center justify-between">
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={`/blog/${post.id}`}>
-                        <span>Read More</span>
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    {post.focusKeyword && (
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        <span className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full flex items-center gap-1">
+                          <Tag className="h-3 w-3" />
+                          {post.focusKeyword}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between">
+                      <Button variant="outline" size="sm" asChild data-testid={`button-read-${post.slug}`}>
+                        <Link href={`/blog/${post.slug}`}>
+                          <span>Read More</span>
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
 
           {/* No Results */}
           {filteredPosts.length === 0 && (
