@@ -214,12 +214,14 @@ export default function Blog() {
                       {post.excerpt || 'Read this article to learn more...'}
                     </p>
 
-                    {post.focusKeyword && (
+                    {post.tags && post.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-6">
-                        <span className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full flex items-center gap-1">
-                          <Tag className="h-3 w-3" />
-                          {post.focusKeyword}
-                        </span>
+                        {post.tags.slice(0, 3).map((tag: string, index: number) => (
+                          <span key={index} className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full flex items-center gap-1">
+                            <Tag className="h-3 w-3" />
+                            {tag}
+                          </span>
+                        ))}
                       </div>
                     )}
 

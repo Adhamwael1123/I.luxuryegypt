@@ -15,26 +15,16 @@ import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { FileText, Plus, Edit, Search, ArrowLeft, Trash2, Calendar } from "lucide-react";
+import { FileText, Plus, Edit, Search, ArrowLeft, Trash2, Calendar, X } from "lucide-react";
 import AdminLayout from "@/components/admin-layout";
+import { insertPostSchema } from "@shared/schema";
 
-// Form validation schema
-const postFormSchema = z.object({
-  slug: z.string().min(1, "Slug is required"),
+// Form validation schema based on insertPostSchema with required fields
+const postFormSchema = insertPostSchema.extend({
   titleEn: z.string().min(1, "English title is required"),
-  titleEs: z.string().optional(),
-  titleFr: z.string().optional(),
-  titleJp: z.string().optional(),
-  bodyEn: z.string().optional(),
-  bodyEs: z.string().optional(),
-  bodyFr: z.string().optional(),
-  bodyJp: z.string().optional(),
-  featuredImage: z.string().optional(),
-  excerpt: z.string().optional(),
-  focusKeyword: z.string().optional(),
-  metaTitle: z.string().optional(),
-  metaDescription: z.string().optional(),
-  status: z.enum(["draft", "published"]).default("draft"),
+  slug: z.string().min(1, "Slug is required"),
+  category: z.string().optional(),
+  tags: z.array(z.string()).optional(),
 });
 
 type PostFormData = z.infer<typeof postFormSchema>;
@@ -134,6 +124,8 @@ export default function AdminPosts() {
       bodyJp: "",
       featuredImage: "",
       excerpt: "",
+      category: "",
+      tags: [],
       focusKeyword: "",
       metaTitle: "",
       metaDescription: "",
@@ -161,6 +153,8 @@ export default function AdminPosts() {
         bodyJp: editingPost.bodyJp || "",
         featuredImage: editingPost.featuredImage || "",
         excerpt: editingPost.excerpt || "",
+        category: editingPost.category || "",
+        tags: editingPost.tags || [],
         focusKeyword: editingPost.focusKeyword || "",
         metaTitle: editingPost.metaTitle || "",
         metaDescription: editingPost.metaDescription || "",
@@ -362,6 +356,59 @@ export default function AdminPosts() {
                                 rows={3} 
                                 {...field} 
                                 data-testid="textarea-meta-description" 
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div className="border-t pt-4 mt-4">
+                      <h3 className="text-lg font-semibold mb-4">Categories & Tags</h3>
+                      
+                      <FormField
+                        control={createForm.control}
+                        name="category"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Category</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger data-testid="select-category">
+                                  <SelectValue placeholder="Select category" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="All Posts">All Posts</SelectItem>
+                                <SelectItem value="Culture & History">Culture & History</SelectItem>
+                                <SelectItem value="Travel Tips">Travel Tips</SelectItem>
+                                <SelectItem value="Destinations">Destinations</SelectItem>
+                                <SelectItem value="Food & Culture">Food & Culture</SelectItem>
+                                <SelectItem value="Travel Planning">Travel Planning</SelectItem>
+                                <SelectItem value="Responsible Travel">Responsible Travel</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={createForm.control}
+                        name="tags"
+                        render={({ field }) => (
+                          <FormItem className="mt-4">
+                            <FormLabel>Tags (comma-separated)</FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="e.g., pyramids, luxury, egypt" 
+                                value={field.value?.join(', ') || ''}
+                                onChange={(e) => {
+                                  const tags = e.target.value.split(',').map(tag => tag.trim()).filter(Boolean);
+                                  field.onChange(tags);
+                                }}
+                                data-testid="input-tags" 
                               />
                             </FormControl>
                             <FormMessage />
@@ -657,6 +704,59 @@ export default function AdminPosts() {
                           rows={3} 
                           {...field} 
                           data-testid="textarea-edit-meta-description" 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="border-t pt-4 mt-4">
+                <h3 className="text-lg font-semibold mb-4">Categories & Tags</h3>
+                
+                <FormField
+                  control={editForm.control}
+                  name="category"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Category</FormLabel>
+                      <Select onValueChange={field.onChange} value={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-edit-category">
+                            <SelectValue placeholder="Select category" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="All Posts">All Posts</SelectItem>
+                          <SelectItem value="Culture & History">Culture & History</SelectItem>
+                          <SelectItem value="Travel Tips">Travel Tips</SelectItem>
+                          <SelectItem value="Destinations">Destinations</SelectItem>
+                          <SelectItem value="Food & Culture">Food & Culture</SelectItem>
+                          <SelectItem value="Travel Planning">Travel Planning</SelectItem>
+                          <SelectItem value="Responsible Travel">Responsible Travel</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={editForm.control}
+                  name="tags"
+                  render={({ field }) => (
+                    <FormItem className="mt-4">
+                      <FormLabel>Tags (comma-separated)</FormLabel>
+                      <FormControl>
+                        <Input 
+                          placeholder="e.g., pyramids, luxury, egypt" 
+                          value={field.value?.join(', ') || ''}
+                          onChange={(e) => {
+                            const tags = e.target.value.split(',').map(tag => tag.trim()).filter(Boolean);
+                            field.onChange(tags);
+                          }}
+                          data-testid="input-edit-tags" 
                         />
                       </FormControl>
                       <FormMessage />

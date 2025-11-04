@@ -61,6 +61,8 @@ export const posts = pgTable("posts", {
   bodyJp: text("body_jp"),
   featuredImage: text("featured_image"),
   excerpt: text("excerpt"),
+  category: text("category"),
+  tags: text("tags").array(),
   focusKeyword: text("focus_keyword"),
   metaTitle: text("meta_title"),
   metaDescription: text("meta_description"),

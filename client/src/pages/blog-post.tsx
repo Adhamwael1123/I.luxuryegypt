@@ -560,17 +560,20 @@ export default function BlogPost() {
                 {post.bodyEn || post.excerpt}
               </div>
               
-              {/* Focus Keyword */}
-              {post.focusKeyword && (
+              {/* Tags */}
+              {post.tags && post.tags.length > 0 && (
                 <div className="mt-16 pt-12 border-t border-border">
-                  <h4 className="text-2xl font-serif font-bold text-primary mb-6">Focus Keyword</h4>
+                  <h4 className="text-2xl font-serif font-bold text-primary mb-6">Related Topics</h4>
                   <div className="flex flex-wrap gap-3">
-                    <span
-                      className="text-base bg-accent/10 text-accent px-4 py-2 rounded-full flex items-center gap-2 hover:bg-accent/20 transition-colors"
-                    >
-                      <Tag className="h-4 w-4" />
-                      {post.focusKeyword}
-                    </span>
+                    {post.tags.map((tag: string, index: number) => (
+                      <span
+                        key={index}
+                        className="text-base bg-accent/10 text-accent px-4 py-2 rounded-full flex items-center gap-2 hover:bg-accent/20 transition-colors"
+                      >
+                        <Tag className="h-4 w-4" />
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               )}
