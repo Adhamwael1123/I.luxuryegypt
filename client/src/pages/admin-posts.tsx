@@ -31,6 +31,9 @@ const postFormSchema = z.object({
   bodyJp: z.string().optional(),
   featuredImage: z.string().optional(),
   excerpt: z.string().optional(),
+  focusKeyword: z.string().optional(),
+  metaTitle: z.string().optional(),
+  metaDescription: z.string().optional(),
   status: z.enum(["draft", "published"]).default("draft"),
 });
 
@@ -131,6 +134,9 @@ export default function AdminPosts() {
       bodyJp: "",
       featuredImage: "",
       excerpt: "",
+      focusKeyword: "",
+      metaTitle: "",
+      metaDescription: "",
       status: "draft",
     },
   });
@@ -155,6 +161,9 @@ export default function AdminPosts() {
         bodyJp: editingPost.bodyJp || "",
         featuredImage: editingPost.featuredImage || "",
         excerpt: editingPost.excerpt || "",
+        focusKeyword: editingPost.focusKeyword || "",
+        metaTitle: editingPost.metaTitle || "",
+        metaDescription: editingPost.metaDescription || "",
         status: editingPost.status || "draft",
       });
     }
@@ -309,6 +318,57 @@ export default function AdminPosts() {
                         </FormItem>
                       )}
                     />
+
+                    <div className="border-t pt-4 mt-4">
+                      <h3 className="text-lg font-semibold mb-4">SEO Settings</h3>
+                      
+                      <FormField
+                        control={createForm.control}
+                        name="focusKeyword"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Focus Keyword</FormLabel>
+                            <FormControl>
+                              <Input placeholder="e.g., luxury egypt travel" {...field} data-testid="input-focus-keyword" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={createForm.control}
+                        name="metaTitle"
+                        render={({ field }) => (
+                          <FormItem className="mt-4">
+                            <FormLabel>Meta Title (SEO)</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Optimized title for search engines" {...field} data-testid="input-meta-title" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={createForm.control}
+                        name="metaDescription"
+                        render={({ field }) => (
+                          <FormItem className="mt-4">
+                            <FormLabel>Meta Description (SEO)</FormLabel>
+                            <FormControl>
+                              <Textarea 
+                                placeholder="Write a compelling description for search results (150-160 characters recommended)" 
+                                rows={3} 
+                                {...field} 
+                                data-testid="textarea-meta-description" 
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
 
                     <DialogFooter>
                       <Button 
@@ -553,6 +613,57 @@ export default function AdminPosts() {
                   </FormItem>
                 )}
               />
+
+              <div className="border-t pt-4 mt-4">
+                <h3 className="text-lg font-semibold mb-4">SEO Settings</h3>
+                
+                <FormField
+                  control={editForm.control}
+                  name="focusKeyword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Focus Keyword</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., luxury egypt travel" {...field} data-testid="input-edit-focus-keyword" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={editForm.control}
+                  name="metaTitle"
+                  render={({ field }) => (
+                    <FormItem className="mt-4">
+                      <FormLabel>Meta Title (SEO)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Optimized title for search engines" {...field} data-testid="input-edit-meta-title" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={editForm.control}
+                  name="metaDescription"
+                  render={({ field }) => (
+                    <FormItem className="mt-4">
+                      <FormLabel>Meta Description (SEO)</FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          placeholder="Write a compelling description for search results (150-160 characters recommended)" 
+                          rows={3} 
+                          {...field} 
+                          data-testid="textarea-edit-meta-description" 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <DialogFooter>
                 <Button 

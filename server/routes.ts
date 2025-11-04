@@ -585,7 +585,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Posts
+  // Public Blog Routes (no authentication required)
+  
+  // Get all published blog posts
+  app.get("/api/blog/posts", async (req, res) => {
+    try {
+      const allPosts = await storage.getPosts();
+      const publishedPosts = allPosts.filter(post => post.status === "published");
+      res.json({ success: true, posts: publishedPosts });
+    } catch (error) {
+      console.error('Error fetching published posts:', error);
+      res.status(500).json({ message: 'Error fetching blog posts' });
+    }
+  });
+  
+  // Get a single published blog post by slug
+  app.get("/api/blog/posts/:slug", async (req, res) => {
+    try {
+      const post = await storage.getPostBySlug(req.params.slug);
+      if (!post) {
+        return res.status(404).json({ message: 'Blog post not found' });
+      }
+      if (post.status !== "published") {
+        return res.status(404).json({ message: 'Blog post not found' });
+      }
+      res.json({ success: true, post });
+    } catch (error) {
+      console.error('Error fetching blog post:', error);
+      res.status(500).json({ message: 'Error fetching blog post' });
+    }
+  });
+  
+  // Posts (CMS - Authenticated Routes)
   app.get("/api/cms/posts", requireAuth, requireEditor, async (req, res) => {
     try {
       const posts = await storage.getPosts();
