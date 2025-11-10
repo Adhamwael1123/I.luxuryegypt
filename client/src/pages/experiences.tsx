@@ -6,7 +6,7 @@ import Footer from "@/components/footer";
 import { Clock, Users, MapPin, Star, Calendar, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 
-// Categories with Tours Data
+// Categories with Tours Data - Each category now has exactly 1 signature tour
 const categories = [
   {
     key: 'family',
@@ -15,43 +15,17 @@ const categories = [
     image: 'https://www.egypttoursportal.com/images/2022/09/Discover-Ancient-Egypt-in-8-Days-Luxury-Holiday-Egypt-Tours-Portal.jpg',
     tours: [
       {
-        id: 'pyramid-adventure',
-        name: 'Pyramid Adventure & Museum Discovery',
-        location: 'Cairo & Giza',
-        duration: '2 Days',
-        groupSize: '4-16 People',
-        price: 'From $450',
-        rating: 4.8,
-        image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Great Pyramids', 'Sphinx Exploration', 'Interactive Museum', 'Family Workshops'],
-        description: 'Interactive pyramid exploration and hands-on museum experiences designed specifically for families.',
-        itinerary: 'Private tours of the Great Pyramids, Sphinx, and world-renowned Egyptian Museum with child-friendly activities and educational games.'
-      },
-      {
-        id: 'pharaoh-valley-quest',
-        name: 'Pharaoh\'s Valley Family Quest',
-        location: 'Luxor',
-        duration: '3 Days',
-        groupSize: '4-12 People',
-        price: 'From $680',
-        rating: 4.7,
-        image: 'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Valley of Kings', 'Family Workshops', 'Educational Tours', 'Kid-Friendly Activities'],
-        description: 'Educational tomb visits and family-friendly archaeological workshops in the legendary Valley of Kings.',
-        itinerary: 'Interactive tomb exploration with educational activities, family workshops on ancient Egyptian life, and visits to colorful temples.'
-      },
-      {
         id: 'nile-family-cruise',
-        name: 'Nile Family Cruise',
+        name: 'Nile Family Adventure',
         location: 'Aswan to Luxor',
         duration: '4 Days',
-        groupSize: '6-20 People',
+        groupSize: '4-16 People',
         price: 'From $850',
         rating: 4.9,
         image: 'https://www.thetimes.com/imageserver/image/%2Fb4c01f06-251f-4b18-b537-a8909772b48b.jpg?crop=1600%2C900%2C0%2C0&resize=1200',
-        highlights: ['Nile Cruise', 'Nubian Village', 'Cultural Activities', 'Family Entertainment'],
-        description: 'Family-friendly cruise with cultural activities and Nubian village visits along the magical Nile River.',
-        itinerary: 'Comfortable family cruise with onboard activities, visits to Nubian villages, temple explorations, and traditional entertainment.'
+        highlights: ['Nile Cruise', 'Valley of Kings', 'Family Workshops', 'Cultural Activities'],
+        description: 'Family-friendly luxury cruise combining ancient wonders with engaging activities designed for all ages.',
+        itinerary: 'Comfortable family cruise with onboard activities, interactive tomb exploration, visits to Nubian villages, and child-friendly temple tours with educational workshops.'
       }
     ]
   },
@@ -62,21 +36,8 @@ const categories = [
     image: 'https://www.thetimes.com/imageserver/image/%2Fb4c01f06-251f-4b18-b537-a8909772b48b.jpg?crop=1600%2C900%2C0%2C0&resize=1200',
     tours: [
       {
-        id: 'luxury-nile-cruise',
-        name: 'Luxury Nile River Cruise',
-        location: 'Aswan to Luxor',
-        duration: '5 Days',
-        groupSize: '2-20 People',
-        price: 'From $1,200',
-        rating: 4.9,
-        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['5-Star Vessel', 'Temple Visits', 'Onboard Dining', 'Sunset Views'],
-        description: 'Experience Egypt from the water aboard a luxury Nile cruise with guided temple visits and world-class amenities.',
-        itinerary: 'Luxury cruise with stops at Kom Ombo, Edfu, and Esna temples, plus visits to Valley of Kings and Karnak Temple.'
-      },
-      {
         id: 'private-dahabiya-cruise',
-        name: 'Private Dahabiya Cruise',
+        name: 'Private Dahabiya Sailing',
         location: 'Nile River',
         duration: '7 Days',
         groupSize: '2-8 People',
@@ -96,43 +57,17 @@ const categories = [
     image: 'https://images.pexels.com/photos/2359/sand-desert-statue-pyramid.jpg?_gl=1*1mcocms*_ga*MTUzMjg3NTA0Mi4xNzU4MjA4MjAy*_ga_8JE65Q40S6*czE3NTgyMDgyMDEkbzEkZzEkdDE3NTgyMDg1NDYkajQ4JGwwJGgw',
     tours: [
       {
-        id: 'pyramids-museum-classic',
-        name: 'Pyramids & Egyptian Museum',
-        location: 'Cairo & Giza',
-        duration: '2 Days',
+        id: 'essential-egypt-tour',
+        name: 'Essential Egypt Grand Tour',
+        location: 'Cairo, Luxor & Aswan',
+        duration: '8 Days',
         groupSize: '2-12 People',
-        price: 'From $380',
+        price: 'From $1,850',
         rating: 4.9,
         image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Great Pyramids', 'Sphinx', 'Egyptian Museum', 'Khan el-Khalili'],
-        description: 'Private tours of the Great Pyramids, Sphinx, and world-renowned Egyptian Museum.',
-        itinerary: 'Explore the Great Pyramids complex, visit the enigmatic Sphinx, discover treasures at the Egyptian Museum, and shop at Khan el-Khalili bazaar.'
-      },
-      {
-        id: 'valley-kings-karnak',
-        name: 'Valley of Kings & Karnak',
-        location: 'Luxor',
-        duration: '3 Days',
-        groupSize: '2-15 People',
-        price: 'From $520',
-        rating: 4.8,
-        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Valley of Kings', 'Karnak Temple', 'Luxor Temple', 'Nile Views'],
-        description: 'Luxury Nile cruise with exclusive access to royal tombs and magnificent temples.',
-        itinerary: 'Royal tomb explorations, magnificent Karnak Temple complex, beautiful Luxor Temple, and scenic Nile River experiences.'
-      },
-      {
-        id: 'nubian-heritage-philae',
-        name: 'Nubian Heritage & Philae Temple',
-        location: 'Aswan',
-        duration: '2 Days',
-        groupSize: '2-10 People',
-        price: 'From $420',
-        rating: 4.7,
-        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Philae Temple', 'Nubian Villages', 'Abu Simbel', 'High Dam'],
-        description: 'Explore Nubian villages, visit Philae Temple, and experience the majesty of Abu Simbel.',
-        itinerary: 'Colorful Nubian village visits, beautiful Philae Temple on its island, magnificent Abu Simbel temples, and modern High Dam engineering marvel.'
+        highlights: ['Great Pyramids', 'Valley of Kings', 'Karnak Temple', 'Abu Simbel'],
+        description: 'Comprehensive journey through Egypt\'s most iconic monuments from Cairo to Aswan.',
+        itinerary: 'Explore the Great Pyramids and Sphinx, discover treasures at the Egyptian Museum, visit the magnificent Valley of Kings, explore Karnak and Luxor temples, and witness the grandeur of Abu Simbel.'
       }
     ]
   },
@@ -143,43 +78,17 @@ const categories = [
     image: 'https://images.pexels.com/photos/33661271/pexels-photo-33661271.jpeg?_gl=1*ywbelw*_ga*MTUzMjg3NTA0Mi4xNzU4MjA4MjAy*_ga_8JE65Q40S6*czE3NTgyMDgyMDEkbzEkZzEkdDE3NTgyMDg2MjIkajM0JGwwJGgw',
     tours: [
       {
-        id: 'sacred-geometry-wisdom',
-        name: 'Sacred Geometry & Ancient Wisdom',
-        location: 'Cairo & Giza',
-        duration: '3 Days',
-        groupSize: '2-10 People',
-        price: 'From $880',
-        rating: 4.8,
-        image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Pyramid Meditation', 'Sacred Geometry', 'Spiritual Guides', 'Ancient Wisdom'],
-        description: 'Private pyramid meditation and sacred geometry workshops exploring ancient Egyptian spiritual knowledge.',
-        itinerary: 'Dawn meditation inside the Great Pyramid, sacred geometry workshops, spiritual guidance sessions, and connection with ancient wisdom.'
-      },
-      {
-        id: 'osiris-pilgrimage',
-        name: 'Temple of Osiris Pilgrimage',
-        location: 'Abydos & Dendera',
-        duration: '4 Days',
+        id: 'temple-healing-journey',
+        name: 'Temple Healing Journey',
+        location: 'Abydos, Dendera & Philae',
+        duration: '5 Days',
         groupSize: '2-8 People',
-        price: 'From $1,150',
-        rating: 4.9,
-        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Osiris Temple', 'Sacred Ceremonies', 'Meditation Sessions', 'Ancient Rituals'],
-        description: 'Sacred ceremonies at Egypt\'s most spiritual temples dedicated to Osiris, god of the afterlife.',
-        itinerary: 'Private temple ceremonies, meditation sessions in sacred spaces, guidance on ancient Egyptian spiritual practices, and transformative rituals.'
-      },
-      {
-        id: 'isis-blessing-ceremony',
-        name: 'Isis Temple Blessing Ceremony',
-        location: 'Philae Temple',
-        duration: '2 Days',
-        groupSize: '2-6 People',
-        price: 'From $650',
+        price: 'From $1,450',
         rating: 5.0,
-        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Isis Temple', 'Sunset Ceremony', 'Blessing Ritual', 'Sacred Waters'],
-        description: 'Private sunset ceremony at the temple of the goddess Isis with traditional blessing rituals.',
-        itinerary: 'Private boat transfer to Philae Island, sunset ceremony at Isis Temple, traditional blessing ritual, and meditation by sacred waters.'
+        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
+        highlights: ['Sacred Ceremonies', 'Temple Meditation', 'Energy Healing', 'Spiritual Guides'],
+        description: 'Transformative journey through Egypt\'s most powerful spiritual temples with meditation and sacred ceremonies.',
+        itinerary: 'Dawn meditation at the Great Pyramid, sacred ceremonies at Temple of Osiris in Abydos, energy healing sessions at Dendera, and sunset blessing ritual at Isis Temple in Philae with experienced spiritual guides.'
       }
     ]
   },
@@ -190,43 +99,17 @@ const categories = [
     image: 'https://images.unsplash.com/photo-1640342105347-3e2699b5fbb3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     tours: [
       {
-        id: 'white-desert-camping',
-        name: 'White Desert Camping Adventure',
-        location: 'White Desert',
-        duration: '3 Days',
-        groupSize: '2-8 People',
-        price: 'From $750',
+        id: 'desert-explorer-expedition',
+        name: 'Desert Explorer Expedition',
+        location: 'White Desert & Siwa Oasis',
+        duration: '6 Days',
+        groupSize: '2-10 People',
+        price: 'From $1,650',
         rating: 4.9,
         image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Desert Camping', 'Star Gazing', 'Rock Formations', '4WD Adventure'],
-        description: 'Camp under stars in otherworldly white rock formations of Egypt\'s most surreal landscape.',
-        itinerary: '4WD desert expedition, camping under star-filled skies, exploration of unique chalk formations, and traditional Bedouin experiences.'
-      },
-      {
-        id: 'siwa-oasis-expedition',
-        name: 'Siwa Oasis Expedition',
-        location: 'Siwa Oasis',
-        duration: '4 Days',
-        groupSize: '2-10 People',
-        price: 'From $950',
-        rating: 4.8,
-        image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Oracle Temple', 'Salt Lakes', 'Cleopatra Springs', 'Berber Culture'],
-        description: 'Visit ancient oracle sites and pristine natural pools in Egypt\'s most remote and mystical oasis.',
-        itinerary: 'Explore the Oracle Temple of Amun, swim in Cleopatra\'s Springs, sandboarding adventures, and immersion in local Berber culture.'
-      },
-      {
-        id: 'golden-mummies-expedition',
-        name: 'Golden Mummies & Hot Springs',
-        location: 'Bahariya Oasis',
-        duration: '2 Days',
-        groupSize: '2-6 People',
-        price: 'From $580',
-        rating: 4.7,
-        image: 'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Golden Mummies', 'Hot Springs', 'Desert Safari', 'Archaeological Sites'],
-        description: 'Explore ancient burial sites and relax in natural hot springs in the heart of the Western Desert.',
-        itinerary: 'Visit the Valley of Golden Mummies, therapeutic hot spring baths, desert safaris, and exploration of Greco-Roman archaeological sites.'
+        highlights: ['White Desert Camping', 'Oracle Temple', 'Cleopatra Springs', 'Star Gazing'],
+        description: 'Epic desert adventure combining the surreal White Desert with the mystical Siwa Oasis.',
+        itinerary: '4WD desert expedition through the otherworldly White Desert, camping under star-filled skies, explore the ancient Oracle Temple of Amun, swim in Cleopatra\'s Springs, and immerse in Berber culture at Siwa Oasis.'
       }
     ]
   },
@@ -237,43 +120,17 @@ const categories = [
     image: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/39926658.jpg?k=5706e07d5b2a27afcfb631edb94dbb1d589cb6803e84733cd3df136a16386f7a&o=&hp=1',
     tours: [
       {
-        id: 'imperial-cairo-experience',
-        name: 'Imperial Cairo Experience',
-        location: 'Cairo',
-        duration: '3 Days',
-        groupSize: '2-4 People',
-        price: 'From $2,250',
+        id: 'pharaohs-platinum-experience',
+        name: 'Pharaohs Platinum Experience',
+        location: 'Cairo, Luxor & Abu Simbel',
+        duration: '10 Days',
+        groupSize: '2-6 People',
+        price: 'From $8,500',
         rating: 5.0,
         image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Private Museums', 'Exclusive Dining', 'Luxury Hotels', 'Personal Butler'],
-        description: 'Private museum tours, exclusive dining, and luxury accommodations with personal concierge service.',
-        itinerary: 'Stay in presidential suites, private after-hours museum access, Michelin-starred dining, personal Egyptologist, and luxury helicopter transfers.'
-      },
-      {
-        id: 'private-dahabiya-ultra',
-        name: 'Private Dahabiya Ultra Experience',
-        location: 'Nile River',
-        duration: '7 Days',
-        groupSize: '2-8 People',
-        price: 'From $4,500',
-        rating: 5.0,
-        image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Private Yacht', 'Personal Crew', 'Exclusive Access', 'Gourmet Cuisine'],
-        description: 'Ultra-luxury sailing yacht with personal crew and private guide for the ultimate Nile experience.',
-        itinerary: 'Private luxury dahabiya with dedicated crew, exclusive temple access outside tourist hours, gourmet onboard dining, and personalized itinerary.'
-      },
-      {
-        id: 'abu-simbel-private-access',
-        name: 'Abu Simbel Private Access',
-        location: 'Abu Simbel',
-        duration: '2 Days',
-        groupSize: '2-6 People',
-        price: 'From $1,850',
-        rating: 5.0,
-        image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
-        highlights: ['Private Access', 'Sunrise/Sunset Tours', 'Luxury Accommodation', 'Helicopter Transfer'],
-        description: 'Exclusive early morning and sunset access to ancient temples with luxury helicopter transfers.',
-        itinerary: 'Private helicopter transfer, exclusive temple access at sunrise and sunset, luxury desert accommodation, and personal archaeological expert.'
+        highlights: ['Private Jet', 'Presidential Suites', 'After-Hours Access', 'Personal Egyptologist'],
+        description: 'The ultimate Egyptian luxury experience with private jet transfers, presidential suite accommodations, and exclusive after-hours temple access.',
+        itinerary: 'Stay in presidential suites at Egypt\'s finest hotels, private jet transfers between destinations, exclusive after-hours access to pyramids and temples, Michelin-starred dining experiences, personal Egyptologist guide, and bespoke itinerary tailored to your desires.'
       }
     ]
   }
