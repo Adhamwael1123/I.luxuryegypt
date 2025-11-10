@@ -341,45 +341,87 @@ export default function Experiences() {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {categories.map((category, index) => (
                 <div
                   key={category.key}
-                  className="group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg hover:border-accent/30 transition-all duration-300 flex flex-col h-full"
+                  className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02]"
                   onClick={() => handleCategoryClick(category.key)}
                   data-testid={`category-${category.key}`}
                 >
-                  {/* Image Section */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={category.image}
-                      alt={category.label}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300" />
-                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 text-xs font-medium text-gray-700">
-                      {category.tours.length} tour{category.tours.length !== 1 ? 's' : ''}
+                  <div className="relative bg-gradient-to-br from-white via-white to-accent/5 rounded-2xl border border-accent/20 shadow-lg overflow-hidden h-full flex flex-col cursor-pointer transition-all duration-500 hover:shadow-2xl hover:border-accent/40 group-hover:bg-gradient-to-br group-hover:from-white group-hover:via-accent/5 group-hover:to-accent/10">
+                    
+                    {/* Luxury accent line */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    {/* Image container with sophisticated overlay */}
+                    <div className="aspect-[4/3] relative overflow-hidden">
+                      <img
+                        src={category.image}
+                        alt={category.label}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                      
+                      {/* Sophisticated gradient overlays */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-primary/30 opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                      
+                      {/* Tour count badge */}
+                      <div className="absolute top-4 left-4 bg-accent/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                        <span className="text-white text-xs font-semibold tracking-wide">
+                          {category.tours.length} Tour{category.tours.length !== 1 ? 's' : ''}
+                        </span>
+                      </div>
+                      
+                      {/* Elegant category name with luxury styling */}
+                      <div className="absolute bottom-6 left-6 right-6">
+                        <div className="space-y-2">
+                          <div className="w-12 h-px bg-accent/80"></div>
+                          <h3 className="text-2xl font-serif font-bold text-white mb-1 tracking-wide" data-testid={`category-name-${category.key}`}>
+                            {category.label}
+                          </h3>
+                        </div>
+                      </div>
+                      
+                      {/* Premium corner accent */}
+                      <div className="absolute top-4 right-4 w-8 h-8 border-2 border-accent/60 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm group-hover:bg-accent/20 transition-all duration-500">
+                        <div className="w-2 h-2 bg-accent rounded-full"></div>
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Content Section */}
-                  <div className="p-6 flex flex-col flex-1">
-                    <h3 className="text-xl font-serif font-bold text-primary mb-2 group-hover:text-accent transition-colors">
-                      {category.label}
-                    </h3>
                     
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
-                      {category.description}
-                    </p>
-                    
-                    <div className="flex items-center justify-between mt-auto">
-                      <span className="text-accent font-medium text-sm">
-                        Explore now
-                      </span>
-                      <svg className="w-4 h-4 text-accent group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
+                    {/* Luxury card content */}
+                    <div className="p-8 flex-1 flex flex-col relative">
+                      
+                      {/* Description with elegant styling */}
+                      <div className="mb-6 flex-1">
+                        <p className="text-muted-foreground font-light leading-relaxed">
+                          {category.description}
+                        </p>
+                      </div>
+                      
+                      {/* Luxury action area with sophisticated styling */}
+                      <div className="pt-6 border-t border-gradient-to-r from-transparent via-accent/20 to-transparent">
+                        <div className="flex items-center justify-between group/action">
+                          <div className="flex flex-col">
+                            <span className="text-primary font-serif font-medium text-lg group-hover/action:text-accent transition-colors duration-300">
+                              Explore Experiences
+                            </span>
+                            <span className="text-muted-foreground text-xs tracking-wide uppercase font-light">
+                              Curated Just For You
+                            </span>
+                          </div>
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover/action:bg-gradient-to-br group-hover/action:from-accent/20 group-hover/action:to-accent/30 transition-all duration-300 group-hover/action:scale-110">
+                            <svg className="w-5 h-5 text-accent group-hover/action:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Subtle decorative elements */}
+                      <div className="absolute top-4 right-4 w-16 h-16 border border-accent/10 rounded-full opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                      <div className="absolute top-6 right-6 w-8 h-8 border border-accent/20 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
                     </div>
                   </div>
                 </div>
