@@ -9,49 +9,19 @@ import { Link } from "wouter";
 
 const spiritualTours = [
   {
-    id: 'sacred-geometry-wisdom',
-    name: 'Sacred Geometry & Ancient Wisdom',
-    location: 'Cairo & Giza',
-    duration: '3 Days',
-    groupSize: '2-10 People',
-    price: 'From $880',
-    rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Pyramid Meditation', 'Sacred Geometry', 'Spiritual Guides', 'Ancient Wisdom'],
-    description: 'Private pyramid meditation and sacred geometry workshops exploring ancient Egyptian spiritual knowledge.',
-    itinerary: 'Dawn meditation inside the Great Pyramid, sacred geometry workshops, spiritual guidance sessions, and connection with ancient wisdom.',
-    tourType: 'Spiritual Experience',
-    spiritualFeatures: ['Meditation sessions', 'Sacred geometry', 'Ancient wisdom', 'Spiritual guides']
-  },
-  {
-    id: 'osiris-pilgrimage',
-    name: 'Temple of Osiris Pilgrimage',
-    location: 'Abydos & Dendera',
-    duration: '4 Days',
+    id: 'temple-healing-journey',
+    name: 'Temple Healing Journey',
+    location: 'Abydos, Dendera & Philae',
+    duration: '5 Days',
     groupSize: '2-8 People',
-    price: 'From $1,150',
-    rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Osiris Temple', 'Sacred Ceremonies', 'Meditation Sessions', 'Ancient Rituals'],
-    description: 'Sacred ceremonies at Egypt\'s most spiritual temples dedicated to Osiris, god of the afterlife.',
-    itinerary: 'Private temple ceremonies, meditation sessions in sacred spaces, guidance on ancient Egyptian spiritual practices, and transformative rituals.',
-    tourType: 'Sacred Pilgrimage',
-    spiritualFeatures: ['Sacred ceremonies', 'Temple meditation', 'Ancient rituals', 'Spiritual transformation']
-  },
-  {
-    id: 'isis-blessing-ceremony',
-    name: 'Isis Temple Blessing Ceremony',
-    location: 'Philae Temple',
-    duration: '2 Days',
-    groupSize: '2-6 People',
-    price: 'From $650',
+    price: 'From $1,450',
     rating: 5.0,
-    image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Isis Temple', 'Sunset Ceremony', 'Blessing Ritual', 'Sacred Waters'],
-    description: 'Private sunset ceremony at the temple of the goddess Isis with traditional blessing rituals.',
-    itinerary: 'Private boat transfer to Philae Island, sunset ceremony at Isis Temple, traditional blessing ritual, and meditation by sacred waters.',
-    tourType: 'Blessing Ceremony',
-    spiritualFeatures: ['Sunset ceremonies', 'Sacred blessings', 'Water meditation', 'Goddess connection']
+    image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
+    highlights: ['Sacred Ceremonies', 'Temple Meditation', 'Energy Healing', 'Spiritual Guides'],
+    description: 'Transformative journey through Egypt\'s most powerful spiritual temples with meditation and sacred ceremonies.',
+    itinerary: 'Dawn meditation at the Great Pyramid, sacred ceremonies at Temple of Osiris in Abydos, energy healing sessions at Dendera, and sunset blessing ritual at Isis Temple in Philae with experienced spiritual guides.',
+    tourType: 'Transformative Journey',
+    spiritualFeatures: ['Sacred ceremonies', 'Temple meditation', 'Energy healing', 'Spiritual transformation']
   }
 ];
 

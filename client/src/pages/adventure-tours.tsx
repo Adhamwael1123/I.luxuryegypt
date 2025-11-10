@@ -9,49 +9,19 @@ import { Link } from "wouter";
 
 const adventureTours = [
   {
-    id: 'white-desert-camping',
-    name: 'White Desert Camping Adventure',
-    location: 'White Desert',
-    duration: '3 Days',
-    groupSize: '2-8 People',
-    price: 'From $750',
+    id: 'desert-explorer-expedition',
+    name: 'Desert Explorer Expedition',
+    location: 'White Desert & Siwa Oasis',
+    duration: '6 Days',
+    groupSize: '2-10 People',
+    price: 'From $1,650',
     rating: 4.9,
     image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Desert Camping', 'Star Gazing', 'Rock Formations', '4WD Adventure'],
-    description: 'Camp under stars in otherworldly white rock formations of Egypt\'s most surreal landscape.',
-    itinerary: '4WD desert expedition, camping under star-filled skies, exploration of unique chalk formations, and traditional Bedouin experiences.',
-    tourType: 'Desert Adventure',
-    adventureFeatures: ['4WD expedition', 'Desert camping', 'Star gazing', 'Rock climbing']
-  },
-  {
-    id: 'siwa-oasis-expedition',
-    name: 'Siwa Oasis Expedition',
-    location: 'Siwa Oasis',
-    duration: '4 Days',
-    groupSize: '2-10 People',
-    price: 'From $950',
-    rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Oracle Temple', 'Salt Lakes', 'Cleopatra Springs', 'Berber Culture'],
-    description: 'Visit ancient oracle sites and pristine natural pools in Egypt\'s most remote and mystical oasis.',
-    itinerary: 'Explore the Oracle Temple of Amun, swim in Cleopatra\'s Springs, sandboarding adventures, and immersion in local Berber culture.',
-    tourType: 'Oasis Expedition',
-    adventureFeatures: ['Oasis exploration', 'Cultural immersion', 'Natural springs', 'Sandboarding']
-  },
-  {
-    id: 'golden-mummies-expedition',
-    name: 'Golden Mummies & Hot Springs',
-    location: 'Bahariya Oasis',
-    duration: '2 Days',
-    groupSize: '2-6 People',
-    price: 'From $580',
-    rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Golden Mummies', 'Hot Springs', 'Desert Safari', 'Archaeological Sites'],
-    description: 'Explore ancient burial sites and relax in natural hot springs in the heart of the Western Desert.',
-    itinerary: 'Visit the Valley of Golden Mummies, therapeutic hot spring baths, desert safaris, and exploration of Greco-Roman archaeological sites.',
-    tourType: 'Archaeological Adventure',
-    adventureFeatures: ['Archaeological sites', 'Hot springs', 'Desert safari', 'Ancient discoveries']
+    highlights: ['White Desert Camping', 'Oracle Temple', 'Cleopatra Springs', 'Star Gazing'],
+    description: 'Epic desert adventure combining the surreal White Desert with the mystical Siwa Oasis.',
+    itinerary: '4WD desert expedition through the otherworldly White Desert, camping under star-filled skies, explore the ancient Oracle Temple of Amun, swim in Cleopatra\'s Springs, and immerse in Berber culture at Siwa Oasis.',
+    tourType: 'Epic Desert Expedition',
+    adventureFeatures: ['4WD expedition', 'Desert camping', 'Oasis exploration', 'Cultural immersion']
   }
 ];
 

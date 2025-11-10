@@ -9,23 +9,8 @@ import { Link } from "wouter";
 
 const nileCruiseTours = [
   {
-    id: 'luxury-nile-cruise',
-    name: 'Luxury Nile River Cruise',
-    location: 'Aswan to Luxor',
-    duration: '5 Days',
-    groupSize: '2-20 People',
-    price: 'From $1,200',
-    rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['5-Star Vessel', 'Temple Visits', 'Onboard Dining', 'Sunset Views'],
-    description: 'Experience Egypt from the water aboard a luxury Nile cruise with guided temple visits and world-class amenities.',
-    itinerary: 'Luxury cruise with stops at Kom Ombo, Edfu, and Esna temples, plus visits to Valley of Kings and Karnak Temple.',
-    vesselType: '5-Star Cruise Ship',
-    cruiseFeatures: ['All meals included', 'Expert Egyptologist', 'Luxury cabins', 'Evening entertainment']
-  },
-  {
     id: 'private-dahabiya-cruise',
-    name: 'Private Dahabiya Cruise',
+    name: 'Private Dahabiya Sailing',
     location: 'Nile River',
     duration: '7 Days',
     groupSize: '2-8 People',
@@ -37,21 +22,6 @@ const nileCruiseTours = [
     itinerary: 'Private luxury dahabiya with dedicated crew, exclusive temple access outside tourist hours, gourmet onboard dining, and personalized itinerary.',
     vesselType: 'Private Sailing Yacht',
     cruiseFeatures: ['Private chef', 'Butler service', 'Flexible itinerary', 'Exclusive experiences']
-  },
-  {
-    id: 'classic-nile-cruise',
-    name: 'Classic Nile Discovery',
-    location: 'Luxor to Aswan',
-    duration: '4 Days',
-    groupSize: '2-16 People',
-    price: 'From $850',
-    rating: 4.7,
-    image: 'https://www.thetimes.com/imageserver/image/%2Fb4c01f06-251f-4b18-b537-a8909772b48b.jpg?crop=1600%2C900%2C0%2C0&resize=1200',
-    highlights: ['Historic Temples', 'Traditional Felucca', 'Cultural Shows', 'Local Markets'],
-    description: 'Traditional Nile cruise experience with authentic cultural encounters and comprehensive temple visits.',
-    itinerary: 'Classic cruise route with visits to Karnak, Luxor Temple, Kom Ombo, Philae Temple, and traditional Nubian village.',
-    vesselType: 'Traditional Cruise Ship',
-    cruiseFeatures: ['Cultural performances', 'Local guide', 'Traditional meals', 'Market visits']
   }
 ];
 

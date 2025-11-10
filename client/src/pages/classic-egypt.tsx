@@ -9,49 +9,19 @@ import { Link } from "wouter";
 
 const classicTours = [
   {
-    id: 'pyramids-museum-classic',
-    name: 'Pyramids & Egyptian Museum',
-    location: 'Cairo & Giza',
-    duration: '2 Days',
+    id: 'essential-egypt-tour',
+    name: 'Essential Egypt Grand Tour',
+    location: 'Cairo, Luxor & Aswan',
+    duration: '8 Days',
     groupSize: '2-12 People',
-    price: 'From $380',
+    price: 'From $1,850',
     rating: 4.9,
     image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d04136?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Great Pyramids', 'Sphinx', 'Egyptian Museum', 'Khan el-Khalili'],
-    description: 'Private tours of the Great Pyramids, Sphinx, and world-renowned Egyptian Museum.',
-    itinerary: 'Explore the Great Pyramids complex, visit the enigmatic Sphinx, discover treasures at the Egyptian Museum, and shop at Khan el-Khalili bazaar.',
-    tourType: 'Private Tour',
-    classicFeatures: ['Expert guide', 'Skip-the-line access', 'Traditional lunch', 'Photo opportunities']
-  },
-  {
-    id: 'valley-kings-karnak',
-    name: 'Valley of Kings & Karnak',
-    location: 'Luxor',
-    duration: '3 Days',
-    groupSize: '2-15 People',
-    price: 'From $520',
-    rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Valley of Kings', 'Karnak Temple', 'Luxor Temple', 'Nile Views'],
-    description: 'Luxury Nile cruise with exclusive access to royal tombs and magnificent temples.',
-    itinerary: 'Royal tomb explorations, magnificent Karnak Temple complex, beautiful Luxor Temple, and scenic Nile River experiences.',
-    tourType: 'Cultural Tour',
-    classicFeatures: ['Tomb access', 'Temple tours', 'Nile cruise', 'Local experiences']
-  },
-  {
-    id: 'nubian-heritage-philae',
-    name: 'Nubian Heritage & Philae Temple',
-    location: 'Aswan',
-    duration: '2 Days',
-    groupSize: '2-10 People',
-    price: 'From $420',
-    rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Philae Temple', 'Nubian Villages', 'Abu Simbel', 'High Dam'],
-    description: 'Explore Nubian villages, visit Philae Temple, and experience the majesty of Abu Simbel.',
-    itinerary: 'Colorful Nubian village visits, beautiful Philae Temple on its island, magnificent Abu Simbel temples, and modern High Dam engineering marvel.',
-    tourType: 'Heritage Tour',
-    classicFeatures: ['Cultural immersion', 'Traditional crafts', 'Village visits', 'Ancient temples']
+    highlights: ['Great Pyramids', 'Valley of Kings', 'Karnak Temple', 'Abu Simbel'],
+    description: 'Comprehensive journey through Egypt\'s most iconic monuments from Cairo to Aswan.',
+    itinerary: 'Explore the Great Pyramids and Sphinx, discover treasures at the Egyptian Museum, visit the magnificent Valley of Kings, explore Karnak and Luxor temples, and witness the grandeur of Abu Simbel.',
+    tourType: 'Grand Tour',
+    classicFeatures: ['Expert Egyptologist', 'All monuments included', 'Luxury hotels', 'Comprehensive itinerary']
   }
 ];
 

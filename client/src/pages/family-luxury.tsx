@@ -1,25 +1,31 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { Clock, Users, MapPin, Star, Calendar, ArrowLeft, Heart, Baby } from "lucide-react";
 import { Link } from "wouter";
-import type { Tour } from "@shared/schema";
+
+const familyTours = [
+  {
+    id: 'family-pyramids-adventure',
+    name: 'Family Pyramids Adventure',
+    location: 'Cairo & Giza',
+    duration: '5 Days',
+    groupSize: '4-16 People',
+    price: 'From $1,280',
+    rating: 4.9,
+    image: 'https://www.egypttoursportal.com/images/2022/09/Discover-Ancient-Egypt-in-8-Days-Luxury-Holiday-Egypt-Tours-Portal.jpg',
+    highlights: ['Pyramids Exploration', 'Camel Rides', 'Interactive Museums', 'Family-Friendly Hotels'],
+    description: 'Perfect family adventure exploring the pyramids with engaging activities designed for children and adults.',
+    itinerary: 'Kid-friendly exploration of the Great Pyramids, fun camel rides, interactive Egyptian Museum experience with treasure hunts, papyrus making workshop, and luxury family accommodation.',
+    tourType: 'Family Adventure',
+    familyFeatures: ['Kid-friendly guides', 'Interactive activities', 'Family hotels', 'Flexible schedule']
+  }
+];
 
 export default function FamilyLuxury() {
-  
-  const { data: toursData, isLoading, isError, error } = useQuery<{ success: boolean; tours: Tour[] }>({
-    queryKey: ['/api/public/tours', 'Family Luxury'],
-    queryFn: async () => {
-      const res = await fetch('/api/public/tours?category=Family%20Luxury');
-      if (!res.ok) throw new Error('Failed to fetch tours');
-      return res.json();
-    }
-  });
-  
-  const familyTours = toursData?.tours || [];
+  const [selectedTour, setSelectedTour] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-background">
@@ -87,66 +93,37 @@ export default function FamilyLuxury() {
             </p>
           </div>
 
-          {isLoading ? (
-            <div className="grid lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} className="overflow-hidden">
-                  <Skeleton className="h-64 w-full" />
-                  <CardContent className="p-6 space-y-4">
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-10 w-full" />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : isError ? (
-            <div className="text-center py-12 bg-destructive/10 rounded-xl border border-destructive/20">
-              <p className="text-lg font-semibold text-destructive mb-2">Unable to Load Tours</p>
-              <p className="text-muted-foreground mb-4">
-                {error instanceof Error ? error.message : 'An error occurred while fetching tours.'}
-              </p>
-              <Button 
-                variant="outline" 
-                onClick={() => window.location.reload()}
-                data-testid="button-reload"
-              >
-                Try Again
-              </Button>
-            </div>
-          ) : familyTours.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-lg text-muted-foreground">No family tours available at the moment. Please check back soon!</p>
-            </div>
-          ) : (
-            <div className="grid lg:grid-cols-3 gap-8">
-              {familyTours.map((tour) => (
+          <div className="grid lg:grid-cols-3 gap-8">
+            {familyTours.map((tour) => (
               <Card
                 key={tour.id}
                 className="group overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] flex flex-col h-full min-h-[600px]"
               >
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={tour.heroImage}
-                    alt={tour.title}
+                    src={tour.image}
+                    alt={tour.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
-                  {/* Category Badge */}
+                  {/* Tour Type Badge */}
                   <div className="absolute top-4 left-4 bg-accent/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    {tour.category}
+                    {tour.tourType}
                   </div>
 
-                  {/* Duration Badge */}
+                  {/* Rating */}
                   <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
-                    <Clock className="h-4 w-4 text-accent" />
-                    <span className="text-sm font-medium">{tour.duration}</span>
+                    <Star className="h-4 w-4 text-accent fill-accent" />
+                    <span className="text-sm font-medium">{tour.rating}</span>
                   </div>
 
                   <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-2">{tour.title}</h3>
+                    <div className="flex items-center gap-2 text-accent font-medium text-sm mb-2">
+                      <MapPin className="h-4 w-4" />
+                      <span>{tour.location}</span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-2">{tour.name}</h3>
                   </div>
                 </div>
 
@@ -168,14 +145,14 @@ export default function FamilyLuxury() {
                     {tour.description}
                   </p>
 
-                  {/* Includes/Features */}
+                  {/* Highlights */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {(tour.includes || []).slice(0, 3).map((item, index) => (
+                    {tour.highlights.slice(0, 3).map((highlight: string, index: number) => (
                       <span
                         key={index}
                         className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full font-medium"
                       >
-                        {item}
+                        {highlight}
                       </span>
                     ))}
                   </div>
@@ -183,33 +160,56 @@ export default function FamilyLuxury() {
                   {/* Price and Actions */}
                   <div className="flex items-center justify-between border-t border-border pt-4 mt-auto">
                     <div>
-                      <p className="text-2xl font-serif font-bold text-primary">${tour.price} {tour.currency}</p>
+                      <p className="text-2xl font-serif font-bold text-primary">{tour.price}</p>
                       <p className="text-xs text-muted-foreground">per person</p>
                     </div>
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
                         size="sm"
-                        asChild
+                        onClick={() => setSelectedTour(selectedTour === tour.id ? null : tour.id)}
                         className="hover:scale-105 transition-transform"
-                        data-testid={`button-details-${tour.slug}`}
                       >
-                        <Link href={`/tour/${tour.slug}`}>
-                          Details
-                        </Link>
+                        {selectedTour === tour.id ? 'Hide' : 'Details'}
                       </Button>
-                      <Button size="sm" asChild className="hover:scale-105 transition-transform" data-testid={`button-book-${tour.slug}`}>
+                      <Button size="sm" asChild className="hover:scale-105 transition-transform">
                         <Link href="/contact">
                           Book Now
                         </Link>
                       </Button>
                     </div>
                   </div>
+
+                  {/* Expandable Details */}
+                  {selectedTour === tour.id && (
+                    <div className="mt-8 p-6 bg-muted/30 rounded-xl border border-accent/20">
+                      <h4 className="text-xl font-serif font-bold text-primary mb-4 flex items-center gap-2">
+                        <Calendar className="h-5 w-5 text-accent" />
+                        Complete Itinerary
+                      </h4>
+                      <div className="space-y-4">
+                        <div className="bg-background/50 p-4 rounded-lg">
+                          <p className="text-muted-foreground leading-relaxed">
+                            {tour.itinerary}
+                          </p>
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-4 text-sm">
+                          <div className="space-y-2">
+                            <div className="font-semibold text-primary">Duration</div>
+                            <div className="text-muted-foreground">{tour.duration}</div>
+                          </div>
+                          <div className="space-y-2">
+                            <div className="font-semibold text-primary">Group Size</div>
+                            <div className="text-muted-foreground">{tour.groupSize}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
           </div>
-          )}
         </div>
       </section>
 

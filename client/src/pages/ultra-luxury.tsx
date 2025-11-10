@@ -9,49 +9,19 @@ import { Link } from "wouter";
 
 const ultraLuxuryTours = [
   {
-    id: 'imperial-cairo-experience',
-    name: 'Imperial Cairo Experience',
-    location: 'Cairo',
-    duration: '3 Days',
-    groupSize: '2-4 People',
-    price: 'From $2,250',
+    id: 'pharaohs-platinum-experience',
+    name: 'Pharaohs Platinum Experience',
+    location: 'Cairo, Luxor & Abu Simbel',
+    duration: '10 Days',
+    groupSize: '2-6 People',
+    price: 'From $8,500',
     rating: 5.0,
     image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Private Museums', 'Exclusive Dining', 'Luxury Hotels', 'Personal Butler'],
-    description: 'Private museum tours, exclusive dining, and luxury accommodations with personal concierge service.',
-    itinerary: 'Stay in presidential suites, private after-hours museum access, Michelin-starred dining, personal Egyptologist, and luxury helicopter transfers.',
-    tourType: 'Ultra Luxury Experience',
-    luxuryFeatures: ['Presidential suites', 'Private museum access', 'Michelin dining', 'Personal butler']
-  },
-  {
-    id: 'private-dahabiya-ultra',
-    name: 'Private Dahabiya Ultra Experience',
-    location: 'Nile River',
-    duration: '7 Days',
-    groupSize: '2-8 People',
-    price: 'From $4,500',
-    rating: 5.0,
-    image: 'https://images.unsplash.com/photo-1578925441513-b3c1bd1bb0e8?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Private Yacht', 'Personal Crew', 'Exclusive Access', 'Gourmet Cuisine'],
-    description: 'Ultra-luxury sailing yacht with personal crew and private guide for the ultimate Nile experience.',
-    itinerary: 'Private luxury dahabiya with dedicated crew, exclusive temple access outside tourist hours, gourmet onboard dining, and personalized itinerary.',
-    tourType: 'Private Yacht Experience',
-    luxuryFeatures: ['Private yacht', 'Dedicated crew', 'Exclusive access', 'Gourmet chef']
-  },
-  {
-    id: 'abu-simbel-private-access',
-    name: 'Abu Simbel Private Access',
-    location: 'Abu Simbel',
-    duration: '2 Days',
-    groupSize: '2-6 People',
-    price: 'From $1,850',
-    rating: 5.0,
-    image: 'https://images.unsplash.com/photo-1594735797063-9d0c7e54f6c8?q=80&w=2070&auto=format&fit=crop',
-    highlights: ['Private Access', 'Sunrise/Sunset Tours', 'Luxury Accommodation', 'Helicopter Transfer'],
-    description: 'Exclusive early morning and sunset access to ancient temples with luxury helicopter transfers.',
-    itinerary: 'Private helicopter transfer, exclusive temple access at sunrise and sunset, luxury desert accommodation, and personal archaeological expert.',
-    tourType: 'Exclusive Temple Access',
-    luxuryFeatures: ['Helicopter transfers', 'Private temple access', 'Luxury desert camp', 'Expert guide']
+    highlights: ['Private Jet', 'Presidential Suites', 'After-Hours Access', 'Personal Egyptologist'],
+    description: 'The ultimate Egyptian luxury experience with private jet transfers, presidential suite accommodations, and exclusive after-hours temple access.',
+    itinerary: 'Stay in presidential suites at Egypt\'s finest hotels, private jet transfers between destinations, exclusive after-hours access to pyramids and temples, Michelin-starred dining experiences, personal Egyptologist guide, and bespoke itinerary tailored to your desires.',
+    tourType: 'Platinum Experience',
+    luxuryFeatures: ['Private jet', 'Presidential suites', 'Exclusive access', 'Bespoke itinerary']
   }
 ];
 
