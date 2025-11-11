@@ -40,6 +40,7 @@ import ResponsibleTravel from "@/pages/responsible-travel";
 import AdminLogin from "@/pages/admin-login";
 import AdminDashboard from "@/pages/admin-dashboard";
 import AdminHotels from "@/pages/admin-hotels";
+import AdminTours from "@/pages/admin-tours";
 import AdminPages from "@/pages/admin-pages";
 import AdminPosts from "@/pages/admin-posts";
 import AdminInquiries from "@/pages/admin-inquiries";
@@ -87,6 +88,7 @@ function Router() {
         <Route path="/admin/login" component={AdminLogin} />
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/admin/hotels" component={AdminHotels} />
+        <Route path="/admin/tours" component={AdminTours} />
         <Route path="/admin/pages" component={AdminPages} />
         <Route path="/admin/posts" component={AdminPosts} />
         <Route path="/admin/inquiries" component={AdminInquiries} />

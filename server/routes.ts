@@ -9,6 +9,7 @@ import {
   insertPageSchema,
   insertPostSchema,
   insertHotelSchema,
+  insertTourSchema,
   insertMediaSchema,
   loginSchema
 } from "@shared/schema";
@@ -800,6 +801,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error fetching hotels for CMS:', error);
       res.status(500).json({ message: 'Error fetching hotels' });
+    }
+  });
+
+  // Tour CMS Routes
+  
+  // Get tours for CMS management (admin/editor access)
+  app.get("/api/cms/tours", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const tours = await storage.getTours();
+      res.json({ success: true, tours });
+    } catch (error) {
+      console.error('Error fetching tours for CMS:', error);
+      res.status(500).json({ message: 'Error fetching tours' });
+    }
+  });
+
+  // Create tour (admin/editor access)
+  app.post("/api/cms/tours", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const tourData = insertTourSchema.parse(req.body);
+      
+      const tour = await storage.createTour({
+        ...tourData,
+        createdBy: authReq.user!.id
+      });
+      
+      res.status(201).json({ success: true, tour });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error creating tour:', error);
+      res.status(500).json({ message: 'Error creating tour' });
+    }
+  });
+
+  // Update tour (admin/editor access)
+  app.put("/api/cms/tours/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const tourData = insertTourSchema.partial().parse(req.body);
+      
+      const tour = await storage.updateTour(req.params.id, tourData);
+      if (!tour) {
+        return res.status(404).json({ message: 'Tour not found' });
+      }
+      
+      res.json({ success: true, tour });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error updating tour:', error);
+      res.status(500).json({ message: 'Error updating tour' });
+    }
+  });
+
+  // Delete tour (admin/editor access)
+  app.delete("/api/cms/tours/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const deleted = await storage.deleteTour(req.params.id);
+      if (!deleted) {
+        return res.status(404).json({ message: 'Tour not found' });
+      }
+      
+      res.json({ success: true, message: 'Tour deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting tour:', error);
+      res.status(500).json({ message: 'Error deleting tour' });
     }
   });
 
