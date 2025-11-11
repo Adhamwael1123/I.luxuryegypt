@@ -11,6 +11,7 @@ import {
   insertHotelSchema,
   insertTourSchema,
   insertPackageSchema,
+  insertDestinationSchema,
   insertMediaSchema,
   loginSchema
 } from "@shared/schema";
@@ -954,6 +955,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error deleting package:', error);
       res.status(500).json({ message: 'Error deleting package' });
+    }
+  });
+
+  // Destination CMS Routes
+  
+  // Get destinations for CMS management (admin/editor access)
+  app.get("/api/cms/destinations", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const destinations = await storage.getDestinations();
+      res.json(destinations);
+    } catch (error) {
+      console.error('Error fetching destinations for CMS:', error);
+      res.status(500).json({ message: 'Error fetching destinations' });
+    }
+  });
+
+  // Create destination (admin/editor access)
+  app.post("/api/cms/destinations", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const destinationData = insertDestinationSchema.parse(req.body);
+      
+      const destination = await storage.createDestination({
+        ...destinationData,
+        createdBy: authReq.user!.id
+      });
+      
+      res.status(201).json({ success: true, destination });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error creating destination:', error);
+      res.status(500).json({ message: 'Error creating destination' });
+    }
+  });
+
+  // Update destination (admin/editor access)
+  app.put("/api/cms/destinations/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const destinationData = insertDestinationSchema.partial().parse(req.body);
+      
+      const destination = await storage.updateDestination(req.params.id, destinationData);
+      if (!destination) {
+        return res.status(404).json({ message: 'Destination not found' });
+      }
+      
+      res.json({ success: true, destination });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error updating destination:', error);
+      res.status(500).json({ message: 'Error updating destination' });
+    }
+  });
+
+  // Delete destination (admin/editor access)
+  app.delete("/api/cms/destinations/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const deleted = await storage.deleteDestination(req.params.id);
+      if (!deleted) {
+        return res.status(404).json({ message: 'Destination not found' });
+      }
+      
+      res.json({ success: true, message: 'Destination deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting destination:', error);
+      res.status(500).json({ message: 'Error deleting destination' });
     }
   });
 
