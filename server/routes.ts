@@ -10,6 +10,7 @@ import {
   insertPostSchema,
   insertHotelSchema,
   insertTourSchema,
+  insertPackageSchema,
   insertMediaSchema,
   loginSchema
 } from "@shared/schema";
@@ -877,6 +878,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error deleting tour:', error);
       res.status(500).json({ message: 'Error deleting tour' });
+    }
+  });
+
+  // Package CMS Routes
+  
+  // Get packages for CMS management (admin/editor access)
+  app.get("/api/cms/packages", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const packages = await storage.getPackages();
+      res.json({ success: true, packages });
+    } catch (error) {
+      console.error('Error fetching packages for CMS:', error);
+      res.status(500).json({ message: 'Error fetching packages' });
+    }
+  });
+
+  // Create package (admin/editor access)
+  app.post("/api/cms/packages", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const packageData = insertPackageSchema.parse(req.body);
+      
+      const pkg = await storage.createPackage({
+        ...packageData,
+        createdBy: authReq.user!.id
+      });
+      
+      res.status(201).json({ success: true, package: pkg });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error creating package:', error);
+      res.status(500).json({ message: 'Error creating package' });
+    }
+  });
+
+  // Update package (admin/editor access)
+  app.put("/api/cms/packages/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const packageData = insertPackageSchema.partial().parse(req.body);
+      
+      const pkg = await storage.updatePackage(req.params.id, packageData);
+      if (!pkg) {
+        return res.status(404).json({ message: 'Package not found' });
+      }
+      
+      res.json({ success: true, package: pkg });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error updating package:', error);
+      res.status(500).json({ message: 'Error updating package' });
+    }
+  });
+
+  // Delete package (admin/editor access)
+  app.delete("/api/cms/packages/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const deleted = await storage.deletePackage(req.params.id);
+      if (!deleted) {
+        return res.status(404).json({ message: 'Package not found' });
+      }
+      
+      res.json({ success: true, message: 'Package deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting package:', error);
+      res.status(500).json({ message: 'Error deleting package' });
     }
   });
 

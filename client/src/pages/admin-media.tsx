@@ -43,12 +43,22 @@ export default function AdminMedia() {
     mutationFn: async (file: File) => {
       const formData = new FormData();
       formData.append('file', file);
-      return apiRequest('/api/cms/media', {
+      const token = localStorage.getItem("adminToken");
+      
+      const response = await fetch('/api/cms/media', {
         method: 'POST',
+        headers: {
+          ...(token && { "Authorization": `Bearer ${token}` }),
+        },
         body: formData,
-        // Don't set Content-Type header, let browser set it for multipart/form-data
-        headers: {}
       });
+      
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: response.statusText }));
+        throw new Error(error.message || `Upload failed with status ${response.status}`);
+      }
+      
+      return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/cms/media'] });
@@ -69,9 +79,7 @@ export default function AdminMedia() {
   // Delete mutation
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      return apiRequest(`/api/cms/media/${id}`, {
-        method: 'DELETE'
-      });
+      return apiRequest('DELETE', `/api/cms/media/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/cms/media'] });
