@@ -42,6 +42,7 @@ import AdminDashboard from "@/pages/admin-dashboard";
 import AdminHotels from "@/pages/admin-hotels";
 import AdminTours from "@/pages/admin-tours";
 import AdminPackages from "@/pages/admin-packages";
+import AdminPackageForm from "@/pages/admin-package-form";
 import AdminPages from "@/pages/admin-pages";
 import AdminPosts from "@/pages/admin-posts";
 import AdminInquiries from "@/pages/admin-inquiries";
@@ -91,11 +92,13 @@ function Router() {
         <Route path="/admin/hotels" component={AdminHotels} />
         <Route path="/admin/tours" component={AdminTours} />
         <Route path="/admin/packages" component={AdminPackages} />
+        <Route path="/admin/packages/new" component={AdminPackageForm} />
+        <Route path="/admin/packages/:id/edit" component={AdminPackageForm} />
+        <Route path="/admin/destinations" component={AdminDestinations} />
         <Route path="/admin/pages" component={AdminPages} />
         <Route path="/admin/posts" component={AdminPosts} />
         <Route path="/admin/inquiries" component={AdminInquiries} />
         <Route path="/admin/media" component={AdminMedia} />
-        <Route path="/admin/destinations" component={AdminDestinations} />
         <Route component={() => <PageTransition><NotFound /></PageTransition>} />
       </Switch>
     </AnimatePresence>

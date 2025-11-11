@@ -29,7 +29,14 @@ export default function AdminDashboard() {
 
       try {
         // Fetch real data from multiple endpoints
-        const [hotelsRes, inquiriesRes, postsRes] = await Promise.all([
+        const [
+          hotelsRes,
+          inquiriesRes,
+          postsRes,
+          destinationsRes, // Added destinations
+          toursRes, // Added tours
+          packagesRes // Added packages
+        ] = await Promise.all([
           fetch("/api/cms/hotels", {
             headers: { "Authorization": `Bearer ${token}` }
           }),
@@ -38,12 +45,24 @@ export default function AdminDashboard() {
           }),
           fetch("/api/cms/posts", {
             headers: { "Authorization": `Bearer ${token}` }
+          }),
+          fetch("/api/cms/destinations", { // Fetch destinations
+            headers: { "Authorization": `Bearer ${token}` }
+          }),
+          fetch("/api/cms/tours", { // Fetch tours
+            headers: { "Authorization": `Bearer ${token}` }
+          }),
+          fetch("/api/cms/packages", { // Fetch packages
+            headers: { "Authorization": `Bearer ${token}` }
           })
         ]);
 
         const hotelsData = hotelsRes.ok ? await hotelsRes.json() : { hotels: [] };
         const inquiriesData = inquiriesRes.ok ? await inquiriesRes.json() : { inquiries: [] };
         const postsData = postsRes.ok ? await postsRes.json() : { posts: [] };
+        const destinationsData = destinationsRes.ok ? await destinationsRes.json() : { destinations: [] }; // Process destinations
+        const toursData = toursRes.ok ? await toursRes.json() : { tours: [] }; // Process tours
+        const packagesData = packagesRes.ok ? await packagesRes.json() : { packages: [] }; // Process packages
 
         return {
           pages: 5, // Static for now
@@ -51,9 +70,9 @@ export default function AdminDashboard() {
           inquiries: inquiriesData.inquiries?.length || 0,
           media: 24, // Static for now
           hotels: hotelsData.hotels?.length || 0,
-          destinations: 0, // Will be updated when destinations API is ready
-          tours: 0, // Will be updated when tours API is ready
-          packages: 0, // Will be updated when packages API is ready
+          destinations: destinationsData.destinations?.length || 0, // Use fetched data
+          tours: toursData.tours?.length || 0, // Use fetched data
+          packages: packagesData.packages?.length || 0, // Use fetched data
         } as DashboardStats;
       } catch (error) {
         console.error("Error fetching stats:", error);
@@ -143,8 +162,8 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <AdminLayout 
-      title="Dashboard" 
+    <AdminLayout
+      title="Dashboard"
       description="Overview of your travel website content and statistics"
     >
       {/* Welcome Section */}
@@ -162,8 +181,8 @@ export default function AdminDashboard() {
           {statsCards.map((stat) => {
             const IconComponent = stat.icon;
             return (
-              <Card 
-                key={stat.title} 
+              <Card
+                key={stat.title}
                 className="hover:shadow-md transition-shadow cursor-pointer"
                 onClick={() => setLocation(stat.href)}
                 data-testid={`card-${stat.title.toLowerCase().replace(' ', '-')}`}
@@ -202,8 +221,8 @@ export default function AdminDashboard() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full justify-start"
                 onClick={() => setLocation("/admin/pages/new")}
                 data-testid="button-new-page"
@@ -211,8 +230,8 @@ export default function AdminDashboard() {
                 <FileText className="h-4 w-4 mr-2" />
                 Create New Page
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full justify-start"
                 onClick={() => setLocation("/admin/posts")}
                 data-testid="button-new-post"
@@ -220,8 +239,8 @@ export default function AdminDashboard() {
                 <FileText className="h-4 w-4 mr-2" />
                 Write Blog Post
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full justify-start"
                 onClick={() => setLocation("/admin/hotels/new")}
                 data-testid="button-new-hotel"
@@ -229,14 +248,23 @@ export default function AdminDashboard() {
                 <Building className="h-4 w-4 mr-2" />
                 Add New Hotel
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full justify-start"
                 onClick={() => setLocation("/admin/media")}
                 data-testid="button-manage-media"
               >
                 <Image className="h-4 w-4 mr-2" />
                 Upload Media
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => setLocation("/admin/packages/new")} // Added route for new package
+                data-testid="button-new-package"
+              >
+                <Package className="h-4 w-4 mr-2" />
+                Add New Package
               </Button>
             </CardContent>
           </Card>

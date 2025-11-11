@@ -1037,11 +1037,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Dashboard stats endpoint
   app.get("/api/cms/stats", requireAuth, requireEditor, async (req, res) => {
     try {
-      const [hotels, inquiries, pages, posts] = await Promise.all([
+      const [hotels, inquiries, pages, posts, packages, tours, destinations] = await Promise.all([
         storage.getHotels(),
         storage.getInquiries(),
         storage.getPages(),
-        storage.getPosts()
+        storage.getPosts(),
+        storage.getPackages(),
+        storage.getTours(),
+        storage.getDestinations()
       ]);
 
       res.json({
@@ -1051,6 +1054,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           inquiries: inquiries.length,
           pages: pages.length,
           posts: posts.length,
+          packages: packages.length,
+          tours: tours.length,
+          destinations: destinations.length,
           media: 24 // Static for now
         }
       });
