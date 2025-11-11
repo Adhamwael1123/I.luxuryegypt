@@ -1,15 +1,14 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
-import { Clock, Users, MapPin, Star, Calendar, ArrowLeft, Heart, Baby } from "lucide-react";
+import { Clock, Users, MapPin, Star, ArrowLeft, Heart, Baby } from "lucide-react";
 import { Link } from "wouter";
 
 const familyTours = [
   {
-    id: 'family-pyramids-adventure',
-    name: 'Family Pyramids Adventure',
+    id: 'family-pyramid-adventure',
+    name: 'Family Pyramid Adventure & Camel Ride',
     location: 'Cairo & Giza',
     duration: '5 Days',
     groupSize: '4-16 People',
@@ -25,8 +24,6 @@ const familyTours = [
 ];
 
 export default function FamilyLuxury() {
-  const [selectedTour, setSelectedTour] = useState<string | null>(null);
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -167,45 +164,21 @@ export default function FamilyLuxury() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => setSelectedTour(selectedTour === tour.id ? null : tour.id)}
+                        asChild
                         className="hover:scale-105 transition-transform"
+                        data-testid={`button-details-${tour.id}`}
                       >
-                        {selectedTour === tour.id ? 'Hide' : 'Details'}
+                        <Link href={`/tour/${tour.id}`}>
+                          Details
+                        </Link>
                       </Button>
-                      <Button size="sm" asChild className="hover:scale-105 transition-transform">
+                      <Button size="sm" asChild className="hover:scale-105 transition-transform" data-testid="button-book-now">
                         <Link href="/contact">
                           Book Now
                         </Link>
                       </Button>
                     </div>
                   </div>
-
-                  {/* Expandable Details */}
-                  {selectedTour === tour.id && (
-                    <div className="mt-8 p-6 bg-muted/30 rounded-xl border border-accent/20">
-                      <h4 className="text-xl font-serif font-bold text-primary mb-4 flex items-center gap-2">
-                        <Calendar className="h-5 w-5 text-accent" />
-                        Complete Itinerary
-                      </h4>
-                      <div className="space-y-4">
-                        <div className="bg-background/50 p-4 rounded-lg">
-                          <p className="text-muted-foreground leading-relaxed">
-                            {tour.itinerary}
-                          </p>
-                        </div>
-                        <div className="grid md:grid-cols-2 gap-4 text-sm">
-                          <div className="space-y-2">
-                            <div className="font-semibold text-primary">Duration</div>
-                            <div className="text-muted-foreground">{tour.duration}</div>
-                          </div>
-                          <div className="space-y-2">
-                            <div className="font-semibold text-primary">Group Size</div>
-                            <div className="text-muted-foreground">{tour.groupSize}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </CardContent>
               </Card>
             ))}
