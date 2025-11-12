@@ -6,7 +6,7 @@ import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { Clock, Users, MapPin, Star, Calendar, ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "wouter";
-import type { SelectCategory } from "@shared/schema";
+import type { Category } from "@shared/schema";
 
 // Fallback categories for when database is empty
 const fallbackCategories = [
@@ -143,7 +143,7 @@ export default function Experiences() {
   const [selectedTour, setSelectedTour] = useState<string | null>(null);
 
   // Fetch categories from the database
-  const { data: response, isLoading, isError } = useQuery<{ success: boolean; categories: SelectCategory[] }>({
+  const { data: response, isLoading, isError } = useQuery<{ success: boolean; categories: Category[] }>({
     queryKey: ['/api/public/categories'],
   });
 
@@ -162,23 +162,8 @@ export default function Experiences() {
   const currentCategory = selectedCategory ? displayCategories.find(cat => cat.key === selectedCategory) : null;
 
   const handleCategoryClick = (categoryKey: string) => {
-    // Navigate to dedicated category pages
-    const categoryRoutes: { [key: string]: string } = {
-      'family': '/experiences/family-luxury',
-      'nile-cruise': '/experiences/nile-cruise',
-      'classic': '/experiences/classic-egypt',
-      'spiritual': '/experiences/spiritual-journeys',
-      'adventure': '/experiences/adventure-tours',
-      'ultra-luxury': '/experiences/ultra-luxury'
-    };
-    
-    if (categoryRoutes[categoryKey]) {
-      window.location.href = categoryRoutes[categoryKey];
-      return;
-    }
-    
-    setSelectedCategory(categoryKey);
-    setSelectedTour(null);
+    // Navigate to dynamic category pages using slug
+    window.location.href = `/experiences/${categoryKey}`;
   };
 
   const handleBackToCategories = () => {

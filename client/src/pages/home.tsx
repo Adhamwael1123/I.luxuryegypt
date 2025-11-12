@@ -32,7 +32,6 @@ export default function Home() {
         </section>
         <WhyUseSection />
         <HighlightsSection />
-        <LuxuryPackagesSection />
         <InteractiveMapSection />
         <TestimonialSection />
         <CallToActionSection />

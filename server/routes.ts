@@ -1048,6 +1048,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get single category by slug (public route)
+  app.get("/api/public/categories/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const categories = await storage.getCategories();
+      const category = categories.find(cat => cat.slug === slug);
+      
+      if (!category) {
+        return res.status(404).json({ 
+          success: false, 
+          message: 'Category not found' 
+        });
+      }
+      
+      res.json({ success: true, category });
+    } catch (error) {
+      console.error('Error fetching category:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Error fetching category' 
+      });
+    }
+  });
+
   // Destination CMS Routes
   
   // Get destinations for CMS management (admin/editor access)

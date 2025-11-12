@@ -21,6 +21,7 @@ import SharmElSheikh from "@/pages/sharm-el-sheikh";
 import SiwaOasis from "@/pages/siwa-oasis";
 import TourDetail from "@/pages/tour-detail";
 import Experiences from "@/pages/experiences";
+import CategoryDetail from "@/pages/category-detail";
 import FamilyLuxury from "@/pages/family-luxury";
 import NileCruise from "@/pages/nile-cruise";
 import ClassicEgypt from "@/pages/classic-egypt";
@@ -78,6 +79,7 @@ function Router() {
         <Route path="/experiences/spiritual-journeys" component={() => <PageTransition><SpiritualJourneys /></PageTransition>} />
         <Route path="/experiences/adventure-tours" component={() => <PageTransition><AdventureTours /></PageTransition>} />
         <Route path="/experiences/ultra-luxury" component={() => <PageTransition><UltraLuxury /></PageTransition>} />
+        <Route path="/experiences/:slug" component={() => <PageTransition><CategoryDetail /></PageTransition>} />
         <Route path="/stay" component={() => <PageTransition><Stay /></PageTransition>} />
         <Route path="/hotel/:id" component={() => <PageTransition><HotelDetail /></PageTransition>} />
         <Route path="/blog" component={() => <PageTransition><Blog /></PageTransition>} />
