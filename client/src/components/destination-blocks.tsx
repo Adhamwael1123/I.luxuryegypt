@@ -1,34 +1,91 @@
-
 import { Link } from "wouter";
 import { Package } from "lucide-react";
-import luxorImage from "@assets/luxor_1757531163688.jpg";
-import redSeaImage from "@assets/red-sea_1757531163688.jpg";
-import siwaImage from "@assets/siwa_1757531163689.jpg";
+import { useQuery } from "@tanstack/react-query";
+import type { Tour } from "@shared/schema";
 
-export default function LuxuryPackagesSection() {
-  const packages = [
-    {
-      id: "pharaohs-legacy",
-      title: "Pharaohs' Legacy Package",
-      description: "Journey through 5,000 years of history with private access to iconic temples and tombs.",
-      duration: "10 Days",
-      imageUrl: luxorImage,
-    },
-    {
-      id: "red-sea-retreat",
-      title: "Red Sea Luxury Package",
-      description: "Luxurious coastal escape with world-class diving, pristine beaches, and exclusive resorts.",
-      duration: "7 Days",
-      imageUrl: redSeaImage,
-    },
-    {
-      id: "desert-safari",
-      title: "Desert Safari Package", 
-      description: "Experience the mystical Western Desert with glamping under starlit skies.",
-      duration: "5 Days",
-      imageUrl: siwaImage,
-    },
-  ];
+interface LuxuryPackagesSectionProps {
+  category?: string;
+  title?: string;
+  description?: string;
+}
+
+export default function LuxuryPackagesSection({ 
+  category, 
+  title = "Our Luxury Packages",
+  description = "Discover our carefully curated luxury travel packages, each designed to offer extraordinary experiences across Egypt's most iconic destinations."
+}: LuxuryPackagesSectionProps) {
+  const apiUrl = category 
+    ? `/api/public/tours?category=${encodeURIComponent(category)}`
+    : '/api/public/tours';
+    
+  const { data, isLoading } = useQuery<{ success: boolean; tours: Tour[] }>({
+    queryKey: [apiUrl],
+    enabled: true,
+  });
+
+  const tours = data?.tours?.filter(tour => tour.published) || [];
+
+  if (isLoading) {
+    return (
+      <section className="py-20 bg-background" data-testid="packages-section">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <div className="flex justify-center mb-6">
+              <Package className="h-12 w-12 text-accent" />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-8">
+              {title}
+            </h2>
+            <div className="flex items-center justify-center space-x-4 mb-8">
+              <div className="w-16 h-px bg-accent"></div>
+              <div className="w-2 h-2 bg-accent rotate-45"></div>
+              <div className="w-16 h-px bg-accent"></div>
+            </div>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              {description}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div 
+                key={i}
+                className="relative h-[500px] overflow-hidden shadow-2xl animate-pulse"
+                style={{ borderRadius: '10px' }}
+              >
+                <div className="absolute inset-0 bg-muted" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!tours.length) {
+    return (
+      <section className="py-20 bg-background" data-testid="packages-section">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <div className="flex justify-center mb-6">
+              <Package className="h-12 w-12 text-accent" />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-8">
+              {title}
+            </h2>
+            <div className="flex items-center justify-center space-x-4 mb-8">
+              <div className="w-16 h-px bg-accent"></div>
+              <div className="w-2 h-2 bg-accent rotate-45"></div>
+              <div className="w-16 h-px bg-accent"></div>
+            </div>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              No tours available at the moment. Please check back later.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-background" data-testid="packages-section">
@@ -40,7 +97,7 @@ export default function LuxuryPackagesSection() {
             <Package className="h-12 w-12 text-accent" />
           </div>
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-8">
-            Our Luxury Packages
+            {title}
           </h2>
           <div className="flex items-center justify-center space-x-4 mb-8">
             <div className="w-16 h-px bg-accent"></div>
@@ -48,24 +105,23 @@ export default function LuxuryPackagesSection() {
             <div className="w-16 h-px bg-accent"></div>
           </div>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Discover our carefully curated luxury travel packages, each designed to offer 
-            extraordinary experiences across Egypt's most iconic destinations.
+            {description}
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {packages.map((packageItem) => (
-            <Link key={packageItem.id} href={`/tour/${packageItem.id}`}>
+          {tours.map((tour) => (
+            <Link key={tour.id} href={`/tour/${tour.slug}`}>
               <div 
                 className="group cursor-pointer relative h-[500px] overflow-hidden shadow-2xl"
                 style={{ borderRadius: '10px' }}
-                data-testid={`card-package-${packageItem.id}`}
+                data-testid={`card-package-${tour.slug}`}
               >
                 {/* Full Card Background Image */}
                 <div 
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 lg:group-hover:scale-110"
                   style={{
-                    backgroundImage: `url(${packageItem.imageUrl})`,
+                    backgroundImage: `url(${tour.heroImage})`,
                   }}
                 />
                 
@@ -83,12 +139,21 @@ export default function LuxuryPackagesSection() {
                   
                   {/* Duration Badge */}
                   <div className="absolute top-6 left-6 bg-accent/90 backdrop-blur-sm px-4 py-2 shadow-lg" style={{ borderRadius: '10px' }}>
-                    <span className="text-white text-sm font-semibold tracking-wide">{packageItem.duration}</span>
+                    <span className="text-white text-sm font-semibold tracking-wide">{tour.duration}</span>
                   </div>
                   
+                  {/* Price Badge */}
+                  {tour.price && (
+                    <div className="absolute top-6 right-6 bg-primary/90 backdrop-blur-sm px-4 py-2 shadow-lg" style={{ borderRadius: '10px' }}>
+                      <span className="text-white text-sm font-semibold tracking-wide">
+                        From {tour.currency} {tour.price}
+                      </span>
+                    </div>
+                  )}
+                  
                   {/* Title - Always visible */}
-                  <h3 className="text-white text-3xl md:text-4xl font-serif font-light mb-4 tracking-wide transform transition-all duration-500 lg:group-hover:-translate-y-2" data-testid={`text-title-${packageItem.id}`}>
-                    {packageItem.title}
+                  <h3 className="text-white text-3xl md:text-4xl font-serif font-light mb-4 tracking-wide transform transition-all duration-500 lg:group-hover:-translate-y-2" data-testid={`text-title-${tour.slug}`}>
+                    {tour.title}
                   </h3>
                   
                   {/* Decorative divider */}
@@ -96,8 +161,8 @@ export default function LuxuryPackagesSection() {
                   
                   {/* Description - Always visible on mobile, appears on hover on desktop */}
                   <div className="transform transition-all duration-700 lg:translate-y-8 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
-                    <p className="text-white/90 text-base leading-relaxed mb-6" data-testid={`text-description-${packageItem.id}`}>
-                      {packageItem.description}
+                    <p className="text-white/90 text-base leading-relaxed mb-6" data-testid={`text-description-${tour.slug}`}>
+                      {tour.shortDescription || tour.description.substring(0, 150) + '...'}
                     </p>
                     
                     {/* Call to Action */}

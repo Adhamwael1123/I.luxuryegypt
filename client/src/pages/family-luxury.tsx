@@ -1,27 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
-import { Clock, Users, MapPin, Star, ArrowLeft, Heart, Baby } from "lucide-react";
+import LuxuryPackagesSection from "@/components/destination-blocks";
+import { ArrowLeft, Heart, Baby, Users } from "lucide-react";
 import { Link } from "wouter";
-
-const familyTours = [
-  {
-    id: 'family-pyramid-adventure',
-    name: 'Family Pyramid Adventure & Camel Ride',
-    location: 'Cairo & Giza',
-    duration: '5 Days',
-    groupSize: '4-16 People',
-    price: 'From $1,280',
-    rating: 4.9,
-    image: 'https://www.egypttoursportal.com/images/2022/09/Discover-Ancient-Egypt-in-8-Days-Luxury-Holiday-Egypt-Tours-Portal.jpg',
-    highlights: ['Pyramids Exploration', 'Camel Rides', 'Interactive Museums', 'Family-Friendly Hotels'],
-    description: 'Perfect family adventure exploring the pyramids with engaging activities designed for children and adults.',
-    itinerary: 'Kid-friendly exploration of the Great Pyramids, fun camel rides, interactive Egyptian Museum experience with treasure hunts, papyrus making workshop, and luxury family accommodation.',
-    tourType: 'Family Adventure',
-    familyFeatures: ['Kid-friendly guides', 'Interactive activities', 'Family hotels', 'Flexible schedule']
-  }
-];
 
 export default function FamilyLuxury() {
   return (
@@ -33,7 +15,7 @@ export default function FamilyLuxury() {
         <div className="absolute inset-0 bg-[url('https://www.egypttoursportal.com/images/2022/09/Discover-Ancient-Egypt-in-8-Days-Luxury-Holiday-Egypt-Tours-Portal.jpg')] bg-cover bg-center opacity-10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/experiences">
-            <Button variant="outline" className="mb-8 hover:scale-105 transition-transform">
+            <Button variant="outline" className="mb-8 hover:scale-105 transition-transform" data-testid="button-back">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Experiences
             </Button>
@@ -78,113 +60,12 @@ export default function FamilyLuxury() {
         </div>
       </section>
 
-      {/* Tours Section */}
-      <section className="py-20 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              Family Adventure Tours
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Choose from our carefully curated family experiences, each designed to engage and educate all family members.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {familyTours.map((tour) => (
-              <Card
-                key={tour.id}
-                className="group overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] flex flex-col h-full min-h-[600px]"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={tour.image}
-                    alt={tour.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-
-                  {/* Tour Type Badge */}
-                  <div className="absolute top-4 left-4 bg-accent/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    {tour.tourType}
-                  </div>
-
-                  {/* Rating */}
-                  <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
-                    <Star className="h-4 w-4 text-accent fill-accent" />
-                    <span className="text-sm font-medium">{tour.rating}</span>
-                  </div>
-
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center gap-2 text-accent font-medium text-sm mb-2">
-                      <MapPin className="h-4 w-4" />
-                      <span>{tour.location}</span>
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-2">{tour.name}</h3>
-                  </div>
-                </div>
-
-                <CardContent className="p-6 flex flex-col justify-between flex-grow">
-                  <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        <span>{tour.duration}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        <span>{tour.groupSize}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="text-muted-foreground mb-4 leading-relaxed">
-                    {tour.description}
-                  </p>
-
-                  {/* Highlights */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {tour.highlights.slice(0, 3).map((highlight: string, index: number) => (
-                      <span
-                        key={index}
-                        className="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full font-medium"
-                      >
-                        {highlight}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Price and Actions */}
-                  <div className="flex items-center justify-between border-t border-border pt-4 mt-auto">
-                    <div>
-                      <p className="text-2xl font-serif font-bold text-primary">{tour.price}</p>
-                      <p className="text-xs text-muted-foreground">per person</p>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        asChild
-                        className="hover:scale-105 transition-transform"
-                        data-testid={`button-details-${tour.id}`}
-                      >
-                        <Link href={`/tour/${tour.id}`}>
-                          Details
-                        </Link>
-                      </Button>
-                      <Button size="sm" asChild className="hover:scale-105 transition-transform" data-testid="button-book-now">
-                        <Link href="/contact">
-                          Book Now
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Tours Section - Now using LuxuryPackagesSection with category filter */}
+      <LuxuryPackagesSection 
+        category="Egypt Family Holidays"
+        title="Family Adventure Tours"
+        description="Choose from our carefully curated family experiences, each designed to engage and educate all family members."
+      />
 
       {/* Why Choose Family Luxury Section */}
       <section className="py-20 bg-muted">
@@ -243,12 +124,12 @@ export default function FamilyLuxury() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link href="/contact">
-              <Button size="lg" variant="secondary" className="px-8 py-4 text-lg min-w-[200px] hover:scale-105 transition-transform">
+              <Button size="lg" variant="secondary" className="px-8 py-4 text-lg min-w-[200px] hover:scale-105 transition-transform" data-testid="button-plan-adventure">
                 Plan Our Adventure
               </Button>
             </Link>
             <Link href="/experiences">
-              <Button size="lg" variant="outline" className="px-8 py-4 text-lg min-w-[200px] border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary hover:scale-105 transition-all">
+              <Button size="lg" variant="outline" className="px-8 py-4 text-lg min-w-[200px] border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary hover:scale-105 transition-all" data-testid="button-all-experiences">
                 See All Experiences
               </Button>
             </Link>
