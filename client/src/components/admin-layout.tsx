@@ -15,7 +15,8 @@ import {
   LogOut,
   Menu,
   X,
-  Users
+  Users,
+  Grid3x3
 } from "lucide-react";
 
 interface AdminLayoutProps {
