@@ -1,13 +1,15 @@
 
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
-import { Clock, Users, MapPin, Star, Calendar, ArrowLeft } from "lucide-react";
+import { Clock, Users, MapPin, Star, Calendar, ArrowLeft, Loader2 } from "lucide-react";
 import { Link } from "wouter";
+import type { SelectCategory } from "@shared/schema";
 
-// Categories with Tours Data - Each category now has exactly 1 signature tour
-const categories = [
+// Fallback categories for when database is empty
+const fallbackCategories = [
   {
     key: 'family',
     label: 'Family Luxury',
@@ -140,7 +142,24 @@ export default function Experiences() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTour, setSelectedTour] = useState<string | null>(null);
 
-  const currentCategory = selectedCategory ? categories.find(cat => cat.key === selectedCategory) : null;
+  // Fetch categories from the database
+  const { data: response, isLoading, isError } = useQuery<{ success: boolean; categories: SelectCategory[] }>({
+    queryKey: ['/api/public/categories'],
+  });
+
+  // Map database categories to UI structure
+  const categories = (response?.categories || []).map(cat => ({
+    key: cat.slug,
+    label: cat.name,
+    description: cat.description || '',
+    image: cat.image || 'https://images.pexels.com/photos/2359/sand-desert-statue-pyramid.jpg',
+    tours: [] // Tours will be linked later
+  }));
+
+  // Use fallback categories if database is empty
+  const displayCategories = categories.length > 0 ? categories : fallbackCategories;
+
+  const currentCategory = selectedCategory ? displayCategories.find(cat => cat.key === selectedCategory) : null;
 
   const handleCategoryClick = (categoryKey: string) => {
     // Navigate to dedicated category pages
@@ -198,8 +217,19 @@ export default function Experiences() {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {categories.map((category, index) => (
+            {isLoading ? (
+              <div className="flex justify-center items-center py-20">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : isError ? (
+              <div className="flex flex-col justify-center items-center py-20 gap-4">
+                <p className="text-muted-foreground">Unable to load categories. Showing default experiences.</p>
+              </div>
+            ) : null}
+            
+            {!isLoading && (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {displayCategories.map((category, index) => (
                 <div
                   key={category.key}
                   className="group cursor-pointer transform transition-all duration-500 hover:scale-[1.02]"
@@ -282,8 +312,9 @@ export default function Experiences() {
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       ) : (
