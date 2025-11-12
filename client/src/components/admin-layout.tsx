@@ -68,16 +68,22 @@ export default function AdminLayout({ children, title, description }: AdminLayou
       href: "/admin",
     },
     {
-      id: "posts",
-      label: "Blog Posts",
-      icon: FileText,
-      href: "/admin/posts",
+      id: "tours",
+      label: "Tours",
+      icon: Plane,
+      href: "/admin/tours",
     },
     {
       id: "categories",
       label: "Categories",
       icon: Grid3x3,
       href: "/admin/categories",
+    },
+    {
+      id: "posts",
+      label: "Blog Posts",
+      icon: FileText,
+      href: "/admin/posts",
     },
     {
       id: "media",
