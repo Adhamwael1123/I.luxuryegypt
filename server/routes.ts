@@ -12,6 +12,7 @@ import {
   insertTourSchema,
   insertPackageSchema,
   insertDestinationSchema,
+  insertCategorySchema,
   insertMediaSchema,
   loginSchema
 } from "@shared/schema";
@@ -955,6 +956,95 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error deleting package:', error);
       res.status(500).json({ message: 'Error deleting package' });
+    }
+  });
+
+  // Category CMS Routes
+  
+  // Get categories for CMS management (admin/editor access)
+  app.get("/api/cms/categories", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const categories = await storage.getCategories();
+      res.json({ success: true, categories });
+    } catch (error) {
+      console.error('Error fetching categories for CMS:', error);
+      res.status(500).json({ message: 'Error fetching categories' });
+    }
+  });
+
+  // Create category (admin/editor access)
+  app.post("/api/cms/categories", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const categoryData = insertCategorySchema.parse(req.body);
+      
+      const category = await storage.createCategory({
+        ...categoryData,
+        createdBy: authReq.user!.id
+      });
+      
+      res.status(201).json({ success: true, category });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error creating category:', error);
+      res.status(500).json({ message: 'Error creating category' });
+    }
+  });
+
+  // Update category (admin/editor access)
+  app.put("/api/cms/categories/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const categoryData = insertCategorySchema.partial().parse(req.body);
+      
+      const category = await storage.updateCategory(req.params.id, categoryData);
+      if (!category) {
+        return res.status(404).json({ message: 'Category not found' });
+      }
+      
+      res.json({ success: true, category });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ 
+          message: 'Invalid input data',
+          errors: error.errors
+        });
+      }
+      console.error('Error updating category:', error);
+      res.status(500).json({ message: 'Error updating category' });
+    }
+  });
+
+  // Delete category (admin/editor access)
+  app.delete("/api/cms/categories/:id", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const deleted = await storage.deleteCategory(req.params.id);
+      if (!deleted) {
+        return res.status(404).json({ message: 'Category not found' });
+      }
+      
+      res.json({ success: true, message: 'Category deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      res.status(500).json({ message: 'Error deleting category' });
+    }
+  });
+
+  // Public Categories Route (no authentication required)
+  app.get("/api/public/categories", async (req, res) => {
+    try {
+      const categories = await storage.getCategories();
+      res.json({ success: true, categories });
+    } catch (error) {
+      console.error('Error fetching public categories:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Error fetching categories' 
+      });
     }
   });
 

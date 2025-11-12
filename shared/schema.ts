@@ -176,6 +176,20 @@ export const packages = pgTable("packages", {
   createdBy: varchar("created_by").references(() => users.id),
 });
 
+export const categories = pgTable("categories", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description").notNull(),
+  shortDescription: text("short_description"),
+  image: text("image").notNull(),
+  sortOrder: integer("sort_order").notNull().default(0),
+  featured: boolean("featured").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  createdBy: varchar("created_by").references(() => users.id),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -295,6 +309,19 @@ export const insertPackageSchema = createInsertSchema(packages).omit({
   published: z.boolean().default(true),
 });
 
+export const insertCategorySchema = createInsertSchema(categories).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  name: z.string().min(1, "Category name is required"),
+  slug: z.string().min(1, "Slug is required"),
+  description: z.string().min(1, "Description is required"),
+  image: z.string().url("Please provide a valid image URL"),
+  sortOrder: z.number().default(0),
+  featured: z.boolean().default(false),
+});
+
 // Login Schema
 export const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -322,4 +349,6 @@ export type InsertTour = z.infer<typeof insertTourSchema>;
 export type Tour = typeof tours.$inferSelect;
 export type InsertPackage = z.infer<typeof insertPackageSchema>;
 export type Package = typeof packages.$inferSelect;
+export type InsertCategory = z.infer<typeof insertCategorySchema>;
+export type Category = typeof categories.$inferSelect;
 export type LoginRequest = z.infer<typeof loginSchema>;

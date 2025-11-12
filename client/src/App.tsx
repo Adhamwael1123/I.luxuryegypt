@@ -48,6 +48,7 @@ import AdminPosts from "@/pages/admin-posts";
 import AdminInquiries from "@/pages/admin-inquiries";
 import AdminMedia from "@/pages/admin-media";
 import AdminDestinations from "@/pages/admin-destinations";
+import AdminCategories from "@/pages/admin-categories";
 
 function Router() {
   const [location] = useLocation();
@@ -95,6 +96,7 @@ function Router() {
         <Route path="/admin/packages/new" component={AdminPackageForm} />
         <Route path="/admin/packages/:id/edit" component={AdminPackageForm} />
         <Route path="/admin/destinations" component={AdminDestinations} />
+        <Route path="/admin/categories" component={AdminCategories} />
         <Route path="/admin/pages" component={AdminPages} />
         <Route path="/admin/posts" component={AdminPosts} />
         <Route path="/admin/inquiries" component={AdminInquiries} />

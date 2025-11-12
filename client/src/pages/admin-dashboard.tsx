@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { apiRequest } from "@/lib/queryClient";
-import { FileText, MessageSquare, Image, Plus, Building, MapPin, Plane, Package } from "lucide-react";
+import { FileText, MessageSquare, Image, Plus, Building, MapPin, Plane, Package, Grid3x3 } from "lucide-react";
 import AdminLayout from "@/components/admin-layout";
 
 interface DashboardStats {
@@ -16,6 +16,7 @@ interface DashboardStats {
   destinations: number;
   tours: number;
   packages: number;
+  categories: number;
 }
 
 export default function AdminDashboard() {
@@ -33,9 +34,10 @@ export default function AdminDashboard() {
           hotelsRes,
           inquiriesRes,
           postsRes,
-          destinationsRes, // Added destinations
-          toursRes, // Added tours
-          packagesRes // Added packages
+          destinationsRes,
+          toursRes,
+          packagesRes,
+          categoriesRes
         ] = await Promise.all([
           fetch("/api/cms/hotels", {
             headers: { "Authorization": `Bearer ${token}` }
@@ -46,13 +48,16 @@ export default function AdminDashboard() {
           fetch("/api/cms/posts", {
             headers: { "Authorization": `Bearer ${token}` }
           }),
-          fetch("/api/cms/destinations", { // Fetch destinations
+          fetch("/api/cms/destinations", {
             headers: { "Authorization": `Bearer ${token}` }
           }),
-          fetch("/api/cms/tours", { // Fetch tours
+          fetch("/api/cms/tours", {
             headers: { "Authorization": `Bearer ${token}` }
           }),
-          fetch("/api/cms/packages", { // Fetch packages
+          fetch("/api/cms/packages", {
+            headers: { "Authorization": `Bearer ${token}` }
+          }),
+          fetch("/api/cms/categories", {
             headers: { "Authorization": `Bearer ${token}` }
           })
         ]);
@@ -60,19 +65,21 @@ export default function AdminDashboard() {
         const hotelsData = hotelsRes.ok ? await hotelsRes.json() : { hotels: [] };
         const inquiriesData = inquiriesRes.ok ? await inquiriesRes.json() : { inquiries: [] };
         const postsData = postsRes.ok ? await postsRes.json() : { posts: [] };
-        const destinationsData = destinationsRes.ok ? await destinationsRes.json() : { destinations: [] }; // Process destinations
-        const toursData = toursRes.ok ? await toursRes.json() : { tours: [] }; // Process tours
-        const packagesData = packagesRes.ok ? await packagesRes.json() : { packages: [] }; // Process packages
+        const destinationsData = destinationsRes.ok ? await destinationsRes.json() : { destinations: [] };
+        const toursData = toursRes.ok ? await toursRes.json() : { tours: [] };
+        const packagesData = packagesRes.ok ? await packagesRes.json() : { packages: [] };
+        const categoriesData = categoriesRes.ok ? await categoriesRes.json() : { categories: [] };
 
         return {
-          pages: 5, // Static for now
+          pages: 5,
           posts: postsData.posts?.length || 0,
           inquiries: inquiriesData.inquiries?.length || 0,
-          media: 24, // Static for now
+          media: 24,
           hotels: hotelsData.hotels?.length || 0,
-          destinations: destinationsData.destinations?.length || 0, // Use fetched data
-          tours: toursData.tours?.length || 0, // Use fetched data
-          packages: packagesData.packages?.length || 0, // Use fetched data
+          destinations: destinationsData.destinations?.length || 0,
+          tours: toursData.tours?.length || 0,
+          packages: packagesData.packages?.length || 0,
+          categories: categoriesData.categories?.length || 0,
         } as DashboardStats;
       } catch (error) {
         console.error("Error fetching stats:", error);
@@ -85,7 +92,8 @@ export default function AdminDashboard() {
           hotels: 0,
           destinations: 0,
           tours: 0,
-          packages: 0
+          packages: 0,
+          categories: 0
         } as DashboardStats;
       }
     },
@@ -142,6 +150,14 @@ export default function AdminDashboard() {
       icon: Package,
       color: "bg-orange-500",
       href: "/admin/packages"
+    },
+    {
+      title: "Categories",
+      value: stats?.categories || 0,
+      description: "Experience categories",
+      icon: Grid3x3,
+      color: "bg-pink-500",
+      href: "/admin/categories"
     },
     {
       title: "Inquiries",

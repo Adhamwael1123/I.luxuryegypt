@@ -4,7 +4,8 @@ import {
   type Post, type InsertPost, type Media, type InsertMedia,
   type Hotel, type InsertHotel, type Tour, type InsertTour,
   type Package, type InsertPackage, type Destination, type InsertDestination,
-  users, inquiries, pages, sections, posts, media as mediaTable, hotels, tours, packages, destinations
+  type Category, type InsertCategory,
+  users, inquiries, pages, sections, posts, media as mediaTable, hotels, tours, packages, destinations, categories
 } from "@shared/schema";
 import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
@@ -83,6 +84,14 @@ export interface IStorage {
   getPackageBySlug(slug: string): Promise<Package | undefined>;
   updatePackage(id: string, pkg: Partial<InsertPackage>): Promise<Package | undefined>;
   deletePackage(id: string): Promise<boolean>;
+
+  // Category methods
+  createCategory(category: InsertCategory): Promise<Category>;
+  getCategories(): Promise<Category[]>;
+  getCategory(id: string): Promise<Category | undefined>;
+  getCategoryBySlug(slug: string): Promise<Category | undefined>;
+  updateCategory(id: string, category: Partial<InsertCategory>): Promise<Category | undefined>;
+  deleteCategory(id: string): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -472,6 +481,70 @@ export class DatabaseStorage implements IStorage {
       return (result.rowCount ?? 0) > 0;
     } catch (error) {
       console.error("Error deleting package:", error);
+      return false;
+    }
+  }
+
+  // Category methods
+  async createCategory(data: InsertCategory): Promise<Category> {
+    try {
+      const [category] = await db.insert(categories).values(data).returning();
+      return category;
+    } catch (error) {
+      console.error("Error creating category:", error);
+      throw error;
+    }
+  }
+
+  async getCategories(): Promise<Category[]> {
+    try {
+      return await db.select().from(categories).orderBy(categories.sortOrder, desc(categories.createdAt));
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      return [];
+    }
+  }
+
+  async getCategory(id: string): Promise<Category | undefined> {
+    try {
+      const [category] = await db.select().from(categories).where(eq(categories.id, id));
+      return category || undefined;
+    } catch (error) {
+      console.error("Error fetching category:", error);
+      return undefined;
+    }
+  }
+
+  async getCategoryBySlug(slug: string): Promise<Category | undefined> {
+    try {
+      const [category] = await db.select().from(categories).where(eq(categories.slug, slug));
+      return category || undefined;
+    } catch (error) {
+      console.error("Error fetching category by slug:", error);
+      return undefined;
+    }
+  }
+
+  async updateCategory(id: string, data: Partial<InsertCategory>): Promise<Category | undefined> {
+    try {
+      const [category] = await db
+        .update(categories)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(categories.id, id))
+        .returning();
+      return category || undefined;
+    } catch (error) {
+      console.error("Error updating category:", error);
+      throw error;
+    }
+  }
+
+  async deleteCategory(id: string): Promise<boolean> {
+    try {
+      const result = await db.delete(categories).where(eq(categories.id, id));
+      return (result.rowCount ?? 0) > 0;
+    } catch (error) {
+      console.error("Error deleting category:", error);
       return false;
     }
   }
