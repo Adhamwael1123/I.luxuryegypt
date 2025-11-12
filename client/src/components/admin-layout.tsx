@@ -67,52 +67,22 @@ export default function AdminLayout({ children, title, description }: AdminLayou
       href: "/admin",
     },
     {
-      id: "media",
-      label: "Media",
-      icon: Image,
-      href: "/admin/media",
-    },
-    {
       id: "posts",
       label: "Blog Posts",
       icon: FileText,
       href: "/admin/posts",
     },
     {
-      id: "destinations",
-      label: "Destinations",
-      icon: MapPin,
-      href: "/admin/destinations",
+      id: "categories",
+      label: "Categories",
+      icon: Grid3x3,
+      href: "/admin/categories",
     },
     {
-      id: "hotels",
-      label: "Hotels",
-      icon: Building,
-      href: "/admin/hotels",
-    },
-    {
-      id: "tours",
-      label: "Tours",
-      icon: Plane,
-      href: "/admin/tours",
-    },
-    {
-      id: "packages",
-      label: "Packages",
-      icon: Package,
-      href: "/admin/packages",
-    },
-    {
-      id: "inquiries",
-      label: "Inquiries",
-      icon: MessageSquare,
-      href: "/admin/inquiries",
-    },
-    {
-      id: "pages",
-      label: "Pages",
-      icon: FileText,
-      href: "/admin/pages",
+      id: "media",
+      label: "Media",
+      icon: Image,
+      href: "/admin/media",
     }
   ];
 
