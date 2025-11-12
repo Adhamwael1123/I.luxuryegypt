@@ -8,14 +8,8 @@ import { FileText, MessageSquare, Image, Plus, Building, MapPin, Plane, Package,
 import AdminLayout from "@/components/admin-layout";
 
 interface DashboardStats {
-  pages: number;
   posts: number;
-  inquiries: number;
   media: number;
-  hotels: number;
-  destinations: number;
-  tours: number;
-  packages: number;
   categories: number;
 }
 
@@ -29,32 +23,12 @@ export default function AdminDashboard() {
       if (!token) throw new Error("No auth token");
 
       try {
-        // Fetch real data from multiple endpoints
+        // Fetch real data from available endpoints
         const [
-          hotelsRes,
-          inquiriesRes,
           postsRes,
-          destinationsRes,
-          toursRes,
-          packagesRes,
           categoriesRes
         ] = await Promise.all([
-          fetch("/api/cms/hotels", {
-            headers: { "Authorization": `Bearer ${token}` }
-          }),
-          fetch("/api/inquiries", {
-            headers: { "Authorization": `Bearer ${token}` }
-          }),
           fetch("/api/cms/posts", {
-            headers: { "Authorization": `Bearer ${token}` }
-          }),
-          fetch("/api/cms/destinations", {
-            headers: { "Authorization": `Bearer ${token}` }
-          }),
-          fetch("/api/cms/tours", {
-            headers: { "Authorization": `Bearer ${token}` }
-          }),
-          fetch("/api/cms/packages", {
             headers: { "Authorization": `Bearer ${token}` }
           }),
           fetch("/api/cms/categories", {
@@ -62,37 +36,20 @@ export default function AdminDashboard() {
           })
         ]);
 
-        const hotelsData = hotelsRes.ok ? await hotelsRes.json() : { hotels: [] };
-        const inquiriesData = inquiriesRes.ok ? await inquiriesRes.json() : { inquiries: [] };
         const postsData = postsRes.ok ? await postsRes.json() : { posts: [] };
-        const destinationsData = destinationsRes.ok ? await destinationsRes.json() : { destinations: [] };
-        const toursData = toursRes.ok ? await toursRes.json() : { tours: [] };
-        const packagesData = packagesRes.ok ? await packagesRes.json() : { packages: [] };
         const categoriesData = categoriesRes.ok ? await categoriesRes.json() : { categories: [] };
 
         return {
-          pages: 5,
           posts: postsData.posts?.length || 0,
-          inquiries: inquiriesData.inquiries?.length || 0,
           media: 24,
-          hotels: hotelsData.hotels?.length || 0,
-          destinations: destinationsData.destinations?.length || 0,
-          tours: toursData.tours?.length || 0,
-          packages: packagesData.packages?.length || 0,
           categories: categoriesData.categories?.length || 0,
         } as DashboardStats;
       } catch (error) {
         console.error("Error fetching stats:", error);
         // Return default stats on error
         return {
-          pages: 5,
           posts: 12,
-          inquiries: 0,
           media: 24,
-          hotels: 0,
-          destinations: 0,
-          tours: 0,
-          packages: 0,
           categories: 0
         } as DashboardStats;
       }
