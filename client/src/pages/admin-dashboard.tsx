@@ -104,14 +104,6 @@ export default function AdminDashboard() {
 
   const statsCards = [
     {
-      title: "Pages",
-      value: stats?.pages || 0,
-      description: "Total pages",
-      icon: FileText,
-      color: "bg-blue-500",
-      href: "/admin/pages"
-    },
-    {
       title: "Blog Posts",
       value: stats?.posts || 0,
       description: "Published & draft posts",
@@ -120,52 +112,12 @@ export default function AdminDashboard() {
       href: "/admin/posts"
     },
     {
-      title: "Destinations",
-      value: stats?.destinations || 0,
-      description: "Travel destinations",
-      icon: MapPin,
-      color: "bg-emerald-500",
-      href: "/admin/destinations"
-    },
-    {
-      title: "Hotels",
-      value: stats?.hotels || 0,
-      description: "Luxury accommodations",
-      icon: Building,
-      color: "bg-indigo-500",
-      href: "/admin/hotels"
-    },
-    {
-      title: "Tours",
-      value: stats?.tours || 0,
-      description: "Travel tours",
-      icon: Plane,
-      color: "bg-cyan-500",
-      href: "/admin/tours"
-    },
-    {
-      title: "Packages",
-      value: stats?.packages || 0,
-      description: "Travel packages",
-      icon: Package,
-      color: "bg-orange-500",
-      href: "/admin/packages"
-    },
-    {
       title: "Categories",
       value: stats?.categories || 0,
       description: "Experience categories",
       icon: Grid3x3,
       color: "bg-pink-500",
       href: "/admin/categories"
-    },
-    {
-      title: "Inquiries",
-      value: stats?.inquiries || 0,
-      description: "Travel inquiries",
-      icon: MessageSquare,
-      color: "bg-amber-500",
-      href: "/admin/inquiries"
     },
     {
       title: "Media Files",
@@ -240,15 +192,6 @@ export default function AdminDashboard() {
               <Button
                 variant="outline"
                 className="w-full justify-start"
-                onClick={() => setLocation("/admin/pages/new")}
-                data-testid="button-new-page"
-              >
-                <FileText className="h-4 w-4 mr-2" />
-                Create New Page
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start"
                 onClick={() => setLocation("/admin/posts")}
                 data-testid="button-new-post"
               >
@@ -258,11 +201,11 @@ export default function AdminDashboard() {
               <Button
                 variant="outline"
                 className="w-full justify-start"
-                onClick={() => setLocation("/admin/hotels/new")}
-                data-testid="button-new-hotel"
+                onClick={() => setLocation("/admin/categories")}
+                data-testid="button-manage-categories"
               >
-                <Building className="h-4 w-4 mr-2" />
-                Add New Hotel
+                <Grid3x3 className="h-4 w-4 mr-2" />
+                Manage Categories
               </Button>
               <Button
                 variant="outline"
@@ -272,15 +215,6 @@ export default function AdminDashboard() {
               >
                 <Image className="h-4 w-4 mr-2" />
                 Upload Media
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start"
-                onClick={() => setLocation("/admin/packages/new")} // Added route for new package
-                data-testid="button-new-package"
-              >
-                <Package className="h-4 w-4 mr-2" />
-                Add New Package
               </Button>
             </CardContent>
           </Card>
