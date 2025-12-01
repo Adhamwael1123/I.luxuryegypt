@@ -45,7 +45,13 @@ export default function AdminPosts() {
     enabled: true
   });
 
+  const { data: categoriesResponse } = useQuery({
+    queryKey: ["/api/cms/categories"],
+    enabled: true
+  });
+
   const posts = (postsResponse as any)?.posts || [];
+  const categories = (categoriesResponse as any)?.categories || [];
 
   // Create post mutation
   const createPostMutation = useMutation({
@@ -380,19 +386,27 @@ export default function AdminPosts() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="All Posts">All Posts</SelectItem>
-                                <SelectItem value="Culture & History">Culture & History</SelectItem>
-                                <SelectItem value="Travel Tips">Travel Tips</SelectItem>
-                                <SelectItem value="Destinations">Destinations</SelectItem>
-                                <SelectItem value="Food & Culture">Food & Culture</SelectItem>
-                                <SelectItem value="Travel Planning">Travel Planning</SelectItem>
-                                <SelectItem value="Responsible Travel">Responsible Travel</SelectItem>
+                                {categories.map((cat: any) => (
+                                  <SelectItem key={cat.id} value={cat.name}>
+                                    {cat.name}
+                                  </SelectItem>
+                                ))}
                               </SelectContent>
                             </Select>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
+                      <Button 
+                        type="button" 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => setLocation("/admin/categories")}
+                        className="mt-2"
+                        data-testid="button-manage-categories"
+                      >
+                        Manage Categories
+                      </Button>
 
                       <FormField
                         control={createForm.control}
@@ -728,19 +742,27 @@ export default function AdminPosts() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="All Posts">All Posts</SelectItem>
-                          <SelectItem value="Culture & History">Culture & History</SelectItem>
-                          <SelectItem value="Travel Tips">Travel Tips</SelectItem>
-                          <SelectItem value="Destinations">Destinations</SelectItem>
-                          <SelectItem value="Food & Culture">Food & Culture</SelectItem>
-                          <SelectItem value="Travel Planning">Travel Planning</SelectItem>
-                          <SelectItem value="Responsible Travel">Responsible Travel</SelectItem>
+                          {categories.map((cat: any) => (
+                            <SelectItem key={cat.id} value={cat.name}>
+                              {cat.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setLocation("/admin/categories")}
+                  className="mt-2"
+                  data-testid="button-manage-categories-edit"
+                >
+                  Manage Categories
+                </Button>
 
                 <FormField
                   control={editForm.control}
