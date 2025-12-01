@@ -40,11 +40,13 @@ export default function Contact() {
     },
     onSuccess: (data) => {
       setIsSubmitted(true);
-      form.reset();
       toast({
         title: "Message Sent Successfully!",
         description: data.message || "Thank you for contacting us. We'll get back to you within 24 hours.",
       });
+      setTimeout(() => {
+        form.reset();
+      }, 100);
     },
     onError: (error: any) => {
       toast({
@@ -57,6 +59,11 @@ export default function Contact() {
 
   const onSubmit = (data: InsertInquiry) => {
     submitInquiry.mutate(data);
+  };
+  
+  const handleSendAnother = () => {
+    form.reset();
+    setIsSubmitted(false);
   };
 
   const destinations = [
@@ -177,7 +184,7 @@ export default function Contact() {
                       Thank you for contacting I.LuxuryEgypt. Our team will respond to your inquiry within 24 hours.
                     </p>
                     <Button 
-                      onClick={() => setIsSubmitted(false)}
+                      onClick={handleSendAnother}
                       variant="outline"
                       data-testid="button-send-another"
                     >
