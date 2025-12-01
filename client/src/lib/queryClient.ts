@@ -42,8 +42,13 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
+    const token = localStorage.getItem("adminToken");
+    
     const res = await fetch(queryKey.join("/") as string, {
       credentials: "include",
+      headers: {
+        ...(token && { "Authorization": `Bearer ${token}` }),
+      },
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {
