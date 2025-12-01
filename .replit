@@ -15,7 +15,7 @@ localPort = 5000
 externalPort = 80
 
 [[ports]]
-localPort = 35507
+localPort = 41401
 externalPort = 3000
 
 [[ports]]
@@ -52,3 +52,8 @@ waitForPort = 5000
 [agent]
 expertMode = true
 integrations = ["javascript_database:1.0.0"]
+
+[userenv]
+
+[userenv.shared]
+JWT_SECRET = "replit-dev-secret-key-change-in-production-12345678901234567890"
