@@ -190,6 +190,14 @@ export const categories = pgTable("categories", {
   createdBy: varchar("created_by").references(() => users.id),
 });
 
+export const settings = pgTable("settings", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  key: text("key").notNull().unique(),
+  value: text("value").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  updatedBy: varchar("updated_by").references(() => users.id),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -326,10 +334,41 @@ export const insertCategorySchema = createInsertSchema(categories).omit({
   featured: z.boolean().default(false),
 });
 
+export const insertSettingSchema = createInsertSchema(settings).omit({
+  id: true,
+  updatedAt: true,
+});
+
 // Login Schema
 export const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
   password: z.string().min(1, "Password is required"),
+});
+
+// Settings Schemas
+export const changeUsernameSchema = z.object({
+  newUsername: z.string().min(3, "Username must be at least 3 characters"),
+  currentPassword: z.string().min(1, "Current password is required"),
+});
+
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(1, "Current password is required"),
+  newPassword: z.string().min(6, "Password must be at least 6 characters"),
+  confirmPassword: z.string().min(1, "Please confirm your password"),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+});
+
+export const siteInfoSchema = z.object({
+  siteName: z.string().min(1, "Site name is required"),
+  contactEmail: z.string().email("Valid email required"),
+  contactPhone: z.string().min(1, "Phone number is required"),
+  contactAddress: z.string().min(1, "Address is required"),
+});
+
+export const emailSettingsSchema = z.object({
+  inquiryNotificationEmail: z.string().email("Valid email required"),
 });
 
 // Type Exports
@@ -355,4 +394,10 @@ export type InsertPackage = z.infer<typeof insertPackageSchema>;
 export type Package = typeof packages.$inferSelect;
 export type InsertCategory = z.infer<typeof insertCategorySchema>;
 export type Category = typeof categories.$inferSelect;
+export type InsertSetting = z.infer<typeof insertSettingSchema>;
+export type Setting = typeof settings.$inferSelect;
 export type LoginRequest = z.infer<typeof loginSchema>;
+export type ChangeUsernameRequest = z.infer<typeof changeUsernameSchema>;
+export type ChangePasswordRequest = z.infer<typeof changePasswordSchema>;
+export type SiteInfoRequest = z.infer<typeof siteInfoSchema>;
+export type EmailSettingsRequest = z.infer<typeof emailSettingsSchema>;

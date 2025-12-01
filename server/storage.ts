@@ -4,8 +4,8 @@ import {
   type Post, type InsertPost, type Media, type InsertMedia,
   type Hotel, type InsertHotel, type Tour, type InsertTour,
   type Package, type InsertPackage, type Destination, type InsertDestination,
-  type Category, type InsertCategory,
-  users, inquiries, pages, sections, posts, media as mediaTable, hotels, tours, packages, destinations, categories
+  type Category, type InsertCategory, type Setting, type InsertSetting,
+  users, inquiries, pages, sections, posts, media as mediaTable, hotels, tours, packages, destinations, categories, settings
 } from "@shared/schema";
 import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
@@ -19,6 +19,7 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUser(id: string, data: Partial<InsertUser>): Promise<User | undefined>;
 
   // Inquiry methods
   createInquiry(inquiry: InsertInquiry): Promise<Inquiry>;
@@ -92,6 +93,11 @@ export interface IStorage {
   getCategoryBySlug(slug: string): Promise<Category | undefined>;
   updateCategory(id: string, category: Partial<InsertCategory>): Promise<Category | undefined>;
   deleteCategory(id: string): Promise<boolean>;
+
+  // Setting methods
+  getSetting(key: string): Promise<Setting | undefined>;
+  getAllSettings(): Promise<Setting[]>;
+  upsertSetting(key: string, value: string, updatedBy: string): Promise<Setting | undefined>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -102,9 +108,18 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.username, username)).limit(1);
-    return result[0] || undefined;
-  }
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
+  },
+
+  async updateUser(id: string, data: Partial<InsertUser>) {
+    const [user] = await this.db
+      .update(users)
+      .set(data)
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  },
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const result = await db.insert(users).values(insertUser).returning();
@@ -548,7 +563,35 @@ export class DatabaseStorage implements IStorage {
       return false;
     }
   }
-}
+
+  // Settings
+  async getSetting(key: string): Promise<Setting | undefined> {
+    const [setting] = await db.select().from(settings).where(eq(settings.key, key));
+    return setting;
+  },
+
+  async getAllSettings() {
+    return await db.select().from(settings);
+  },
+
+  async upsertSetting(key: string, value: string, updatedBy: string) {
+    const existing = await this.getSetting(key);
+    if (existing) {
+      const [updated] = await db
+        .update(settings)
+        .set({ value, updatedBy, updatedAt: new Date() })
+        .where(eq(settings.key, key))
+        .returning();
+      return updated;
+    } else {
+      const [created] = await db
+        .insert(settings)
+        .values({ key, value, updatedBy })
+        .returning();
+      return created;
+    }
+  },
+};
 
 // Memory Storage Implementation for Development
 export class MemoryStorage implements IStorage {
@@ -559,12 +602,15 @@ export class MemoryStorage implements IStorage {
   private posts = new Map<string, Post>();
   private mediaFiles = new Map<string, Media>();
   private hotels = new Map<string, Hotel>();
+  private settings = new Map<string, Setting>();
 
   constructor() {
     // Pre-populate with default admin user
     this.seedDefaultUser();
     // Pre-populate with sample hotels
     this.seedDefaultHotels();
+    // Pre-populate with sample settings
+    this.seedDefaultSettings();
   }
 
   private async seedDefaultUser() {
@@ -708,6 +754,47 @@ export class MemoryStorage implements IStorage {
     });
   }
 
+  private async seedDefaultSettings() {
+    const sampleSettings: Setting[] = [
+      {
+        id: randomUUID(),
+        key: "contact_email",
+        value: "info@luxortravel.com",
+        updatedBy: "admin",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: randomUUID(),
+        key: "inquiry_notification_email",
+        value: "support@luxortravel.com",
+        updatedBy: "admin",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: randomUUID(),
+        key: "site_name",
+        value: "Luxury Egypt Tours",
+        updatedBy: "admin",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: randomUUID(),
+        key: "site_tagline",
+        value: "Experience the magic of Egypt.",
+        updatedBy: "admin",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+
+    sampleSettings.forEach(setting => {
+      this.settings.set(setting.id, setting);
+    });
+  }
+
   // User methods
   async getUser(id: string): Promise<User | undefined> {
     return this.users.get(id);
@@ -720,6 +807,19 @@ export class MemoryStorage implements IStorage {
       }
     }
     return undefined;
+  }
+
+  async updateUser(id: string, data: Partial<InsertUser>): Promise<User | undefined> {
+    const existingUser = this.users.get(id);
+    if (!existingUser) return undefined;
+
+    const updatedUser: User = {
+      ...existingUser,
+      ...data,
+      updatedAt: new Date()
+    };
+    this.users.set(id, updatedUser);
+    return updatedUser;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
@@ -1000,6 +1100,95 @@ export class MemoryStorage implements IStorage {
   async deleteInquiry(id: string): Promise<boolean> {
     return this.inquiries.delete(id);
   }
+
+  // Category methods
+  async createCategory(data: InsertCategory): Promise<Category> {
+    try {
+      const [category] = await db.insert(categories).values(data).returning();
+      return category;
+    } catch (error) {
+      console.error("Error creating category:", error);
+      throw error;
+    }
+  }
+
+  async getCategories(): Promise<Category[]> {
+    try {
+      return await db.select().from(categories).orderBy(categories.sortOrder, desc(categories.createdAt));
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      return [];
+    }
+  }
+
+  async getCategory(id: string): Promise<Category | undefined> {
+    try {
+      const [category] = await db.select().from(categories).where(eq(categories.id, id));
+      return category || undefined;
+    } catch (error) {
+      console.error("Error fetching category:", error);
+      return undefined;
+    }
+  }
+
+  async getCategoryBySlug(slug: string): Promise<Category | undefined> {
+    try {
+      const [category] = await db.select().from(categories).where(eq(categories.slug, slug));
+      return category || undefined;
+    } catch (error) {
+      console.error("Error fetching category by slug:", error);
+      return undefined;
+    }
+  }
+
+  async updateCategory(id: string, data: Partial<InsertCategory>): Promise<Category | undefined> {
+    try {
+      const [category] = await db
+        .update(categories)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(categories.id, id))
+        .returning();
+      return category || undefined;
+    } catch (error) {
+      console.error("Error updating category:", error);
+      throw error;
+    }
+  }
+
+  async deleteCategory(id: string): Promise<boolean> {
+    try {
+      const result = await db.delete(categories).where(eq(categories.id, id));
+      return (result.rowCount ?? 0) > 0;
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      return false;
+    }
+  }
+
+  // Settings
+  async getSetting(key: string): Promise<Setting | undefined> {
+    return this.settings.get(key);
+  }
+
+  async getAllSettings(): Promise<Setting[]> {
+    return Array.from(this.settings.values());
+  }
+
+  async upsertSetting(key: string, value: string, updatedBy: string): Promise<Setting | undefined> {
+    const existingSetting = this.settings.get(key);
+    const now = new Date();
+
+    const setting: Setting = {
+      id: existingSetting ? existingSetting.id : randomUUID(),
+      key,
+      value,
+      updatedBy,
+      createdAt: existingSetting ? existingSetting.createdAt : now,
+      updatedAt: now,
+    };
+    this.settings.set(key, setting);
+    return setting;
+  }
 }
 
 // Use database storage with PostgreSQL
@@ -1014,7 +1203,7 @@ export async function seedDatabase() {
       // Create admin user with bcrypt-hashed password
       await storage.createUser({
         username: "admin",
-        email: "admin@luxuryegypt.com", 
+        email: "admin@luxuryegypt.com",
         password: "$2b$10$jya3D5zQkarnCNp7ex9E1eQFFdHa5pQgvriM2BK5yiPM/BNO77Hf.", // bcrypt hash of "admin123"
         role: "admin"
       });
@@ -1040,7 +1229,7 @@ export async function seedDatabase() {
         },
         {
           name: "Sofitel Winter Palace",
-          location: "Luxor", 
+          location: "Luxor",
           region: "Luxor",
           type: "Palace" as const,
           rating: 5,
@@ -1053,7 +1242,7 @@ export async function seedDatabase() {
         {
           name: "Four Seasons Hotel Cairo at Nile Plaza",
           location: "Cairo",
-          region: "Cairo & Giza", 
+          region: "Cairo & Giza",
           type: "Resort" as const,
           rating: 5,
           priceTier: "$$$$" as const,
@@ -1083,7 +1272,7 @@ export async function seedDatabase() {
           specialRequests: "Anniversary celebration, prefer Nile view rooms"
         },
         {
-          fullName: "David Chen", 
+          fullName: "David Chen",
           email: "david.chen@email.com",
           phone: "+1-555-0456",
           destination: "Cairo & Giza",
@@ -1096,6 +1285,16 @@ export async function seedDatabase() {
         await storage.createInquiry(inquiry);
       }
       console.log("✓ Sample inquiries seeded");
+    }
+
+    // Seed settings if not already present
+    const existingSettings = await storage.getAllSettings();
+    if (existingSettings.length === 0) {
+      await storage.upsertSetting("contact_email", "info@luxortravel.com", "admin");
+      await storage.upsertSetting("inquiry_notification_email", "support@luxortravel.com", "admin");
+      await storage.upsertSetting("site_name", "Luxury Egypt Tours", "admin");
+      await storage.upsertSetting("site_tagline", "Experience the magic of Egypt.", "admin");
+      console.log("✓ Sample settings seeded");
     }
 
     console.log("✓ Database seeding completed");

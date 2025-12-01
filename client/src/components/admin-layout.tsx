@@ -16,7 +16,8 @@ import {
   Menu,
   X,
   Users,
-  Grid3x3
+  Grid3x3,
+  Settings
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -96,6 +97,12 @@ export default function AdminLayout({ children, title, description }: AdminLayou
       label: "Media",
       icon: Image,
       href: "/admin/media",
+    },
+    {
+      id: "settings",
+      label: "Settings",
+      icon: Settings,
+      href: "/admin/settings",
     }
   ];
 

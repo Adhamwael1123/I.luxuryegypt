@@ -52,6 +52,7 @@ import AdminInquiries from "@/pages/admin-inquiries";
 import AdminMedia from "@/pages/admin-media";
 import AdminDestinations from "@/pages/admin-destinations";
 import AdminCategories from "@/pages/admin-categories";
+import AdminSettings from "@/pages/admin-settings";
 
 function Router() {
   const [location] = useLocation();
@@ -101,6 +102,11 @@ function Router() {
         <Route path="/admin/tours" component={AdminTours} />
         <Route path="/admin/tours/new" component={AdminToursNew} />
         <Route path="/admin/tours/:id/edit" component={AdminToursEdit} />
+        <Route path="/admin/packages" component={AdminPackages} />
+        <Route path="/admin/packages/new" component={AdminPackageForm} />
+        <Route path="/admin/packages/:id/edit" component={AdminPackageForm} />
+        <Route path="/admin/destinations" component={AdminDestinations} />
+        <Route path="/admin/settings" component={AdminSettings} />
         <Route component={() => <PageTransition><NotFound /></PageTransition>} />
       </Switch>
     </AnimatePresence>

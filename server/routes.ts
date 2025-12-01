@@ -1342,6 +1342,122 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Settings Routes
+  
+  // Get all settings
+  app.get("/api/cms/settings", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const allSettings = await storage.getAllSettings();
+      // Convert to key-value object
+      const settingsObj = allSettings.reduce((acc, setting) => {
+        acc[setting.key] = setting.value;
+        return acc;
+      }, {} as Record<string, string>);
+      
+      res.json({ success: true, settings: settingsObj });
+    } catch (error) {
+      console.error('Error fetching settings:', error);
+      res.status(500).json({ message: 'Error fetching settings' });
+    }
+  });
+
+  // Change username
+  app.post("/api/cms/settings/change-username", requireAuth, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const { newUsername, currentPassword } = req.body;
+      
+      // Verify current password
+      const isValidPassword = await verifyPassword(currentPassword, authReq.user!.password);
+      if (!isValidPassword) {
+        return res.status(401).json({ message: 'Current password is incorrect' });
+      }
+      
+      // Check if username already exists
+      const existingUser = await storage.getUserByUsername(newUsername);
+      if (existingUser && existingUser.id !== authReq.user!.id) {
+        return res.status(400).json({ message: 'Username already taken' });
+      }
+      
+      // Update username
+      const updatedUser = await storage.updateUser(authReq.user!.id, { username: newUsername });
+      
+      res.json({ 
+        success: true, 
+        message: 'Username updated successfully',
+        user: {
+          id: updatedUser.id,
+          username: updatedUser.username,
+          email: updatedUser.email,
+          role: updatedUser.role
+        }
+      });
+    } catch (error) {
+      console.error('Error changing username:', error);
+      res.status(500).json({ message: 'Error changing username' });
+    }
+  });
+
+  // Change password
+  app.post("/api/cms/settings/change-password", requireAuth, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const { currentPassword, newPassword } = req.body;
+      
+      // Verify current password
+      const isValidPassword = await verifyPassword(currentPassword, authReq.user!.password);
+      if (!isValidPassword) {
+        return res.status(401).json({ message: 'Current password is incorrect' });
+      }
+      
+      // Hash new password
+      const hashedPassword = await hashPassword(newPassword);
+      
+      // Update password
+      await storage.updateUser(authReq.user!.id, { password: hashedPassword });
+      
+      res.json({ success: true, message: 'Password updated successfully' });
+    } catch (error) {
+      console.error('Error changing password:', error);
+      res.status(500).json({ message: 'Error changing password' });
+    }
+  });
+
+  // Update site info
+  app.post("/api/cms/settings/site-info", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const { siteName, contactEmail, contactPhone, contactAddress } = req.body;
+      
+      await Promise.all([
+        storage.upsertSetting('site_name', siteName, authReq.user!.id),
+        storage.upsertSetting('contact_email', contactEmail, authReq.user!.id),
+        storage.upsertSetting('contact_phone', contactPhone, authReq.user!.id),
+        storage.upsertSetting('contact_address', contactAddress, authReq.user!.id),
+      ]);
+      
+      res.json({ success: true, message: 'Site information updated successfully' });
+    } catch (error) {
+      console.error('Error updating site info:', error);
+      res.status(500).json({ message: 'Error updating site information' });
+    }
+  });
+
+  // Update email settings
+  app.post("/api/cms/settings/email", requireAuth, requireEditor, async (req, res) => {
+    try {
+      const authReq = req as AuthenticatedRequest;
+      const { inquiryNotificationEmail } = req.body;
+      
+      await storage.upsertSetting('inquiry_notification_email', inquiryNotificationEmail, authReq.user!.id);
+      
+      res.json({ success: true, message: 'Email settings updated successfully' });
+    } catch (error) {
+      console.error('Error updating email settings:', error);
+      res.status(500).json({ message: 'Error updating email settings' });
+    }
+  });
+
   // Serve assets from attached_assets folder
   app.use("/api/assets", express.static(path.resolve(import.meta.dirname, "..", "attached_assets")));
 
