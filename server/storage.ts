@@ -110,16 +110,16 @@ export class DatabaseStorage implements IStorage {
   async getUserByUsername(username: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.username, username));
     return user;
-  },
+  }
 
   async updateUser(id: string, data: Partial<InsertUser>) {
-    const [user] = await this.db
+    const [user] = await db
       .update(users)
       .set(data)
       .where(eq(users.id, id))
       .returning();
     return user;
-  },
+  }
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const result = await db.insert(users).values(insertUser).returning();
@@ -568,11 +568,11 @@ export class DatabaseStorage implements IStorage {
   async getSetting(key: string): Promise<Setting | undefined> {
     const [setting] = await db.select().from(settings).where(eq(settings.key, key));
     return setting;
-  },
+  }
 
   async getAllSettings() {
     return await db.select().from(settings);
-  },
+  }
 
   async upsertSetting(key: string, value: string, updatedBy: string) {
     const existing = await this.getSetting(key);
@@ -590,7 +590,7 @@ export class DatabaseStorage implements IStorage {
         .returning();
       return created;
     }
-  },
+  }
 };
 
 // Memory Storage Implementation for Development
