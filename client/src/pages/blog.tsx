@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -116,7 +115,7 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="pt-20 pb-16 bg-gradient-to-br from-background via-accent/5 to-primary/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -144,7 +143,7 @@ export default function Blog() {
                 className="pl-10"
               />
             </div>
-            
+
             {/* Results Count */}
             <p className="text-muted-foreground mb-8">
               {filteredPosts.length} article{filteredPosts.length !== 1 ? 's' : ''} found

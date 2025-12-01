@@ -97,7 +97,7 @@ export default function Stay() {
       const matchesRating = selectedRating === "all" || hotel.rating >= parseInt(selectedRating);
       const matchesAmenities = selectedAmenities.length === 0 || 
                               selectedAmenities.some(amenity => hotel.amenities.includes(amenity));
-      
+
       return matchesSearch && matchesRegion && matchesType && matchesRating && matchesAmenities;
     });
 
@@ -189,10 +189,10 @@ export default function Stay() {
     const cardClasses = isSpotlight
       ? "group cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:-translate-y-2"
       : "group cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-accent/30";
-    
+
     const imageHeight = isSpotlight ? "h-80" : "h-48";
     const contentPadding = isSpotlight ? "p-6" : "p-4";
-    
+
     return (
       <Card className={cardClasses} data-testid={`hotel-card-${hotel.id}`}>
         <div className={`relative ${imageHeight} overflow-hidden`}>
@@ -204,7 +204,7 @@ export default function Stay() {
             style={{ aspectRatio: '3/2' }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          
+
           {/* Rating overlay */}
           <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1">
             <div className="flex items-center space-x-1">
@@ -212,7 +212,7 @@ export default function Stay() {
               <span className="ml-1 text-primary font-semibold text-xs">{hotel.rating}</span>
             </div>
           </div>
-          
+
           {/* Featured badge */}
           {hotel.featured && (
             <div className="absolute top-3 left-3">
@@ -222,7 +222,7 @@ export default function Stay() {
             </div>
           )}
         </div>
-        
+
         <CardContent className={contentPadding}>
           <div className="flex items-start justify-between mb-2">
             <h3 className={`font-serif font-bold text-primary leading-tight ${isSpotlight ? 'text-xl' : 'text-lg'}`}>
@@ -232,20 +232,20 @@ export default function Stay() {
               <div className="text-accent font-bold text-sm">{hotel.priceTier}</div>
             </div>
           </div>
-          
+
           <div className="flex items-center text-muted-foreground mb-3">
             <MapPin className="w-4 h-4 mr-1 text-accent" />
             <span className="text-sm font-medium">{hotel.location}</span>
             <span className="mx-2 text-xs">•</span>
             <span className="text-xs">{hotel.type}</span>
           </div>
-          
+
           {isSpotlight && (
             <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2">
               {hotel.description}
             </p>
           )}
-          
+
           <div className="flex flex-wrap gap-1 mb-4">
             {hotel.amenities.slice(0, isSpotlight ? 4 : 3).map((amenity, idx) => (
               <Badge
@@ -257,7 +257,7 @@ export default function Stay() {
               </Badge>
             ))}
           </div>
-          
+
           <Link href={`/hotel/${hotel.id}`}>
             <Button 
               className="w-full" 
@@ -275,7 +275,7 @@ export default function Stay() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div 
@@ -284,7 +284,7 @@ export default function Stay() {
             backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${luxuryHallImage})` 
           }}
         />
-        
+
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
           <h1 className="text-6xl md:text-8xl font-serif font-bold mb-6 animate-fade-in">
             Luxury Accommodations
@@ -329,7 +329,7 @@ export default function Stay() {
                 Choose from our carefully selected portfolio of Egypt's most exclusive accommodations.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {accommodationTypes.map((type, index) => (
                 <Card key={index} className="text-center shadow-lg hover:shadow-xl transition-all duration-300 hover-elevate">
@@ -364,7 +364,7 @@ export default function Stay() {
                 Experience Egypt's most legendary hotels, each offering a unique blend of luxury, history, and authentic Egyptian hospitality.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredHotels.map((hotel) => (
                 <HotelCard key={hotel.id} hotel={hotel} isSpotlight={true} />
@@ -624,7 +624,7 @@ export default function Stay() {
                 Every accommodation in our portfolio offers world-class amenities and personalized service.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {luxuryFeatures.map((feature, index) => (
                 <div key={index} className="text-center">
@@ -745,7 +745,7 @@ export default function Stay() {
           </div>
         </section>
       </main>
-      
+
       <Footer />
       <ScrollToTopButton />
     </div>

@@ -119,7 +119,7 @@ export default function Destinations() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="pt-20 pb-16 bg-gradient-to-br from-background via-accent/5 to-primary/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -170,10 +170,10 @@ export default function Destinations() {
               >
                 <Link href={`/destinations/${destination.id}`} className="block h-full">
                   <div className="relative bg-gradient-to-br from-white via-white to-accent/5 rounded-2xl border border-accent/20 shadow-lg overflow-hidden h-full flex flex-col cursor-pointer transition-all duration-500 hover:shadow-2xl hover:border-accent/40 group-hover:bg-gradient-to-br group-hover:from-white group-hover:via-accent/5 group-hover:to-accent/10">
-                    
+
                     {/* Luxury accent line */}
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
+
                     {/* Image container with sophisticated overlay */}
                     <div className="aspect-[4/3] relative overflow-hidden">
                       <img
@@ -182,11 +182,11 @@ export default function Destinations() {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"
                       />
-                      
+
                       {/* Sophisticated gradient overlays */}
                       <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
                       <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-primary/30 opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
-                      
+
                       {/* Elegant destination name with luxury styling */}
                       <div className="absolute bottom-6 left-6 right-6">
                         <div className="space-y-2">
@@ -199,16 +199,16 @@ export default function Destinations() {
                           </p>
                         </div>
                       </div>
-                      
+
                       {/* Premium corner accent */}
                       <div className="absolute top-4 right-4 w-8 h-8 border-2 border-accent/60 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm group-hover:bg-accent/20 transition-all duration-500">
                         <div className="w-2 h-2 bg-accent rounded-full"></div>
                       </div>
                     </div>
-                    
+
                     {/* Luxury card content */}
                     <div className="p-8 flex-1 flex flex-col relative">
-                      
+
                       {/* Premium highlights with elegant styling */}
                       <div className="space-y-3 mb-6 flex-1">
                         <h4 className="text-sm font-medium text-primary/70 tracking-widest uppercase mb-4">
@@ -223,7 +223,7 @@ export default function Destinations() {
                           </div>
                         ))}
                       </div>
-                      
+
                       {/* Luxury action area with sophisticated styling */}
                       <div className="pt-6 border-t border-gradient-to-r from-transparent via-accent/20 to-transparent">
                         <div className="flex items-center justify-between group/action">
@@ -242,7 +242,7 @@ export default function Destinations() {
                           </div>
                         </div>
                       </div>
-                      
+
                       {/* Subtle decorative elements */}
                       <div className="absolute top-4 right-4 w-16 h-16 border border-accent/10 rounded-full opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
                       <div className="absolute top-6 right-6 w-8 h-8 border border-accent/20 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -174,7 +173,7 @@ export default function Experiences() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="pt-20 pb-16 bg-gradient-to-br from-background via-accent/5 to-primary/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -201,7 +200,7 @@ export default function Experiences() {
                 Select from our carefully curated experience categories to discover your perfect Egyptian journey.
               </p>
             </div>
-            
+
             {isLoading ? (
               <div className="flex justify-center items-center py-20">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -211,7 +210,7 @@ export default function Experiences() {
                 <p className="text-muted-foreground">Unable to load categories. Showing default experiences.</p>
               </div>
             ) : null}
-            
+
             {!isLoading && (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {displayCategories.map((category, index) => (
@@ -222,10 +221,10 @@ export default function Experiences() {
                   data-testid={`category-${category.key}`}
                 >
                   <div className="relative bg-gradient-to-br from-white via-white to-accent/5 rounded-2xl border border-accent/20 shadow-lg overflow-hidden h-full flex flex-col cursor-pointer transition-all duration-500 hover:shadow-2xl hover:border-accent/40 group-hover:bg-gradient-to-br group-hover:from-white group-hover:via-accent/5 group-hover:to-accent/10">
-                    
+
                     {/* Luxury accent line */}
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
+
                     {/* Image container with sophisticated overlay */}
                     <div className="aspect-[4/3] relative overflow-hidden">
                       <img
@@ -234,18 +233,18 @@ export default function Experiences() {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"
                       />
-                      
+
                       {/* Sophisticated gradient overlays */}
                       <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
                       <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-primary/30 opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
-                      
+
                       {/* Tour count badge */}
                       <div className="absolute top-4 left-4 bg-accent/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
                         <span className="text-white text-xs font-semibold tracking-wide">
                           {category.tours.length} Tour{category.tours.length !== 1 ? 's' : ''}
                         </span>
                       </div>
-                      
+
                       {/* Elegant category name with luxury styling */}
                       <div className="absolute bottom-6 left-6 right-6">
                         <div className="space-y-2">
@@ -255,23 +254,23 @@ export default function Experiences() {
                           </h3>
                         </div>
                       </div>
-                      
+
                       {/* Premium corner accent */}
                       <div className="absolute top-4 right-4 w-8 h-8 border-2 border-accent/60 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm group-hover:bg-accent/20 transition-all duration-500">
                         <div className="w-2 h-2 bg-accent rounded-full"></div>
                       </div>
                     </div>
-                    
+
                     {/* Luxury card content */}
                     <div className="p-8 flex-1 flex flex-col relative">
-                      
+
                       {/* Description with elegant styling */}
                       <div className="mb-6 flex-1">
                         <p className="text-muted-foreground font-light leading-relaxed">
                           {category.description}
                         </p>
                       </div>
-                      
+
                       {/* Luxury action area with sophisticated styling */}
                       <div className="pt-6 border-t border-gradient-to-r from-transparent via-accent/20 to-transparent">
                         <div className="flex items-center justify-between group/action">
@@ -290,7 +289,7 @@ export default function Experiences() {
                           </div>
                         </div>
                       </div>
-                      
+
                       {/* Subtle decorative elements */}
                       <div className="absolute top-4 right-4 w-16 h-16 border border-accent/10 rounded-full opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
                       <div className="absolute top-6 right-6 w-8 h-8 border border-accent/20 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
@@ -317,7 +316,7 @@ export default function Experiences() {
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Categories
               </Button>
-              
+
               <div className="text-center">
                 <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
                   {currentCategory?.label}

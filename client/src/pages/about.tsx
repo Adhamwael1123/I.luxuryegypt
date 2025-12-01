@@ -55,7 +55,7 @@ export default function About() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       {/* Hero Section with Video Background */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -78,7 +78,7 @@ export default function About() {
             </video>
           )}
         </div>
-        
+
         <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
           <h1 className="text-6xl md:text-8xl font-serif font-bold mb-6 animate-fade-in">
             About I.LuxuryEgypt
@@ -115,7 +115,7 @@ export default function About() {
         <section className="py-24 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
           {/* Background decorative elements */}
           <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23D4A574%22%20fill-opacity%3D%220.02%22%3E%3Ccircle%20cx%3D%227%22%20cy%3D%227%22%20r%3D%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             {/* Enhanced Section Header */}
             <div className="text-center mb-20">
@@ -125,21 +125,21 @@ export default function About() {
                   <BookOpen className="h-8 w-8 text-accent" />
                 </div>
               </div>
-              
+
               <p className="tracking-[0.3em] uppercase text-accent text-sm font-medium mb-4 animate-fade-in">
                 Heritage & Excellence
               </p>
-              
+
               <h2 className="text-5xl md:text-6xl font-serif font-bold text-primary mb-8 leading-tight">
                 Our Story
               </h2>
-              
+
               <div className="flex items-center justify-center space-x-6 mb-10">
                 <div className="w-20 h-px bg-gradient-to-r from-transparent to-accent"></div>
                 <div className="w-3 h-3 bg-accent rotate-45 rounded-sm"></div>
                 <div className="w-20 h-px bg-gradient-to-l from-transparent to-accent"></div>
               </div>
-              
+
               <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-light">
                 A journey that began with passion for Egypt's timeless beauty and evolved into the finest luxury travel experience in the land of the Pharaohs.
               </p>
@@ -164,29 +164,29 @@ export default function About() {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Floating accent element */}
                   <div className="absolute -top-6 -right-6 w-20 h-20 bg-accent/20 rounded-full blur-2xl animate-pulse"></div>
                 </div>
-                
+
                 <div className="space-y-8 lg:pl-8">
                   <div className="space-y-6">
                     <div className="inline-flex items-center gap-2 bg-accent/10 rounded-full px-4 py-2">
                       <div className="w-2 h-2 bg-accent rounded-full"></div>
                       <span className="text-accent font-medium text-sm">Our Beginning</span>
                     </div>
-                    
+
                     <h3 className="text-3xl md:text-4xl font-serif font-bold text-primary leading-tight">
                       Born from Passion
                     </h3>
-                    
+
                     <p className="text-lg text-muted-foreground leading-relaxed">
                       Born from a passion for Egypt's timeless beauty and a commitment to unparalleled luxury, 
                       I.LuxuryEgypt was founded to offer discerning travelers an extraordinary way to experience 
                       the land of the Pharaohs.
                     </p>
                   </div>
-                  
+
                   <div className="flex items-start gap-4 p-6 bg-background/60 backdrop-blur-sm rounded-xl border border-accent/10">
                     <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <Star className="h-5 w-5 text-accent" />
@@ -209,17 +209,17 @@ export default function About() {
                       <div className="w-2 h-2 bg-accent rounded-full"></div>
                       <span className="text-accent font-medium text-sm">Our Mission</span>
                     </div>
-                    
+
                     <h3 className="text-3xl md:text-4xl font-serif font-bold text-primary leading-tight">
                       Transformative Experiences
                     </h3>
-                    
+
                     <p className="text-lg text-muted-foreground leading-relaxed">
                       We believe in creating deeply personal connections with Egypt's rich heritage, breathtaking landscapes, 
                       and warm hospitality. From private sunrise ceremonies at the Pyramids to intimate felucca cruises on the Nile.
                     </p>
                   </div>
-                  
+
                   {/* Mission Statement Card */}
                   <div className="relative p-8 bg-primary rounded-2xl text-white overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 rounded-full -translate-y-16 translate-x-16"></div>
@@ -235,7 +235,7 @@ export default function About() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="relative lg:order-2 order-1">
                   <div className="grid grid-cols-2 gap-4 h-96">
                     <div className="space-y-4">
@@ -271,7 +271,7 @@ export default function About() {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Floating accent element */}
                   <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-primary/20 rounded-full blur-2xl animate-pulse"></div>
                 </div>
@@ -300,7 +300,7 @@ export default function About() {
                 Our commitment to luxury travel excellence, measured by the experiences we've crafted.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center">
@@ -336,7 +336,7 @@ export default function About() {
                 Three principles that guide every extraordinary journey we create.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {/* Bespoke Excellence */}
               <div className="group text-center">
@@ -420,7 +420,7 @@ export default function About() {
                 and an intimate knowledge of Egypt's hidden treasures.
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               {team.map((member, index) => (
                 <div key={index} className="group">
@@ -434,7 +434,7 @@ export default function About() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                     </div>
-                    
+
                     {/* Floating name card */}
                     <div className="absolute -bottom-6 left-6 right-6 bg-background rounded-lg shadow-xl p-6 border border-accent/10">
                       <h3 className="text-xl font-serif font-bold text-primary mb-1">
@@ -445,7 +445,7 @@ export default function About() {
                       </p>
                     </div>
                   </div>
-                  
+
                   {/* Description below */}
                   <div className="pt-8">
                     <p className="text-muted-foreground leading-relaxed text-center">
@@ -455,7 +455,7 @@ export default function About() {
                 </div>
               ))}
             </div>
-            
+
             {/* Team philosophy */}
             <div className="mt-20 text-center max-w-4xl mx-auto">
               <div className="bg-background rounded-xl p-8 md:p-12 shadow-lg border border-accent/10">
@@ -481,7 +481,7 @@ export default function About() {
                 The I.LuxuryEgypt Difference
               </h2>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-6 bg-accent/10 rounded-full flex items-center justify-center">
@@ -492,7 +492,7 @@ export default function About() {
                   Round-the-clock support from our dedicated luxury travel specialists, ensuring every need is met.
                 </p>
               </div>
-              
+
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-6 bg-accent/10 rounded-full flex items-center justify-center">
                   <Star className="w-8 h-8 text-accent" />
@@ -502,7 +502,7 @@ export default function About() {
                   Private entrances to historical sites, after-hours museum visits, and VIP experiences unavailable to regular tourists.
                 </p>
               </div>
-              
+
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-6 bg-accent/10 rounded-full flex items-center justify-center">
                   <Award className="w-8 h-8 text-accent" />
@@ -554,7 +554,7 @@ export default function About() {
           </div>
         </section>
       </main>
-      
+
       <Footer />
       <ScrollToTopButton />
     </div>

@@ -21,7 +21,7 @@ export default function Home() {
         <BrandBanner />
         <SiwaVideoSection />
         <GuestExperienceIntro />
-        
+
         {/* Central Banner */}
         <section className="py-24 bg-primary">
           <div className="max-w-4xl mx-auto text-center px-4">
