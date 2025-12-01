@@ -1223,9 +1223,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Configure multer for file uploads
+  const uploadPath = path.resolve(import.meta.dirname, "..", "attached_assets", "uploads");
+  
+  // Ensure uploads directory exists
+  import('fs').then(fs => {
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+      console.log('Created uploads directory:', uploadPath);
+    }
+  });
+
   const storage_config = multer.diskStorage({
     destination: (req, file, cb) => {
-      const uploadPath = path.resolve(import.meta.dirname, "..", "attached_assets", "uploads");
       cb(null, uploadPath);
     },
     filename: (req, file, cb) => {
