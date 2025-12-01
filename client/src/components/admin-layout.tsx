@@ -68,6 +68,12 @@ export default function AdminLayout({ children, title, description }: AdminLayou
       href: "/admin",
     },
     {
+      id: "hotels",
+      label: "Hotels",
+      icon: Building,
+      href: "/admin/hotels",
+    },
+    {
       id: "tours",
       label: "Tours",
       icon: Plane,
